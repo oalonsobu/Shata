@@ -6,6 +6,8 @@
 [Bb]uild
 /[Bb]uilds/
 /[Ll]ibrary/
+Assets/NonUsedSprites/
+Assets/NonUsedSprites.meta
 
 # Exclude 3rd party libraries installed from the assets store
 [Aa]ssets/Asset Store Resources/
