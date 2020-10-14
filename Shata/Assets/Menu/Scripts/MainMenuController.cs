@@ -20,7 +20,7 @@ namespace Menu
 
         public void NewGame() {
             audioHelper.PlaySound(clickAudio);
-            SceneManager.LoadScene("Tutorial");
+            SceneManager.LoadScene("Level1");
         }
 
         public void ShowCredits() {
