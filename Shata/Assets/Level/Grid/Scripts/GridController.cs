@@ -11,14 +11,17 @@ namespace Level.Grid
 
         //TODO: I think that maybe we can store a custom object, maybe something less consuming
         GameObject[] grid;
+        GameObject selectedCell;
 
-        const int gridHeight = 50;
-        const int gridWidth  = 50;
+        const int gridHeight = 10;
+        const int gridWidth  = 10;
 
         const float hexRadius = 0.866025404f;
         
         void Awake()
         {
+            selectedCell = null;
+            
             grid = new GameObject[gridHeight * gridWidth];
             
             for (int z = 0, i = 0; z < gridHeight; z++) {
@@ -28,6 +31,15 @@ namespace Level.Grid
             }
         }
         
+        // Update is called once per frame
+        void Update()
+        {
+            if (Input.GetMouseButtonDown(0)) {
+                HandleInput();
+            }
+        }
+        
+                
         void initHex (int x, int z, int i) {
             Vector3 position;
             int evenRow = z % 2; //1 or 0
@@ -38,6 +50,20 @@ namespace Level.Grid
             GameObject cell = grid[i] = Instantiate<GameObject>(cellPrefab);
             cell.transform.SetParent(transform, false);
             cell.transform.localPosition = position;
+        }
+        
+        void HandleInput () {
+            Ray inputRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(inputRay, out hit, 100.0f)) {
+                if (hit.collider.CompareTag("Cell")) {
+                    CellController cellController = hit.collider.gameObject.GetComponent<CellController>();
+                    if (selectedCell != null) {
+                        selectedCell.GetComponent<CellController>().UnselectCell();
+                    }
+                    selectedCell = cellController.SelectCell();
+                }
+            }
         }
     }
 }
