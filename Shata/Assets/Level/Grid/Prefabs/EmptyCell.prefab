@@ -128,9 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56ec7f9350a5f45eeb657e271ce176a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  titleReference: {fileID: 11400000, guid: df2707d20d066452ca80370ec9f7d201, type: 2}
-  descriptionReference: {fileID: 11400000, guid: 6906d2874d61e4986bed5b3932c45262, type: 2}
-  commentReference: {fileID: 11400000, guid: c28bddc1b0d874c3cb0332378ce054e4, type: 2}
+  cellReference: {fileID: 11400000, guid: 0be4e581b33844a4aa4ed5f04105bc81, type: 2}
   isActiveCelReference: {fileID: 11400000, guid: a51870d52c1d04e539392c01bfdbb4ae, type: 2}
 --- !u!114 &-1166877916429343413
 MonoBehaviour:

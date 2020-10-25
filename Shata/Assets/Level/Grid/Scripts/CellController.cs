@@ -11,10 +11,8 @@ namespace Level.Grid
         Outline outline;
         
         //TODO: need one for active :D
-        [SerializeField] StringReference titleReference;
-        [SerializeField] StringReference descriptionReference;
-        [SerializeField] StringReference commentReference;        
-        [SerializeField] BoolReference   isActiveCelReference;
+        [SerializeField] CellReference cellReference;
+        [SerializeField] BoolReference isActiveCelReference;
 
 
         //TODO: randomize, just for testing rn
@@ -28,31 +26,15 @@ namespace Level.Grid
         public GameObject SelectCell () {
             outline.enabled = true;
             isActiveCelReference.value = true;
-            titleReference.value = getCellTitle();
-            descriptionReference.value = getCellDescription();
-            commentReference.value = getCellComment();
+            cellReference.value = cell;
             
             return gameObject;
         }
         
         public void UnselectCell () {
-            titleReference.value = "";
-            descriptionReference.value = "";
-            commentReference.value = "";
+            cellReference.value = null;
             outline.enabled = false;
             isActiveCelReference.value = false;
-        }
-
-        public string getCellDescription() {
-            return cell.CellType.getDesription();
-        }
-        
-        public string getCellComment() {
-            return cell.CellType.getComment();
-        }
-        
-        public string getCellTitle() {
-            return cell.CellType.getTitle();
         }
     }
 }

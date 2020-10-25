@@ -9,7 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34677bb2d5fb04f6fb4a362e1268dafd, type: 3}
-  m_Name: CellTitleReference
+  m_Script: {fileID: 11500000, guid: 52bc0e84c4ab4bd99202dc68bd8e2335, type: 3}
+  m_Name: SelectedCellReference
   m_EditorClassIdentifier: 
-  value: Grassland
