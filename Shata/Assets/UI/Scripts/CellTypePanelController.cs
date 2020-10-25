@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Level.Grid;
+using UnityEngine;
 using UnityEngine.UI;
 using Variables;
 
@@ -9,10 +10,9 @@ public class CellTypePanelController : MonoBehaviour
     [SerializeField] Text descriptionText;
     [SerializeField] Text commentText;
     
-    [SerializeField] CellReference cellReference;    
     [SerializeField] BoolReference isActiveReference;
     
-    
+   
     GameObject container;
 
     private void Start() {
@@ -21,13 +21,14 @@ public class CellTypePanelController : MonoBehaviour
         container.SetActive(false);
     }
 
-    private void Update() {
-        //TODO: this is working but I don't want to constantly check this. Checks out events :D
+    public void selectedCellEvent(CellReference cellReference) {
         container.SetActive(isActiveReference.value);
-        if (container.activeSelf) {
-            titleText.text = cellReference.value.CellType.getTitle();
-            descriptionText.text = cellReference.value.CellType.getDesription();
-            commentText.text = cellReference.value.CellType.getComment();
-        }
+        titleText.text = cellReference.value.CellType.getTitle();
+        descriptionText.text = cellReference.value.CellType.getDesription();
+        commentText.text = cellReference.value.CellType.getComment();
+    }
+    
+    public void unselectedCellEvent() {
+        container.SetActive(isActiveReference.value);
     }
 }

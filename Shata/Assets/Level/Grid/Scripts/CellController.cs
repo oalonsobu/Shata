@@ -10,9 +10,9 @@ namespace Level.Grid
     {
         Outline outline;
         
-        //TODO: need one for active :D
         [SerializeField] CellReference cellReference;
         [SerializeField] BoolReference isActiveCelReference;
+        [SerializeField] GameEvent selectedCellEvent;
 
 
         //TODO: randomize, just for testing rn
@@ -27,6 +27,7 @@ namespace Level.Grid
             outline.enabled = true;
             isActiveCelReference.value = true;
             cellReference.value = cell;
+            selectedCellEvent.Raise();
             
             return gameObject;
         }

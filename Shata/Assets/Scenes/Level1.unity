@@ -544,11 +544,55 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0300cc85bc59a4a55af8dc32f34de2fc, type: 3}
+--- !u!1 &1361742413 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4514273530064040104, guid: 49eaa89d5b2034a46987f6216b427cb1, type: 3}
+  m_PrefabInstance: {fileID: 4514273531420277477}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1361742414 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4514273530064040107, guid: 49eaa89d5b2034a46987f6216b427cb1, type: 3}
   m_PrefabInstance: {fileID: 4514273531420277477}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1361742415 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4514273530064040106, guid: 49eaa89d5b2034a46987f6216b427cb1, type: 3}
+  m_PrefabInstance: {fileID: 4514273531420277477}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1361742413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5983e43f89ab5437a90e02004e105759, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1361742416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1361742413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8eaf5f6fedfc4763a7e1e443d79372ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: cd0c5d576c6fb4b3394eb9aa8d60f41a, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1361742415}
+        m_TargetAssemblyTypeName: CellTypePanelController, Assembly-CSharp
+        m_MethodName: selectedCellEvent
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: 0be4e581b33844a4aa4ed5f04105bc81, type: 2}
+          m_ObjectArgumentAssemblyTypeName: Variables.CellReference, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1963001587
 GameObject:
   m_ObjectHideFlags: 0
