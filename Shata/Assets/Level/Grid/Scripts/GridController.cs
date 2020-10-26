@@ -54,14 +54,14 @@ namespace Level.Grid
         }
         
         void HandleInput () {
+            if (selectedCell != null) {
+                selectedCell.GetComponent<CellController>().UnselectCell();
+            }
             Ray inputRay = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(inputRay, out hit, 100.0f)) {
                 if (hit.collider.CompareTag("Cell")) {
                     CellController cellController = hit.collider.gameObject.GetComponent<CellController>();
-                    if (selectedCell != null) {
-                        selectedCell.GetComponent<CellController>().UnselectCell();
-                    }
                     selectedCell = cellController.SelectCell();
                 }
             }
