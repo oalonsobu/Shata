@@ -10,25 +10,24 @@ public class CellTypePanelController : MonoBehaviour
     [SerializeField] Text descriptionText;
     [SerializeField] Text commentText;
     
-    [SerializeField] BoolReference isActiveReference;
-    
    
     GameObject container;
 
     private void Start() {
-        isActiveReference.value = false;
         container = transform.GetChild(0).gameObject;
         container.SetActive(false);
     }
 
-    public void selectedCellEvent(CellReference cellReference) {
-        container.SetActive(isActiveReference.value);
-        titleText.text = cellReference.value.CellType.getTitle();
-        descriptionText.text = cellReference.value.CellType.getDesription();
-        commentText.text = cellReference.value.CellType.getComment();
-    }
-    
-    public void unselectedCellEvent() {
-        container.SetActive(isActiveReference.value);
+    public void selectedCellChangedEvent(CellReference cellReference)
+    {
+        bool isActive = cellReference.value != null;
+        container.SetActive(isActive);
+        if (isActive)
+        {
+            titleText.text = cellReference.value.CellType.getTitle();
+            descriptionText.text = cellReference.value.CellType.getDesription();
+            commentText.text = cellReference.value.CellType.getComment();
+            
+        }
     }
 }

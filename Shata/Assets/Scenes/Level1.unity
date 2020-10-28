@@ -583,7 +583,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1361742415}
         m_TargetAssemblyTypeName: CellTypePanelController, Assembly-CSharp
-        m_MethodName: selectedCellEvent
+        m_MethodName: selectedCellChangedEvent
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: 0be4e581b33844a4aa4ed5f04105bc81, type: 2}

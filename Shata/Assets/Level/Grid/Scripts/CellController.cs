@@ -11,8 +11,7 @@ namespace Level.Grid
         Outline outline;
         
         [SerializeField] CellReference cellReference;
-        [SerializeField] BoolReference isActiveCelReference;
-        [SerializeField] GameEvent selectedCellEvent;
+        [SerializeField] GameEvent selectedCellChangedEvent;
 
 
         //TODO: randomize, just for testing rn
@@ -25,9 +24,8 @@ namespace Level.Grid
         
         public GameObject SelectCell () {
             outline.enabled = true;
-            isActiveCelReference.value = true;
             cellReference.value = cell;
-            selectedCellEvent.Raise();
+            selectedCellChangedEvent.Raise();
             
             return gameObject;
         }
@@ -35,7 +33,7 @@ namespace Level.Grid
         public void UnselectCell () {
             cellReference.value = null;
             outline.enabled = false;
-            isActiveCelReference.value = false;
+            selectedCellChangedEvent.Raise();
         }
     }
 }
