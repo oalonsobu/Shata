@@ -12,7 +12,7 @@ namespace Level.Grid
         
         [SerializeField] public CellReference cellReference;
         [SerializeField] GameEvent selectedCellChangedEvent;
-        private Cell cell;
+        private CellTypeInterface cell;
         
         void Start() {
             outline = GetComponent<Outline>();
@@ -33,7 +33,7 @@ namespace Level.Grid
             selectedCellChangedEvent.Raise();
         }
         
-        public void SetCell (Cell c)
+        public void SetCell (CellTypeInterface c)
         {
             cell = c;
         }

@@ -48,27 +48,27 @@ namespace Level.Grid
             position.y = 0f;
             position.z = z * hexRadius;
 
-            Cell cell = createCell();
-            grid[i] = Instantiate<GameObject>(cell.CellCellType.getBasePrefab());
+            CellTypeInterface cell = createCell();
+            grid[i] = Instantiate<GameObject>(cell.getBasePrefab());
             grid[i].GetComponent<CellController>().SetCell(cell);
             grid[i].transform.SetParent(transform, false);
             grid[i].transform.localPosition = position;
         }
 
-        Cell createCell()
+        CellTypeInterface createCell()
         {
             int random = Random.Range(0, 10);
             //TODO: to improve, just testing
             CellTypeInterface cellType;
             if (random >= 0 && random <= 2) {
                 cellType = new Water();
-            } else if (random >= 3 && random <= 5) {
+            } else if (random >= 3 && random <= 4) {
                 cellType = new Farm();
             }
             else {
                 cellType = new Grass();
             }
-            return new Cell(cellType);
+            return cellType;
         }
         
         void HandleInput () {

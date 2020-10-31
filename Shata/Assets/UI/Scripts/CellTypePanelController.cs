@@ -24,9 +24,9 @@ public class CellTypePanelController : MonoBehaviour
         container.SetActive(isActive);
         if (isActive)
         {
-            titleText.text = cellReference.value.CellCellType.getTitle();
-            descriptionText.text = cellReference.value.CellCellType.getDesription();
-            commentText.text = cellReference.value.CellCellType.getComment();
+            titleText.text = cellReference.value.Title;
+            descriptionText.text = cellReference.value.Description;
+            commentText.text = cellReference.value.Comment;
             
         }
     }

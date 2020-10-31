@@ -5,7 +5,7 @@ namespace Variables
     [CreateAssetMenu]
     public class CellReference : ScriptableObject
     {
-        public Cell value;
+        public CellTypeInterface value;
     }
     
 }
