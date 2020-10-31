@@ -13,8 +13,8 @@ namespace Variables
 
         public void Raise()
         {
-            for (int i = listeners.Count - 1; i >= 0; i--)
-            {
+            for (int i = listeners.Count - 1; i >= 0; i--) {
+                Debug.Log("event raised");
                 listeners[i].OnEventRaise();
             }
         }

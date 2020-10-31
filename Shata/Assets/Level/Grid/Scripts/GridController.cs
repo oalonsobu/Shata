@@ -8,8 +8,6 @@ namespace Level.Grid
 
     public class GridController : MonoBehaviour
     {
-        [SerializeField] GameObject cellPrefab;
-
         //TODO: I think that maybe we can store a custom object, maybe something less consuming
         GameObject[] grid;
         GameObject selectedCell;
@@ -41,16 +39,36 @@ namespace Level.Grid
         }
         
                 
-        void initHex (int x, int z, int i) {
+        //TODO: this need to be improved. Is a little messed up...
+        void initHex (int x, int z, int i) 
+        {
             Vector3 position;
             int evenRow = z % 2; //1 or 0
             position.x = x + 0.5f * evenRow;
             position.y = 0f;
             position.z = z * hexRadius;
-    
-            GameObject cell = grid[i] = Instantiate<GameObject>(cellPrefab);
-            cell.transform.SetParent(transform, false);
-            cell.transform.localPosition = position;
+
+            Cell cell = createCell();
+            grid[i] = Instantiate<GameObject>(cell.CellCellType.getBasePrefab());
+            grid[i].GetComponent<CellController>().SetCell(cell);
+            grid[i].transform.SetParent(transform, false);
+            grid[i].transform.localPosition = position;
+        }
+
+        Cell createCell()
+        {
+            int random = Random.Range(0, 10);
+            //TODO: to improve, just testing
+            CellTypeInterface cellType;
+            if (random >= 0 && random <= 2) {
+                cellType = new Water();
+            } else if (random >= 3 && random <= 5) {
+                cellType = new Farm();
+            }
+            else {
+                cellType = new Grass();
+            }
+            return new Cell(cellType);
         }
         
         void HandleInput () {

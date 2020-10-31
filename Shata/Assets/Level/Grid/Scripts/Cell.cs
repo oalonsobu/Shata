@@ -4,15 +4,14 @@ namespace Level.Grid
     //Cell information not related with unity behaviours. More like an aggregated/container 
     public class Cell
     {
-        private TypeInterface cellType;
+        private CellTypeInterface _cellCellType;
         
-        public Cell(TypeInterface ct) {
-            cellType = ct;
+        public Cell(CellTypeInterface ct) {
+            _cellCellType = ct;
         }
 
-        public TypeInterface CellType {
-            get => cellType;
-            //set => cellType = value;
+        public CellTypeInterface CellCellType {
+            get => _cellCellType;
         }
     }
 }

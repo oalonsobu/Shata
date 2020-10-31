@@ -11,12 +11,11 @@ GameObject:
   - component: {fileID: 4391584229215910379}
   - component: {fileID: 819040522253383246}
   - component: {fileID: 3222649107956941444}
-  - component: {fileID: 2077829586652481765}
   - component: {fileID: -4904467356116655493}
   - component: {fileID: -7129427329253135431}
   - component: {fileID: -1166877916429343413}
   m_Layer: 0
-  m_Name: EmptyCell
+  m_Name: GrassCell
   m_TagString: Cell
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -86,22 +85,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!54 &2077829586652481765
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4015480486044328785}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!64 &-4904467356116655493
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -129,7 +112,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cellReference: {fileID: 11400000, guid: 0be4e581b33844a4aa4ed5f04105bc81, type: 2}
-  isActiveCelReference: {fileID: 11400000, guid: a51870d52c1d04e539392c01bfdbb4ae, type: 2}
   selectedCellChangedEvent: {fileID: 11400000, guid: cd0c5d576c6fb4b3394eb9aa8d60f41a, type: 2}
 --- !u!114 &-1166877916429343413
 MonoBehaviour:

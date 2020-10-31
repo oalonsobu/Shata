@@ -5,10 +5,9 @@ using UnityEngine;
 namespace Level.Grid
 {
 
-    public interface TypeInterface
+    public interface BuildingInterface
     {
-
-        void getAllowedBuildings();
+        string getPrice();
         string getDesription();
         string getComment();
         string getTitle();

@@ -10,12 +10,9 @@ namespace Level.Grid
     {
         Outline outline;
         
-        [SerializeField] CellReference cellReference;
+        [SerializeField] public CellReference cellReference;
         [SerializeField] GameEvent selectedCellChangedEvent;
-
-
-        //TODO: randomize, just for testing rn
-        public Cell cell = new Cell(new Grass());
+        private Cell cell;
         
         void Start() {
             outline = GetComponent<Outline>();
@@ -34,6 +31,11 @@ namespace Level.Grid
             cellReference.value = null;
             outline.enabled = false;
             selectedCellChangedEvent.Raise();
+        }
+        
+        public void SetCell (Cell c)
+        {
+            cell = c;
         }
     }
 }

@@ -2,12 +2,12 @@
 
 namespace Level.Grid
 {
-    public class Water : CellTypeInterface
+    public class Farm : CellTypeInterface
     {
-        private const string BasePrefab = "WaterCell";
-        private const string Description = "Large body of water.";
-        private const string Comment = "Do not drink.";
-        private const string Title = "Water";
+        private const string BasePrefab = "FarmCell";
+        private const string Description = "Ideal for farming.";
+        private const string Comment = "You can build anything here, but I recommend to build farms. You will not have many of this";
+        private const string Title = "Fertile land";
         
         public void getAllowedBuildings() {
             throw new System.NotImplementedException();
