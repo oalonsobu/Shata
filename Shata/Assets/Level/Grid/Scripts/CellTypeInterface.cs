@@ -12,8 +12,8 @@ namespace Level.Grid
         public abstract string BasePrefab { get; }
         public abstract List<BuildingInterface> AllowedBuildings { get; }
 
-        private BuildingInterface Building { get; set; }
-        
+        public BuildingInterface Building { get; set; } = new None();
+
         //TODO: check for errors?
         public GameObject getBasePrefab() {
             return Resources.Load("Prefabs/" + BasePrefab) as GameObject;
