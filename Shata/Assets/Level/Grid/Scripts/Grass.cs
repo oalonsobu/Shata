@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
 
 namespace Level.Grid
 {
@@ -8,10 +8,7 @@ namespace Level.Grid
         public override string Comment => "Plenty of flowers, herbs and grass. Pettry but useless if you don't build something here.";
         public override string Title => "Grassland";
         public override string BasePrefab => "GrassCell";
-        
-        protected override void getAllowedBuildings()
-        {
-            throw new System.NotImplementedException();
-        }
+       
+        public override List<BuildingInterface> AllowedBuildings => new List<BuildingInterface>();
     }
 }

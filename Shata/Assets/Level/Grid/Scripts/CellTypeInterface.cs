@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 namespace Level.Grid
 {
@@ -9,7 +10,9 @@ namespace Level.Grid
         public abstract string Comment { get; }
         public abstract string Title { get; }
         public abstract string BasePrefab { get; }
-        protected abstract void getAllowedBuildings();
+        public abstract List<BuildingInterface> AllowedBuildings { get; }
+
+        private BuildingInterface Building { get; set; }
         
         //TODO: check for errors?
         public GameObject getBasePrefab() {
