@@ -9,36 +9,21 @@ using Variables;
 namespace Level.Grid
 {
     //Cell information related with unity behaviours
-    public class CellController : MonoBehaviour
+    public class CellOutlineController : MonoBehaviour
     {
         Outline outline;
-        
-        [SerializeField] CellReference cellReference;
-        [SerializeField] GameEvent selectedCellChangedEvent;
-        private CellTypeInterface cell;
         
         void Start() {
             outline = GetComponent<Outline>();
             outline.enabled = false;
         }
         
-        public GameObject SelectCell () {
+        public void enable () {
             outline.enabled = true;
-            cellReference.value = cell;
-            selectedCellChangedEvent.Raise();
-            
-            return gameObject;
         }
         
-        public void UnselectCell () {
-            cellReference.value = null;
+        public void disable () {
             outline.enabled = false;
-            selectedCellChangedEvent.Raise();
-        }
-        
-        public void SetCell (CellTypeInterface c)
-        {
-            cell = c;
         }
     }
 }

@@ -3,39 +3,48 @@ using System.Collections.Generic;
 using UnityEngine;
 using Variables;
 
+
+
+//TODO: convertir esto en una clase sin logica, que solo responda a eventos varios y llame a lo que pertoca. Sera el CellReference
 namespace Level.Grid
 {
-    //Cell information related with unity behaviours
+    //Cell manager. Is the entry point for events or references to update the cell status
     public class CellController : MonoBehaviour
     {
-        Outline outline;
-        
-        [SerializeField] public CellReference cellReference;
-        [SerializeField] GameEvent selectedCellChangedEvent;
+        CellOutlineController outline;
         private CellTypeInterface cell;
-        
-        void Start() {
-            outline = GetComponent<Outline>();
-            outline.enabled = false;
-        }
-        
-        public GameObject SelectCell () {
-            outline.enabled = true;
-            cellReference.value = cell;
-            selectedCellChangedEvent.Raise();
-            
-            return gameObject;
-        }
-        
-        public void UnselectCell () {
-            cellReference.value = null;
-            outline.enabled = false;
-            selectedCellChangedEvent.Raise();
-        }
-        
-        public void SetCell (CellTypeInterface c)
+        [SerializeField] GameEvent selectedCellChangedEvent;
+
+        public CellTypeInterface Cell
         {
-            cell = c;
+            get => cell;
+            set => cell = value;
+        }
+
+        void Start() {
+            outline = gameObject.AddComponent<CellOutlineController>();
+        }
+        
+        public void addOutline () {
+            outline.enable();
+        }
+        
+        public void removeOutline ()
+        {
+            outline.disable();
+        }
+        
+        public void build (BuildingInterface building)
+        {
+            cell.setCurrentBuilding(building);
+            instantiateBuilding();
+            selectedCellChangedEvent.Raise();
+        }
+
+        private void instantiateBuilding()
+        {
+            GameObject building = Instantiate<GameObject>(cell.CurrentBuilding.getBasePrefab(), transform, false);
+            building.transform.Rotate(new Vector3(0,1,0), 90);
         }
     }
 }

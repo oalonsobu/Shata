@@ -6,7 +6,7 @@ namespace Level.Grid
     {
         public override int Price { get; }
         public override string Description => "Increase your max population.";
-        public override string Comment => "Here is where you citizens live. If you want to make your beautiful city grow.";
+        public override string Comment => "Here is where you citizens live. Build more if you want to make your beautiful city grow.";
         public override string Title => "House";
         public override string BasePrefab => "House";
     }

@@ -5,12 +5,13 @@ using Variables;
 
 namespace Level.Grid
 {
-
+    //TODO: I think I need to separate the initialization and the "update" (the init method will grown)
     public class GridController : MonoBehaviour
     {
         //TODO: I think that maybe we can store a custom object, maybe something less consuming
         GameObject[] grid;
-        GameObject selectedCell;
+        [SerializeField] CellReference cellReference;
+        [SerializeField] GameEvent selectedCellChangedEvent;
 
         const int gridHeight = 10;
         const int gridWidth  = 10;
@@ -19,8 +20,6 @@ namespace Level.Grid
         
         void Awake()
         {
-            selectedCell = null;
-            
             grid = new GameObject[gridHeight * gridWidth];
             
             for (int z = 0, i = 0; z < gridHeight; z++) {
@@ -49,9 +48,8 @@ namespace Level.Grid
             position.z = z * hexRadius;
 
             CellTypeInterface cell = createCell();
-            grid[i] = Instantiate<GameObject>(cell.getBasePrefab());
-            grid[i].GetComponent<CellController>().SetCell(cell);
-            grid[i].transform.SetParent(transform, false);
+            grid[i] = Instantiate<GameObject>(cell.getBasePrefab(), transform, false);
+            grid[i].GetComponent<CellController>().Cell = cell;
             grid[i].transform.localPosition = position;
         }
 
@@ -72,15 +70,16 @@ namespace Level.Grid
         }
         
         void HandleInput () {
-            if (selectedCell != null) {
-                selectedCell.GetComponent<CellController>().UnselectCell();
-            }
             Ray inputRay = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(inputRay, out hit, 100.0f)) {
                 if (hit.collider.CompareTag("Cell")) {
-                    CellController cellController = hit.collider.gameObject.GetComponent<CellController>();
-                    selectedCell = cellController.SelectCell();
+                    if (cellReference.value != null) {
+                        cellReference.value.removeOutline();
+                    }
+                    cellReference.value = hit.transform.GetComponent<CellController>();
+                    cellReference.value.addOutline();
+                    selectedCellChangedEvent.Raise();
                 }
             }
         }

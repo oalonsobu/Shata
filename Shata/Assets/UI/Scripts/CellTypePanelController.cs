@@ -24,11 +24,10 @@ namespace UI
         {
             bool isActive = cellReference.value != null;
             container.SetActive(isActive);
-            if (isActive)
-            {
-                titleText.text = cellReference.value.Title;
-                descriptionText.text = cellReference.value.Description;
-                commentText.text = cellReference.value.Comment;
+            if (isActive) {
+                titleText.text = cellReference.value.Cell.Title;
+                descriptionText.text = cellReference.value.Cell.Description;
+                commentText.text = cellReference.value.Cell.Comment;
                 
             }
         }

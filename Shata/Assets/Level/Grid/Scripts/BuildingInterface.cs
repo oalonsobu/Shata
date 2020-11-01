@@ -14,7 +14,7 @@ namespace Level.Grid
         public abstract string Title { get; }
         public abstract string BasePrefab { get; }
         
-        public string CurrentLvl { get; set; }
+        public int CurrentLvl { get; set; }
         
         public GameObject getBasePrefab() {
             if (BasePrefab == "None")
