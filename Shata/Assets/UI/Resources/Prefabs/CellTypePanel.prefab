@@ -169,6 +169,7 @@ GameObject:
   - component: {fileID: 4514273530064040107}
   - component: {fileID: 4514273530064040117}
   - component: {fileID: 4514273530064040106}
+  - component: {fileID: 7329610590679611456}
   m_Layer: 5
   m_Name: CellTypePanel
   m_TagString: Untagged
@@ -219,8 +220,34 @@ MonoBehaviour:
   titleText: {fileID: 4514273529936418761}
   descriptionText: {fileID: 4514273530619665423}
   commentText: {fileID: 4514273530014678759}
-  cellReference: {fileID: 11400000, guid: 0be4e581b33844a4aa4ed5f04105bc81, type: 2}
-  isActiveReference: {fileID: 11400000, guid: a51870d52c1d04e539392c01bfdbb4ae, type: 2}
+--- !u!114 &7329610590679611456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4514273530064040104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8eaf5f6fedfc4763a7e1e443d79372ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: cd0c5d576c6fb4b3394eb9aa8d60f41a, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4514273530064040106}
+        m_TargetAssemblyTypeName: CellTypePanelController, Assembly-CSharp
+        m_MethodName: selectedCellChangedEvent
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: 0be4e581b33844a4aa4ed5f04105bc81, type: 2}
+          m_ObjectArgumentAssemblyTypeName: Variables.CellReference, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4514273530363635516
 GameObject:
   m_ObjectHideFlags: 0
