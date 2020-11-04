@@ -22,7 +22,7 @@ namespace UI
     
         public void selectedCellChangedEvent(CellReference cellReference)
         {
-            bool isActive = cellReference.value != null && cellReference.value.Cell.AllowedBuildings.Any();
+            bool isActive = cellReference.value != null && cellReference.value.Cell.getAllowedBuilds().Any();
             container.SetActive(isActive);
             if (isActive) {
                 titleText.text = cellReference.value.Cell.CurrentBuilding.Title;

@@ -25,5 +25,20 @@ namespace Level.Grid
             CurrentBuilding = building;
             CurrentBuilding.CurrentLvl = 1;
         }
+        
+        public bool canBeBuilt(BuildingInterface building, float currentWood)
+        {
+            return CurrentBuilding is None && building.Price < currentWood;
+        }
+        
+        public List<BuildingInterface> getAllowedBuilds()
+        {
+            if (!(CurrentBuilding is None))
+            {
+                return new List<BuildingInterface>();
+            }
+            
+            return AllowedBuildings;
+        }
     }
 }

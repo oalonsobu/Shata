@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Variables;
 
 namespace Level.Grid
@@ -70,15 +71,22 @@ namespace Level.Grid
         }
         
         void HandleInput () {
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                //If we are over a UI element, do not continue
+                return;
+            }
             Ray inputRay = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
+            if (cellReference.value != null) {
+                cellReference.value.removeOutline();
+                cellReference.value = null;
+                selectedCellChangedEvent.Raise();
+            }
             if (Physics.Raycast(inputRay, out hit, 100.0f)) {
                 if (hit.collider.CompareTag("Cell")) {
-                    if (cellReference.value != null) {
-                        cellReference.value.removeOutline();
-                    }
-                    cellReference.value = hit.transform.GetComponent<CellController>();
                     cellReference.value.addOutline();
+                    cellReference.value = hit.transform.GetComponent<CellController>();
                     selectedCellChangedEvent.Raise();
                 }
             }

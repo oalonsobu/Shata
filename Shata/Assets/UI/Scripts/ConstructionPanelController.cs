@@ -13,7 +13,8 @@ namespace UI
         [SerializeField] Text titleText;
         [SerializeField] GridLayoutGroup backgroundGrid;
         [SerializeField] GameObject buttonPrefab;
-      
+        [SerializeField] ResourceReference woodReference;
+        
         GameObject container;
     
         private void Start() {
@@ -25,19 +26,26 @@ namespace UI
         public void selectedCellChangedEvent(CellReference cellReference)
         {
             bool isActive = cellReference.value != null && 
-                            cellReference.value.Cell.AllowedBuildings.Any() && 
-                            cellReference.value.Cell.CurrentBuilding is None;
+                            cellReference.value.Cell.getAllowedBuilds().Any();
             
             container.SetActive(isActive);
             if (isActive) {
                 foreach (Transform child in backgroundGrid.transform) Destroy(child.gameObject);
-                foreach (var buildingInterface in cellReference.value.Cell.AllowedBuildings)
+                foreach (var building in cellReference.value.Cell.getAllowedBuilds())
                 {
                     GameObject go = Instantiate(buttonPrefab, backgroundGrid.transform, false);
                     Button button = go.GetComponent<Button>();
-                    button.onClick.AddListener(()  => constructEvent(cellReference, buildingInterface));
                     Text textBox = button.GetComponentInChildren<Text>();
-                    textBox.text = buildingInterface.Title;
+                    textBox.text = building.Title;
+                    if (cellReference.value.Cell.canBeBuilt(building, woodReference.amount))
+                    {
+                        button.onClick.AddListener(()  => constructEvent(cellReference, building));
+                        textBox.color = Color.white;
+                    }
+                    else
+                    {
+                        textBox.color = Color.red;
+                    }
                 }
             }
         }
@@ -45,7 +53,7 @@ namespace UI
         public void constructEvent(CellReference cellReference, BuildingInterface building)
         {
             //Check two avoid double clicks
-            if (cellReference.value.Cell.CurrentBuilding is None)
+            if (cellReference.value.Cell.canBeBuilt(building, woodReference.amount))
             {
                 cellReference.value.build(building);
             }

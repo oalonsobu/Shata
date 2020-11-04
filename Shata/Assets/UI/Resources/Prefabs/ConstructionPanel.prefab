@@ -238,6 +238,7 @@ MonoBehaviour:
   titleText: {fileID: 772026201689838133}
   backgroundGrid: {fileID: 2559359958022597427}
   buttonPrefab: {fileID: 8553177690209578805, guid: 650b71f44af664f0a8febc2aa68c9c9d, type: 3}
+  woodReference: {fileID: 11400000, guid: 7cc073d95f70342f38a881926e21b5d4, type: 2}
 --- !u!114 &3752380739995591614
 MonoBehaviour:
   m_ObjectHideFlags: 0
