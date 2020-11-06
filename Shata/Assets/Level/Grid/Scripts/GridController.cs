@@ -85,8 +85,8 @@ namespace Level.Grid
             }
             if (Physics.Raycast(inputRay, out hit, 100.0f)) {
                 if (hit.collider.CompareTag("Cell")) {
-                    cellReference.value.addOutline();
                     cellReference.value = hit.transform.GetComponent<CellController>();
+                    cellReference.value.addOutline();
                     selectedCellChangedEvent.Raise();
                 }
             }
