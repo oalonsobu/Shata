@@ -1,25 +1,24 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.Serialization;
 using Variables;
 
 namespace Level.Extra
 {
-    public class ResourceManagerController : MonoBehaviour
+    //TODO: Create abstract class
+    public abstract class ResourceManagerController : MonoBehaviour
     {
-        [SerializeField] ResourceReference resourceReference;
-       
-        void Start()
+        [SerializeField] protected ResourceReference resourceReference;
+        
+        protected void Update()
         {
-            resourceReference.amount = 0;
-            resourceReference.increment = 1;
-            
-        }
-    
-        void Update()
-        {
-            //Roughly increments that value for each second
-            resourceReference.amount = resourceReference.amount + resourceReference.increment * Time.deltaTime;
+            if (resourceReference.resource.Amount < resourceReference.resource.Max && resourceReference.resource.Amount >= 0)
+            {
+                float increment = resourceReference.resource.ApplyModifier();
+                resourceReference.resource.Amount += increment * Time.deltaTime;
+            } else if (resourceReference.resource.Amount < 0)
+            {
+                resourceReference.resource.Amount = 0;
+            }
         }
     }
 }

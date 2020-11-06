@@ -7,7 +7,7 @@ using Variables;
 
 namespace UI
 {
-    public class UIResourceManagerController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class UiResourceManagerController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] ResourceReference resourceReference;
         [SerializeField] Text text;
@@ -22,9 +22,9 @@ namespace UI
 
         private void Update()
         {
-            text.text = resourceReference.amount.ToString("0");
-            popOvertext.text = "Amount: " + resourceReference.amount.ToString("0.0") + 
-                               "\nProduction " + resourceReference.increment.ToString("0.0");
+            float production = resourceReference.resource.ApplyModifier();
+            text.text = resourceReference.resource.Amount.ToString("0");
+            popOvertext.text = "Production: " + production.ToString("0.00");
             
         }
 

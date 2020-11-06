@@ -37,7 +37,7 @@ namespace UI
                     Button button = go.GetComponent<Button>();
                     Text textBox = button.GetComponentInChildren<Text>();
                     textBox.text = building.Title;
-                    if (cellReference.value.Cell.canBeBuilt(building, woodReference.amount))
+                    if (cellReference.value.Cell.canBeBuilt(building, woodReference.resource.Amount))
                     {
                         button.onClick.AddListener(()  => constructEvent(cellReference, building));
                         textBox.color = Color.white;
@@ -53,7 +53,7 @@ namespace UI
         public void constructEvent(CellReference cellReference, BuildingInterface building)
         {
             //Check two avoid double clicks
-            if (cellReference.value.Cell.canBeBuilt(building, woodReference.amount))
+            if (cellReference.value.Cell.canBeBuilt(building, woodReference.resource.Amount))
             {
                 cellReference.value.build(building);
             }

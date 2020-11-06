@@ -166,8 +166,8 @@ GameObject:
   - component: {fileID: 4179854323723972441}
   - component: {fileID: 4179854323723972444}
   - component: {fileID: 4179854323723972447}
-  - component: {fileID: 4179854323723972446}
-  - component: {fileID: 4179854323723972445}
+  - component: {fileID: 8384901199369091753}
+  - component: {fileID: 5706112967363480558}
   m_Layer: 5
   m_Name: ResourceGold
   m_TagString: Untagged
@@ -235,7 +235,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4179854323723972446
+--- !u!114 &8384901199369091753
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -244,11 +244,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4179854323723972440}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a6e864ad0e8b447e8be381ef8f7bdd6, type: 3}
+  m_Script: {fileID: 11500000, guid: 1985ecc0598642e28aa61014395fec56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resourceReference: {fileID: 11400000, guid: 6560edfa4e47943eab8e774d84696f42, type: 2}
---- !u!114 &4179854323723972445
+  resourceReference: {fileID: 11400000, guid: 957310317665f4e16809d86548a151c3, type: 2}
+--- !u!114 &5706112967363480558
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -257,10 +257,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4179854323723972440}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecc4af9a51d145a8b0bf05d89b186070, type: 3}
+  m_Script: {fileID: 11500000, guid: 2d5e8ecab24e4cc38fbaa5a8735a2bb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resourceReference: {fileID: 11400000, guid: 6560edfa4e47943eab8e774d84696f42, type: 2}
+  resourceReference: {fileID: 11400000, guid: 957310317665f4e16809d86548a151c3, type: 2}
   text: {fileID: 4179854323919351035}
   popOverImage: {fileID: 5149191287008888265}
   popOvertext: {fileID: 7720826218619432347}

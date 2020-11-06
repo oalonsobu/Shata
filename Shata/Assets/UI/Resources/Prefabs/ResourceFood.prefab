@@ -87,8 +87,8 @@ GameObject:
   - component: {fileID: 39574303922890815}
   - component: {fileID: 4802758630159766126}
   - component: {fileID: 5202069934157132130}
-  - component: {fileID: 7989987494612046555}
-  - component: {fileID: 7773408644514380293}
+  - component: {fileID: 8467246409235581330}
+  - component: {fileID: 4807581032204074691}
   m_Layer: 5
   m_Name: ResourceFood
   m_TagString: Untagged
@@ -156,7 +156,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7989987494612046555
+--- !u!114 &8467246409235581330
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -165,11 +165,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1629874717163963633}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a6e864ad0e8b447e8be381ef8f7bdd6, type: 3}
+  m_Script: {fileID: 11500000, guid: 6ae0eea7cdb647238550aa36aaa0dee2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   resourceReference: {fileID: 11400000, guid: 0d1400a36a2704ea6adf63a5ea12f360, type: 2}
---- !u!114 &7773408644514380293
+--- !u!114 &4807581032204074691
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -178,7 +178,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1629874717163963633}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecc4af9a51d145a8b0bf05d89b186070, type: 3}
+  m_Script: {fileID: 11500000, guid: 2d5e8ecab24e4cc38fbaa5a8735a2bb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   resourceReference: {fileID: 11400000, guid: 0d1400a36a2704ea6adf63a5ea12f360, type: 2}
