@@ -11,14 +11,7 @@ namespace Level.Extra
         
         protected void Update()
         {
-            if (resourceReference.resource.Amount < resourceReference.resource.Max && resourceReference.resource.Amount >= 0)
-            {
-                float increment = resourceReference.resource.ApplyModifier();
-                resourceReference.resource.Amount += increment * Time.deltaTime;
-            } else if (resourceReference.resource.Amount < 0)
-            {
-                resourceReference.resource.Amount = 0;
-            }
+            resourceReference.resource.Update(Time.deltaTime);
         }
     }
 }

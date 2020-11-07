@@ -14,6 +14,10 @@ namespace Level.Grid
         CellOutlineController outline;
         private CellTypeInterface cell;
         [SerializeField] GameEvent selectedCellChangedEvent;
+        [SerializeField] ResourceReference goldResourceReference;
+        [SerializeField] ResourceReference foodResourceReference;
+        [SerializeField] ResourceReference populationResourceReference;
+        [SerializeField] ResourceReference woodResourceReference;
 
         public CellTypeInterface Cell
         {
@@ -37,6 +41,11 @@ namespace Level.Grid
         public void build (BuildingInterface building)
         {
             cell.setCurrentBuilding(building);
+            foodResourceReference.resource.AddModifier(building.FoodModifiers);
+            goldResourceReference.resource.AddModifier(building.GoldModifiers);
+            woodResourceReference.resource.AddModifier(building.WoodModifiers);
+            populationResourceReference.resource.AddModifier(building.PopulationModifiers);
+            woodResourceReference.resource.Amount -= building.Price;
             instantiateBuilding();
             selectedCellChangedEvent.Raise();
         }

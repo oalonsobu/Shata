@@ -263,7 +263,7 @@ MonoBehaviour:
   resourceReference: {fileID: 11400000, guid: 957310317665f4e16809d86548a151c3, type: 2}
   text: {fileID: 4179854323919351035}
   popOverImage: {fileID: 5149191287008888265}
-  popOvertext: {fileID: 7720826218619432347}
+  popOverText: {fileID: 7720826218619432347}
 --- !u!1 &4179854323919351029
 GameObject:
   m_ObjectHideFlags: 0

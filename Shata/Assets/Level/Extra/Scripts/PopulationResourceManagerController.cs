@@ -13,7 +13,7 @@ namespace Level.Extra
         
         void Start()
         {
-            resourceReference.resource = new Resource(0, new FlatPerkModifier(500f), new FlatPerkModifier(0.05f));
+            resourceReference.resource = new Resource(0, new FlatPerkModifier(0.05f, ResourceModifierType.Production), new FlatPerkModifier(500f, ResourceModifierType.Storage));
         }
 
         private void Update()
@@ -28,8 +28,8 @@ namespace Level.Extra
         void AddModifiers()
         {
             previousPop = Convert.ToInt32(resourceReference.resource.Amount);
-            goldResourceReference.resource.AddModifier(new FlatPerkModifier(0.1f));
-            goldResourceReference.resource.AddModifier(new FlatHandicapModifier(0.1f));
+            goldResourceReference.resource.AddModifier(new FlatPerkModifier(0.1f, ResourceModifierType.Production));
+            foodResourceReference.resource.AddModifier(new FlatHandicapModifier(0.1f, ResourceModifierType.Production));
         }
     }
 }

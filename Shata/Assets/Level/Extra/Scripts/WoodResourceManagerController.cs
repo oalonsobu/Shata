@@ -7,7 +7,7 @@ namespace Level.Extra
     {
         void Start()
         {
-            resourceReference.resource = new Resource(0, new FlatPerkModifier(500f), new FlatPerkModifier(0f));
+            resourceReference.resource = new Resource(100, new FlatPerkModifier(0f, ResourceModifierType.Production), new FlatPerkModifier(500f, ResourceModifierType.Storage));
         }
     }
 }

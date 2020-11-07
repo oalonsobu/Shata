@@ -5,10 +5,12 @@ namespace Level.Extra
 {
     public class FlatPerkModifier : ResourceModifier
     {
-        public FlatPerkModifier(float a) : base(a) {}
-        
-        public static float operator+ (float a, FlatPerkModifier b) {
-            return a + b.Amount;
+        public FlatPerkModifier(float amount, ResourceModifierType resourceModifierType) : base(amount, resourceModifierType){}
+
+
+        protected override float Apply(float a)
+        {
+            return a + Amount;
         }
     }
 }

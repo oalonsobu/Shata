@@ -12,7 +12,7 @@ namespace UI
         [SerializeField] ResourceReference resourceReference;
         [SerializeField] Text text;
         [SerializeField] Image popOverImage;
-        [SerializeField] Text popOvertext;
+        [SerializeField] Text popOverText;
 
 
         private void Start()
@@ -22,10 +22,8 @@ namespace UI
 
         private void Update()
         {
-            float production = resourceReference.resource.ApplyModifier();
-            text.text = resourceReference.resource.Amount.ToString("0");
-            popOvertext.text = "Production: " + production.ToString("0.00");
-            
+            text.text = resourceReference.resource.Amount.ToString("0") + "/" + resourceReference.resource.Storage.ToString("0");
+            popOverText.text = "Production: " + resourceReference.resource.Production.ToString("0.00");
         }
 
         public void OnPointerEnter(PointerEventData eventData)

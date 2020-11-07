@@ -1135,6 +1135,14 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 1575600811737941759, guid: 916573f972afd454c98a4d0478ac14a3, type: 3}
+      propertyPath: goldResourceReference
+      value: 
+      objectReference: {fileID: 11400000, guid: 957310317665f4e16809d86548a151c3, type: 2}
+    - target: {fileID: 1575600811737941759, guid: 916573f972afd454c98a4d0478ac14a3, type: 3}
+      propertyPath: foodResourceReference
+      value: 
+      objectReference: {fileID: 11400000, guid: 0d1400a36a2704ea6adf63a5ea12f360, type: 2}
     - target: {fileID: 2067960730084690312, guid: 916573f972afd454c98a4d0478ac14a3, type: 3}
       propertyPath: m_Name
       value: ResourcePopulation

@@ -247,6 +247,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resourceReference: {fileID: 11400000, guid: 565d502b08a1b43e588ce689343d5bd8, type: 2}
+  goldResourceReference: {fileID: 11400000, guid: 957310317665f4e16809d86548a151c3, type: 2}
+  foodResourceReference: {fileID: 11400000, guid: 0d1400a36a2704ea6adf63a5ea12f360, type: 2}
 --- !u!114 &6932454348996951525
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,7 +264,7 @@ MonoBehaviour:
   resourceReference: {fileID: 11400000, guid: 565d502b08a1b43e588ce689343d5bd8, type: 2}
   text: {fileID: 7777286557831846263}
   popOverImage: {fileID: 1158707639220590198}
-  popOvertext: {fileID: 1035837040398916392}
+  popOverText: {fileID: 1035837040398916392}
 --- !u!1 &7015811516457544389
 GameObject:
   m_ObjectHideFlags: 0
