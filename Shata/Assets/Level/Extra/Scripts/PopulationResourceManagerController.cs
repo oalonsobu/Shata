@@ -13,7 +13,7 @@ namespace Level.Extra
         
         void Start()
         {
-            resourceReference.resource = new Resource(0, 500, new FlatPerkModifier(0.05f));
+            resourceReference.resource = new Resource(0, new FlatPerkModifier(500f), new FlatPerkModifier(0.05f));
         }
 
         private void Update()
