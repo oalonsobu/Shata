@@ -2,24 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Variables;
-
+using Level.Building;
 
 
 //TODO: convertir esto en una clase sin logica, que solo responda a eventos varios y llame a lo que pertoca. Sera el CellReference
-namespace Level.Grid
+namespace Level.Cell
 {
     //Cell manager. Is the entry point for events or references to update the cell status
     public class CellController : MonoBehaviour
     {
         CellOutlineController outline;
-        private CellTypeInterface cell;
+        private CellInterface cell;
         [SerializeField] GameEvent selectedCellChangedEvent;
         [SerializeField] ResourceReference goldResourceReference;
         [SerializeField] ResourceReference foodResourceReference;
         [SerializeField] ResourceReference populationResourceReference;
         [SerializeField] ResourceReference woodResourceReference;
 
-        public CellTypeInterface Cell
+        public CellInterface Cell
         {
             get => cell;
             set => cell = value;

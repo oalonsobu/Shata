@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Level.Extra;
 using UnityEngine;
 
-namespace Level.Grid
+namespace Level.Building
 {
 
     public abstract class BuildingInterface

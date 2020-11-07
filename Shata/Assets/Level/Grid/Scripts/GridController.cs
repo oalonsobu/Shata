@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Level.Cell;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Variables;
@@ -48,26 +47,26 @@ namespace Level.Grid
             position.y = 0f;
             position.z = z * hexRadius;
 
-            CellTypeInterface cell = createCell();
+            CellInterface cell = createCell();
             grid[i] = Instantiate<GameObject>(cell.getBasePrefab(), transform, false);
             grid[i].GetComponent<CellController>().Cell = cell;
             grid[i].transform.localPosition = position;
         }
 
-        CellTypeInterface createCell()
+        CellInterface createCell()
         {
             int random = Random.Range(0, 10);
             //TODO: to improve, just testing
-            CellTypeInterface cellType;
+            CellInterface cell;
             if (random >= 0 && random <= 2) {
-                cellType = new Water();
+                cell = new Water();
             } else if (random >= 3 && random <= 4) {
-                cellType = new Farm();
+                cell = new Farm();
             }
             else {
-                cellType = new Grass();
+                cell = new Grass();
             }
-            return cellType;
+            return cell;
         }
         
         void HandleInput () {

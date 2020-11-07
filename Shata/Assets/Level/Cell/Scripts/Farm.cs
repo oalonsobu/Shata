@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using Level.Building;
 
-namespace Level.Grid
+namespace Level.Cell
 {
-    public class Farm : CellTypeInterface
+    public class Farm : CellInterface
     {
         private List<BuildingInterface> allowedBuildings;
         
@@ -17,6 +18,7 @@ namespace Level.Grid
         public Farm()
         {
             allowedBuildings = new List<BuildingInterface>();
+            allowedBuildings.Add(new Building.Farm());
             allowedBuildings.Add(new House());
         }
     }

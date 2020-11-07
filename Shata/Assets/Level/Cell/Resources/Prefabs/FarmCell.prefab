@@ -112,6 +112,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedCellChangedEvent: {fileID: 11400000, guid: cd0c5d576c6fb4b3394eb9aa8d60f41a, type: 2}
+  goldResourceReference: {fileID: 11400000, guid: 957310317665f4e16809d86548a151c3, type: 2}
+  foodResourceReference: {fileID: 11400000, guid: 0d1400a36a2704ea6adf63a5ea12f360, type: 2}
+  populationResourceReference: {fileID: 11400000, guid: 565d502b08a1b43e588ce689343d5bd8, type: 2}
+  woodResourceReference: {fileID: 11400000, guid: 7cc073d95f70342f38a881926e21b5d4, type: 2}
 --- !u!114 &1072207053410729524
 MonoBehaviour:
   m_ObjectHideFlags: 0

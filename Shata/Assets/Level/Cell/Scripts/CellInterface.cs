@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using Variables;
+using Level.Building;
 
-namespace Level.Grid
+namespace Level.Cell
 {
      //No unity logic, only events and reference
-    public abstract class CellTypeInterface
+    public abstract class CellInterface
     {
         public abstract string Description { get; }
         public abstract string Comment { get; }

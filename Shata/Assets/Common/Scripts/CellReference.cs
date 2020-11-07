@@ -1,5 +1,6 @@
-﻿using Level.Grid;
+﻿using Level.Cell;
 using UnityEngine;
+
 namespace Variables
 {
     [CreateAssetMenu]

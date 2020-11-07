@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using Level.Building;
 
-namespace Level.Grid
+namespace Level.Cell
 {
-    public class Grass : CellTypeInterface
+    public class Grass : CellInterface
     {
         private List<BuildingInterface> allowedBuildings;
         

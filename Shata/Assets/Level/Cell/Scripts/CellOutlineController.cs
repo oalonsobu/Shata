@@ -1,12 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Variables;
-
+﻿using UnityEngine;
+using Level.Grid;
 
 
 //TODO: convertir esto en una clase sin logica, que solo responda a eventos varios y llame a lo que pertoca. Sera el CellReference
-namespace Level.Grid
+namespace Level.Cell
 {
     //Cell information related with unity behaviours
     public class CellOutlineController : MonoBehaviour

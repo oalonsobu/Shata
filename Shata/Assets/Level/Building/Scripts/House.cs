@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Level.Extra;
 
-namespace Level.Grid
+namespace Level.Building
 {
     public class House : BuildingInterface
     {
