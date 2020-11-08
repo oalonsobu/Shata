@@ -13,5 +13,10 @@ namespace Level.Resource
         {
             storageReference.value = new StorageManager();
         }
+        
+        void Update()
+        {
+            storageReference.value.Update(Time.deltaTime);
+        }
     }
 }

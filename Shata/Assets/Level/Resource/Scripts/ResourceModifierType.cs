@@ -5,6 +5,7 @@ namespace Level.Resource
 {
     public enum ResourceModifierType 
     {
+        Amount,
         Production,
         Storage
     }

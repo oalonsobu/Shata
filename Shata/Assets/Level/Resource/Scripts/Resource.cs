@@ -18,13 +18,13 @@ namespace Level.Resource
 
         private List<ResourceModifier> Modifiers { get; }
         
-        public Resource(float amount, ResourceType resourceType)
+        public Resource(ResourceType resourceType)
         {
-            Amount = amount;
             ResourceType = resourceType;
             Modifiers = new List<ResourceModifier>();
             Storage = 0;
             Production = 0;
+            Amount = 0;
         }
         
         public void Update(float time)
@@ -40,7 +40,7 @@ namespace Level.Resource
             
         }
         
-        private void ApplyModifiers()
+        public void ApplyModifiers()
         {
             Production = 0.0f;
             Storage = 0.0f;
@@ -60,7 +60,14 @@ namespace Level.Resource
 
         public void AddModifier(ResourceModifier resourceModifier)
         {
-            Modifiers.Add(resourceModifier);
+            if (resourceModifier.ResourceModifierType == ResourceModifierType.Amount)
+            {
+                Amount += resourceModifier;
+            }
+            else
+            {
+                Modifiers.Add(resourceModifier);
+            }
         }
         
         public void RemoveModifier(ResourceModifier resourceModifier)
