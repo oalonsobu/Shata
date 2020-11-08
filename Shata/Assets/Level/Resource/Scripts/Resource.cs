@@ -4,11 +4,13 @@ using System.Linq;
 using UnityEngine;
 using Variables;
 
-namespace Level.Extra
+namespace Level.Resource
 {
     public class Resource
     {
         public float Amount { get; set; }
+        
+        public ResourceType ResourceType { get; set; }
 
         public float Storage { get; private set; }
 
@@ -16,19 +18,17 @@ namespace Level.Extra
 
         private List<ResourceModifier> Modifiers { get; }
         
-        public Resource(float amount, FlatPerkModifier modifier, FlatPerkModifier maxModifier)
+        public Resource(float amount, ResourceType resourceType)
         {
+            Amount = amount;
+            ResourceType = resourceType;
+            Modifiers = new List<ResourceModifier>();
             Storage = 0;
             Production = 0;
-            Amount = amount;
-            Modifiers = new List<ResourceModifier>();
-            Modifiers.Add(modifier);
-            Modifiers.Add(maxModifier);
         }
         
         public void Update(float time)
         {
-            ApplyModifiers();
             if (Amount < Storage && Amount >= 0)
             {
                 Amount += Production * time;
@@ -63,17 +63,7 @@ namespace Level.Extra
             Modifiers.Add(resourceModifier);
         }
         
-        public void AddModifier(IEnumerable<ResourceModifier> resourceModifiers)
-        {
-            Modifiers.AddRange(resourceModifiers);
-        }
-        
         public void RemoveModifier(ResourceModifier resourceModifier)
-        {
-            throw new NotImplementedException();
-        }
-        
-        public void RemoveModifier(List<ResourceModifier> resourceModifier)
         {
             throw new NotImplementedException();
         }

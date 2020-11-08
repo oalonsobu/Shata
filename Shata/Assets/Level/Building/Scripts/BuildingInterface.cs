@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Level.Extra;
+using Level.Resource;
 using UnityEngine;
 
 namespace Level.Building
@@ -15,10 +15,7 @@ namespace Level.Building
         public abstract string Title { get; }
         public abstract string BasePrefab { get; }
         
-        public abstract List<ResourceModifier> GoldModifiers { get; }
-        public abstract List<ResourceModifier> WoodModifiers { get; }
-        public abstract List<ResourceModifier> FoodModifiers { get; }
-        public abstract List<ResourceModifier> PopulationModifiers { get; }
+        public abstract List<ResourceModifier> Modifiers { get; }
         
         public int CurrentLvl { get; set; }
         

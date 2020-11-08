@@ -12,7 +12,7 @@ namespace UI
         [SerializeField] Text titleText;
         [SerializeField] GridLayoutGroup backgroundGrid;
         [SerializeField] GameObject buttonPrefab;
-        [SerializeField] ResourceReference woodReference;
+        [SerializeField] StorageReference storageReference;
         
         GameObject container;
     
@@ -36,7 +36,8 @@ namespace UI
                     Button button = go.GetComponent<Button>();
                     Text textBox = button.GetComponentInChildren<Text>();
                     textBox.text = building.Title;
-                    if (cellReference.value.Cell.canBeBuilt(building, woodReference.resource.Amount))
+                    //TODO: create method to check if this can be build (enough wood)
+                    if (cellReference.value.Cell.canBeBuilt(building, storageReference.value.Wood.Amount))
                     {
                         button.onClick.AddListener(()  => constructEvent(cellReference, building));
                         textBox.color = Color.white;
@@ -52,7 +53,8 @@ namespace UI
         public void constructEvent(CellReference cellReference, BuildingInterface building)
         {
             //Check two avoid double clicks
-            if (cellReference.value.Cell.canBeBuilt(building, woodReference.resource.Amount))
+            //TODO: create method to check if this can be build (enough wood)
+            if (cellReference.value.Cell.canBeBuilt(building, storageReference.value.Wood.Amount))
             {
                 cellReference.value.build(building);
             }

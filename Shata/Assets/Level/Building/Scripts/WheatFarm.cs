@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Level.Extra;
+using Level.Resource;
 
 namespace Level.Building
 {
@@ -12,9 +12,10 @@ namespace Level.Building
         public override string Title => "Farm";
         public override string BasePrefab => "House";
         
-        public override List<ResourceModifier> GoldModifiers => new List<ResourceModifier>();
-        public override List<ResourceModifier> WoodModifiers => new List<ResourceModifier>();
-        public override List<ResourceModifier> FoodModifiers => new List<ResourceModifier>{ new FlatPerkModifier(2, ResourceModifierType.Production)};
-        public override List<ResourceModifier> PopulationModifiers => new List<ResourceModifier>();
+        public override List<ResourceModifier> Modifiers
+            => new List<ResourceModifier>
+            {
+                new FlatPerkModifier(2, ResourceType.Gold, ResourceModifierType.Production),
+            };
     }
 }

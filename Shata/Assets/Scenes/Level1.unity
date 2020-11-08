@@ -1401,6 +1401,7 @@ GameObject:
   - component: {fileID: 5066329880414987379}
   - component: {fileID: 5066329880414987377}
   - component: {fileID: 5066329880414987376}
+  - component: {fileID: 5066329880414987380}
   m_Layer: 5
   m_Name: UpMenuPanel
   m_TagString: UI
@@ -1432,6 +1433,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 35}
   m_Pivot: {x: 0.5, y: 1}
+--- !u!114 &5066329880414987380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5066329880414987378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 811508ce6d2d4ffeae3fbc387990672f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &5066329882012911384 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7507734180856279419, guid: 653abaaa303054183bd49f4db669061a, type: 3}
