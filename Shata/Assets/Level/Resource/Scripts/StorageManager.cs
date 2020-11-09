@@ -87,25 +87,24 @@ namespace Level.Resource
 
         private void AddModifier(ResourceModifier resourceModifier)
         {
+            Resource resource = getResourceByType(resourceModifier.ResourceType);
+            resource.AddModifier(resourceModifier);
+            resource.ApplyModifiers();
+        }
+
+        private Resource getResourceByType(ResourceType resourceType)
+        {
             //TODO: get resource or something like that
-            switch (resourceModifier.ResourceType)
+            switch (resourceType)
             {
                 case ResourceType.Gold:
-                    Gold.AddModifier(resourceModifier);
-                    Gold.ApplyModifiers();
-                    break;
+                    return Gold;
                 case ResourceType.Wood:
-                    Wood.AddModifier(resourceModifier);
-                    Wood.ApplyModifiers();
-                    break;
+                    return Wood;
                 case ResourceType.Meat:
-                    Meat.AddModifier(resourceModifier);
-                    Meat.ApplyModifiers();
-                    break;
+                    return Meat;
                 case ResourceType.Population:
-                    Population.AddModifier(resourceModifier);
-                    Population.ApplyModifiers();
-                    break;
+                    return Population;
                 default:
                     throw new ArgumentOutOfRangeException();
             }

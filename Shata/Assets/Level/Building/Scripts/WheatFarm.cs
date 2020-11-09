@@ -19,7 +19,7 @@ namespace Level.Building
         public override List<ResourceModifier> Modifiers
             => new List<ResourceModifier>
             {
-                new FlatPerkModifier(2, ResourceType.Gold, ResourceModifierType.Production),
+                new FlatPerkModifier(2, ResourceType.Meat, ResourceModifierType.Production),
             };
     }
 }
