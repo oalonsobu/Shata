@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using Level.Building;
+using Level.Resource;
 
 namespace Level.Cell
 {
@@ -26,9 +27,9 @@ namespace Level.Cell
             CurrentBuilding.CurrentLvl = 1;
         }
         
-        public bool canBeBuilt(BuildingInterface building, float currentWood)
+        public bool isEmptyCel()
         {
-            return CurrentBuilding is None && building.Price <= currentWood;
+            return CurrentBuilding is None;
         }
         
         public List<BuildingInterface> getAllowedBuilds()

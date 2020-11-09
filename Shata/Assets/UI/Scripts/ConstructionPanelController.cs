@@ -36,8 +36,8 @@ namespace UI
                     Button button = go.GetComponent<Button>();
                     Text textBox = button.GetComponentInChildren<Text>();
                     textBox.text = building.Title;
-                    //TODO: create method to check if this can be build (enough wood)
-                    if (cellReference.value.Cell.canBeBuilt(building, storageReference.value.Wood.Amount))
+                    //TODO: create method to check if this can be build (enough wood) in storageReference
+                    if (cellReference.value.Cell.isEmptyCel() && storageReference.value.hasEnoughResources(building.Price))
                     {
                         button.onClick.AddListener(()  => constructEvent(cellReference, building));
                         textBox.color = Color.white;
@@ -53,10 +53,13 @@ namespace UI
         public void constructEvent(CellReference cellReference, BuildingInterface building)
         {
             //Check two avoid double clicks
-            //TODO: create method to check if this can be build (enough wood)
-            if (cellReference.value.Cell.canBeBuilt(building, storageReference.value.Wood.Amount))
+            //TODO: create method to check if this can be build (enough wood) in storageReference
+            if (cellReference.value.Cell.isEmptyCel() && storageReference.value.hasEnoughResources(building.Price))
             {
-                cellReference.value.build(building);
+                cellReference.value.Cell.setCurrentBuilding(building);
+                storageReference.value.AddModifier(building.Price);
+                storageReference.value.AddModifier(building.Modifiers);
+                cellReference.value.build();
             }
         }
     }

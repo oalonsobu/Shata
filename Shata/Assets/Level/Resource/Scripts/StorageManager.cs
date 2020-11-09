@@ -41,8 +41,53 @@ namespace Level.Resource
             Population.Update(time);
         }
         
-        public void AddModifier(ResourceModifier resourceModifier)
+        public void AddModifier(IEnumerable<ResourceModifier> resourceModifiers)
         {
+            foreach (ResourceModifier resourceModifier in resourceModifiers)
+            {
+                AddModifier(resourceModifier);
+            }
+        }
+
+        public bool hasEnoughResources(IEnumerable<ResourceModifier> prices)
+        {
+            var totalGold = 0.0f;
+            var totalMeat = 0.0f;
+            var totalWood = 0.0f;
+            var totalPopulation = 0.0f;
+            foreach (ResourceModifier price in prices)
+            {
+                if (price.ResourceModifierType == ResourceModifierType.Amount)
+                {
+                    switch (price.ResourceType)
+                    {
+                        case ResourceType.Gold:
+                            totalGold += price.Amount;
+                            break;
+                        case ResourceType.Wood:
+                            totalWood += price.Amount;
+                            break;
+                        case ResourceType.Meat:
+                            totalMeat += price.Amount;
+                            break;
+                        case ResourceType.Population:
+                            totalPopulation += price.Amount;
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+                }
+            }
+
+            return    totalGold <= Gold.Amount
+                   && totalMeat <= Meat.Amount
+                   && totalWood <= Wood.Amount
+                   && totalPopulation <= Population.Amount;
+        }
+
+        private void AddModifier(ResourceModifier resourceModifier)
+        {
+            //TODO: get resource or something like that
             switch (resourceModifier.ResourceType)
             {
                 case ResourceType.Gold:
@@ -61,14 +106,8 @@ namespace Level.Resource
                     Population.AddModifier(resourceModifier);
                     Population.ApplyModifiers();
                     break;
-            }
-        }
-        
-        public void AddModifier(IEnumerable<ResourceModifier> resourceModifiers)
-        {
-            foreach (ResourceModifier resourceModifier in resourceModifiers)
-            {
-                AddModifier(resourceModifier);
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
         

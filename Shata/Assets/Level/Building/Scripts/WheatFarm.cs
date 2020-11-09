@@ -5,8 +5,12 @@ namespace Level.Building
 {
     public class Farm : BuildingInterface
     {
-        //TODO: wood cost
-        public override int Price => 10;
+        public override List<ResourceModifier> Price 
+            => new List<ResourceModifier>
+            {
+                new FlatHandicapModifier(10, ResourceType.Wood, ResourceModifierType.Amount)
+            };
+        
         public override string Description => "Gives you meat";
         public override string Comment => "I don't know what to say u fucking bastard";
         public override string Title => "Farm";

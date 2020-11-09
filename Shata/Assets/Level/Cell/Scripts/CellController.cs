@@ -35,11 +35,8 @@ namespace Level.Cell
             outline.disable();
         }
         
-        public void build (BuildingInterface building)
+        public void build ()
         {
-            cell.setCurrentBuilding(building);
-            storageReference.value.AddModifier(building.Modifiers);
-            //TODO: add price
             instantiateBuilding();
             selectedCellChangedEvent.Raise();
         }

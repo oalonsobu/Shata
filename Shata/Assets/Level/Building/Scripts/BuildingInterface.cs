@@ -9,7 +9,7 @@ namespace Level.Building
 
     public abstract class BuildingInterface
     {
-        public abstract int Price { get; }
+        public abstract List<ResourceModifier> Price { get; }
         public abstract string Description { get; }
         public abstract string Comment { get; }
         public abstract string Title { get; }
