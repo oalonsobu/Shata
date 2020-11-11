@@ -1445,6 +1445,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 811508ce6d2d4ffeae3fbc387990672f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  storageReference: {fileID: 11400000, guid: 301e3c91b623d4aa1956e4637ebf9d73, type: 2}
 --- !u!224 &5066329882012911384 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7507734180856279419, guid: 653abaaa303054183bd49f4db669061a, type: 3}

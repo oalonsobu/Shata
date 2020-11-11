@@ -14,7 +14,7 @@ namespace Level.Building
         public override string Description => "Gives you meat";
         public override string Comment => "I don't know what to say u fucking bastard";
         public override string Title => "Farm";
-        public override string BasePrefab => "House";
+        public override string BasePrefab => "Farm";
         
         public override List<ResourceModifier> Modifiers
             => new List<ResourceModifier>
