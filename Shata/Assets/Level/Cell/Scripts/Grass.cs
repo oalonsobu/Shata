@@ -18,6 +18,10 @@ namespace Level.Cell
         {
             allowedBuildings = new List<BuildingInterface>();
             allowedBuildings.Add(new House());
+            allowedBuildings.Add(new Mill());
+            allowedBuildings.Add(new Storage());
+            //todo: move to forest cell
+            allowedBuildings.Add(new Sawmill());
         }
     }
 }
