@@ -14,10 +14,7 @@ namespace Level.Cell
         CellOutlineController outline;
         private CellInterface cell;
         [SerializeField] GameEvent selectedCellChangedEvent;
-        [SerializeField] ResourceReference goldResourceReference;
-        [SerializeField] ResourceReference foodResourceReference;
-        [SerializeField] ResourceReference populationResourceReference;
-        [SerializeField] ResourceReference woodResourceReference;
+        [SerializeField] StorageReference storageReference;
 
         public CellInterface Cell
         {
@@ -38,14 +35,8 @@ namespace Level.Cell
             outline.disable();
         }
         
-        public void build (BuildingInterface building)
+        public void build ()
         {
-            cell.setCurrentBuilding(building);
-            foodResourceReference.resource.AddModifier(building.FoodModifiers);
-            goldResourceReference.resource.AddModifier(building.GoldModifiers);
-            woodResourceReference.resource.AddModifier(building.WoodModifiers);
-            populationResourceReference.resource.AddModifier(building.PopulationModifiers);
-            woodResourceReference.resource.Amount -= building.Price;
             instantiateBuilding();
             selectedCellChangedEvent.Raise();
         }

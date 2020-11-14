@@ -165,7 +165,6 @@ GameObject:
   - component: {fileID: 2215656750842822337}
   - component: {fileID: 6984164448947618444}
   - component: {fileID: 7670259715103088555}
-  - component: {fileID: 1575600811737941759}
   - component: {fileID: 6932454348996951525}
   m_Layer: 5
   m_Name: ResourcePopulation
@@ -234,21 +233,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1575600811737941759
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2067960730084690312}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8db56213bd634caebba73e8fbba5714f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  resourceReference: {fileID: 11400000, guid: 565d502b08a1b43e588ce689343d5bd8, type: 2}
-  goldResourceReference: {fileID: 11400000, guid: 957310317665f4e16809d86548a151c3, type: 2}
-  foodResourceReference: {fileID: 11400000, guid: 0d1400a36a2704ea6adf63a5ea12f360, type: 2}
 --- !u!114 &6932454348996951525
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -261,7 +245,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d5e8ecab24e4cc38fbaa5a8735a2bb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resourceReference: {fileID: 11400000, guid: 565d502b08a1b43e588ce689343d5bd8, type: 2}
+  storageReference: {fileID: 11400000, guid: 301e3c91b623d4aa1956e4637ebf9d73, type: 2}
+  resourceType: 3
   text: {fileID: 7777286557831846263}
   popOverImage: {fileID: 1158707639220590198}
   popOverText: {fileID: 1035837040398916392}

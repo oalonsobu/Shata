@@ -162,7 +162,6 @@ GameObject:
   - component: {fileID: 6312230861462423401}
   - component: {fileID: 2609455311578380582}
   - component: {fileID: 6666700604575180438}
-  - component: {fileID: 5862031089017661744}
   - component: {fileID: 47222054463323051}
   m_Layer: 5
   m_Name: ResourceWood
@@ -231,19 +230,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5862031089017661744
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3209570676802154312}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 700860ad33cd40f9811863c39b403f87, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  resourceReference: {fileID: 11400000, guid: 7cc073d95f70342f38a881926e21b5d4, type: 2}
 --- !u!114 &47222054463323051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -256,7 +242,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d5e8ecab24e4cc38fbaa5a8735a2bb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resourceReference: {fileID: 11400000, guid: 7cc073d95f70342f38a881926e21b5d4, type: 2}
+  storageReference: {fileID: 11400000, guid: 301e3c91b623d4aa1956e4637ebf9d73, type: 2}
+  resourceType: 1
   text: {fileID: 3517863513543964851}
   popOverImage: {fileID: 2735417950170327700}
   popOverText: {fileID: 3449837619905991477}

@@ -166,7 +166,6 @@ GameObject:
   - component: {fileID: 4179854323723972441}
   - component: {fileID: 4179854323723972444}
   - component: {fileID: 4179854323723972447}
-  - component: {fileID: 8384901199369091753}
   - component: {fileID: 5706112967363480558}
   m_Layer: 5
   m_Name: ResourceGold
@@ -235,19 +234,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &8384901199369091753
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4179854323723972440}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1985ecc0598642e28aa61014395fec56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  resourceReference: {fileID: 11400000, guid: 957310317665f4e16809d86548a151c3, type: 2}
 --- !u!114 &5706112967363480558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -260,7 +246,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d5e8ecab24e4cc38fbaa5a8735a2bb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resourceReference: {fileID: 11400000, guid: 957310317665f4e16809d86548a151c3, type: 2}
+  storageReference: {fileID: 11400000, guid: 301e3c91b623d4aa1956e4637ebf9d73, type: 2}
+  resourceType: 0
   text: {fileID: 4179854323919351035}
   popOverImage: {fileID: 5149191287008888265}
   popOverText: {fileID: 7720826218619432347}

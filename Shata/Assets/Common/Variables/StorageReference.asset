@@ -10,5 +10,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: da3c407a4b054c4687c1225224769d29, type: 3}
-  m_Name: PopulationReference
+  m_Name: StorageReference
   m_EditorClassIdentifier: 

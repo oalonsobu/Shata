@@ -1,17 +1,19 @@
 ﻿using UnityEngine;
 using Variables;
 
-namespace Level.Extra
+namespace Level.Resource
 {
     public abstract class ResourceModifier
     {
 
         public float Amount { get; }
         public ResourceModifierType ResourceModifierType { get; }
+        public ResourceType ResourceType { get; }
 
-        protected ResourceModifier(float amount, ResourceModifierType resourceModifierType)
+        protected ResourceModifier(float amount, ResourceType resourceType, ResourceModifierType resourceModifierType)
         {
             Amount = amount;
+            ResourceType = resourceType;
             ResourceModifierType = resourceModifierType;
         }
         

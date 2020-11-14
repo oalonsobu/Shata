@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using Variables;
 
-namespace Level.Extra
+namespace Level.Resource
 {
     public class FlatPerkModifier : ResourceModifier
     {
-        public FlatPerkModifier(float amount, ResourceModifierType resourceModifierType) : base(amount, resourceModifierType){}
+        public FlatPerkModifier(float amount, ResourceType resourceType, ResourceModifierType resourceModifierType) : base(amount, resourceType, resourceModifierType){}
 
 
         protected override float Apply(float a)
