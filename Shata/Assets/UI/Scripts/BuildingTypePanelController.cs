@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Level.Grid;
+﻿using Level.Cell;
 using UnityEngine;
 using UnityEngine.UI;
 using Variables;
@@ -22,7 +21,8 @@ namespace UI
     
         public void selectedCellChangedEvent(CellReference cellReference)
         {
-            bool isActive = cellReference.value != null && cellReference.value.Cell.getAllowedBuilds().Any();
+            bool isActive = cellReference.value != null && 
+                            !(cellReference.value.Cell is Water);
             container.SetActive(isActive);
             if (isActive) {
                 titleText.text = cellReference.value.Cell.CurrentBuilding.Title;
