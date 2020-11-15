@@ -28,17 +28,14 @@ namespace Level.Grid
         [SerializeField] [Range(0,100)]  private float jitter;
         [SerializeField] [Range(20,60)]  private int minLandSize;
         [SerializeField] [Range(60,100)] private int maxLandSize;
-        [SerializeField] [Range(4,10)]   private int landNumber;
+        [SerializeField] [Range(5,95)]   private int landPercentage;
 
         const float hexRadius = 0.866025404f;
         
         void Awake()
         {
             createEmptyMap(50, 50);
-            for (int i = 0; i < landNumber; i++)
-            {
-                createTerrain(Random.Range(minLandSize, maxLandSize));
-            }
+            createWorld();
             instantiateCells();
         }
 
@@ -112,7 +109,16 @@ namespace Level.Grid
             return Random.Range(0, grid.Length);
         }
 
-        void createTerrain(int size)
+        void createWorld()
+        {
+            int landBudget = Mathf.RoundToInt(grid.Length * landPercentage * 0.01f);
+            while (landBudget >= 0)
+            {
+                createTerrain(Random.Range(minLandSize, maxLandSize),ref landBudget);
+            }
+        }
+
+        void createTerrain(int size, ref int landBudget)
         {
             //get a not visited cell
             int index = 0;
@@ -131,11 +137,12 @@ namespace Level.Grid
                 pendingToVisit.RemoveFirst();
                 alreadyVisited.Add(current);
                 grid[current].CellType = new Grass();
+                landBudget--;
                 index += 1;
 
                 for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++) {
                     CellBase neighbor = grid[current].getNeigbour(d);
-                    if (neighbor != null && !alreadyVisited.Contains(neighbor.Id)) {
+                    if (neighbor != null && !alreadyVisited.Contains(neighbor.Id) && !pendingToVisit.Contains(neighbor.Id)) {
                         if (Random.Range(0, 100) < jitter)
                         {
                             pendingToVisit.AddFirst(neighbor.Id);
