@@ -17,9 +17,13 @@ namespace Level.Cell
         public Grass()
         {
             allowedBuildings = new List<BuildingInterface>();
-            allowedBuildings.Add(new House());
-            allowedBuildings.Add(new Mill());
-            allowedBuildings.Add(new Storage());
+            allowedBuildings.AddRange(new List<BuildingInterface>
+            {
+                new House(),
+                new Mill(),
+                new Storage(),
+                new Townhall(),
+            });
             //todo: move to forest cell
             allowedBuildings.Add(new Sawmill());
         }

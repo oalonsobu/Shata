@@ -16,21 +16,6 @@ namespace Level.Resource
             Wood = new Resource(ResourceType.Wood);
             Meat = new Resource(ResourceType.Meat);
             Population = new Resource(ResourceType.Population);
-
-            AddModifier(new List<ResourceModifier>{
-                new FlatPerkModifier(1, ResourceType.Gold, ResourceModifierType.Production),
-                new FlatPerkModifier(500f, ResourceType.Gold, ResourceModifierType.Storage),
-                new FlatPerkModifier(50f, ResourceType.Gold, ResourceModifierType.Amount),
-                new FlatPerkModifier(0f, ResourceType.Wood, ResourceModifierType.Production),
-                new FlatPerkModifier(500f, ResourceType.Wood, ResourceModifierType.Storage),
-                new FlatPerkModifier(50f, ResourceType.Wood, ResourceModifierType.Amount),
-                new FlatPerkModifier(0.5f, ResourceType.Meat, ResourceModifierType.Production),
-                new FlatPerkModifier(500f, ResourceType.Meat, ResourceModifierType.Storage),
-                new FlatPerkModifier(50f, ResourceType.Meat, ResourceModifierType.Amount),
-                new FlatPerkModifier(0f, ResourceType.Population, ResourceModifierType.Production),
-                new FlatPerkModifier(50f, ResourceType.Population, ResourceModifierType.Storage),
-                new FlatPerkModifier(5f, ResourceType.Population, ResourceModifierType.Amount)
-            });
         }
         
         public void Update(float time)

@@ -18,8 +18,11 @@ namespace Level.Cell
         public Farm()
         {
             allowedBuildings = new List<BuildingInterface>();
-            allowedBuildings.Add(new Building.Farm());
-            allowedBuildings.Add(new House());
+            allowedBuildings.AddRange(new List<BuildingInterface>
+            {
+                new House(),
+                new Building.Farm(),
+            });
         }
     }
 }
