@@ -3,7 +3,7 @@ using Level.Building;
 
 namespace Level.Cell
 {
-    public class Water : CellInterface
+    public class Water : CellTypeInterface
     {
         public override string Description => "Large body of water.";
         public override string Comment => "Do not drink.";

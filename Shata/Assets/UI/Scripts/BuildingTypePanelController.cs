@@ -22,12 +22,12 @@ namespace UI
         public void selectedCellChangedEvent(CellReference cellReference)
         {
             bool isActive = cellReference.value != null && 
-                            !(cellReference.value.Cell is Water);
+                            !(cellReference.value.CellBase.CellType is Water);
             container.SetActive(isActive);
             if (isActive) {
-                titleText.text = cellReference.value.Cell.CurrentBuilding.Title;
-                descriptionText.text = cellReference.value.Cell.CurrentBuilding.Description;
-                commentText.text = cellReference.value.Cell.CurrentBuilding.Comment;
+                titleText.text = cellReference.value.CellBase.CellType.CurrentBuilding.Title;
+                descriptionText.text = cellReference.value.CellBase.CellType.CurrentBuilding.Description;
+                commentText.text = cellReference.value.CellBase.CellType.CurrentBuilding.Comment;
                 
             }
         }

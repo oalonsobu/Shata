@@ -25,19 +25,19 @@ namespace UI
         public void selectedCellChangedEvent(CellReference cellReference)
         {
             bool isActive = cellReference.value != null && 
-                            cellReference.value.Cell.getAllowedBuilds().Any();
+                            cellReference.value.CellBase.CellType.getAllowedBuilds().Any();
             
             container.SetActive(isActive);
             if (isActive) {
                 foreach (Transform child in backgroundGrid.transform) Destroy(child.gameObject);
-                foreach (var building in cellReference.value.Cell.getAllowedBuilds())
+                foreach (var building in cellReference.value.CellBase.CellType.getAllowedBuilds())
                 {
                     GameObject go = Instantiate(buttonPrefab, backgroundGrid.transform, false);
                     Button button = go.GetComponent<Button>();
                     Text textBox = button.GetComponentInChildren<Text>();
                     textBox.text = building.Title;
                     //TODO: create method to check if this can be build (enough wood) in storageReference
-                    if (cellReference.value.Cell.isEmptyCel() && storageReference.value.hasEnoughResources(building.Price))
+                    if (cellReference.value.CellBase.CellType.isEmptyCel() && storageReference.value.hasEnoughResources(building.Price))
                     {
                         button.onClick.AddListener(()  => constructEvent(cellReference, building));
                         textBox.color = Color.white;
@@ -54,9 +54,9 @@ namespace UI
         {
             //Check two avoid double clicks
             //TODO: create method to check if this can be build (enough wood) in storageReference
-            if (cellReference.value.Cell.isEmptyCel() && storageReference.value.hasEnoughResources(building.Price))
+            if (cellReference.value.CellBase.CellType.isEmptyCel() && storageReference.value.hasEnoughResources(building.Price))
             {
-                cellReference.value.Cell.setCurrentBuilding(building);
+                cellReference.value.CellBase.CellType.setCurrentBuilding(building);
                 storageReference.value.AddModifier(building.Price);
                 storageReference.value.AddModifier(building.Modifiers);
                 cellReference.value.build();

@@ -25,9 +25,9 @@ namespace UI
             bool isActive = cellReference.value != null;
             container.SetActive(isActive);
             if (isActive) {
-                titleText.text = cellReference.value.Cell.Title;
-                descriptionText.text = cellReference.value.Cell.Description;
-                commentText.text = cellReference.value.Cell.Comment;
+                titleText.text = cellReference.value.CellBase.CellType.Title;
+                descriptionText.text = cellReference.value.CellBase.CellType.Description;
+                commentText.text = cellReference.value.CellBase.CellType.Comment;
                 
             }
         }

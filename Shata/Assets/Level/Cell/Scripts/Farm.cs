@@ -3,7 +3,7 @@ using Level.Building;
 
 namespace Level.Cell
 {
-    public class Farm : CellInterface
+    public class Farm : CellTypeInterface
     {
         private List<BuildingInterface> allowedBuildings;
         
