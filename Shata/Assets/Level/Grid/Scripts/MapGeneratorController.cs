@@ -126,6 +126,17 @@ namespace Level.Grid
         {
             return Random.Range(0, grid.Length);
         }
+        
+        int getNotVisitedRandomCell()
+        {
+            int cell = 0;
+            do
+            {
+                cell = getRandomCell();
+            } while (timesVisited[cell] != 0);
+
+            return cell;
+        }
 
         void createWorld()
         {
@@ -138,16 +149,10 @@ namespace Level.Grid
 
         void createTerrain(int size, ref int landBudget)
         {
-            //get a not visited cell
-            int index = 0;
-            do
-            {
-                index = getRandomCell();
-            } while (timesVisited[index] != 0);
+            int currentSize = 0;
+            int cell = getNotVisitedRandomCell();
+            pendingToVisit.queue(cell, 1);
             
-            pendingToVisit.queue(index, 1);
-            
-            index = 0;
             while (pendingToVisit.Count > 0)
             {
                 int current = pendingToVisit.dequeue();
@@ -155,11 +160,8 @@ namespace Level.Grid
                 if (timesVisited[current] == 1)
                 {
                     landBudget--;
-                    index += 1;
-                    if (landBudget == 0 || index >= size)
-                    {
-                        break;
-                    }
+                    currentSize += 1;
+                    if (landBudget == 0 || currentSize >= size) break;
                 }
 
                 for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++) {
