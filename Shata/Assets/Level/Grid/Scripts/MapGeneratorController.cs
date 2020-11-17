@@ -111,11 +111,13 @@ namespace Level.Grid
                     case 1:
                         grid[i].CellType = new Grass();
                         break;
+                    case 2:
+                        grid[i].CellType = new Stone();
+                        break;
                     default:
-                        grid[i].CellType = new Farm();
+                        grid[i].CellType = new Fertile();
                         break;
                 }
-                Debug.Log(timesVisited[grid[i].Id]);
                 aux = Instantiate<GameObject>(grid[i].CellType.getBasePrefab(), transform, false);
                 aux.GetComponent<CellController>().CellBase = grid[i];
                 aux.transform.localPosition = grid[i].Position;

@@ -13,7 +13,6 @@ namespace Level.Cell
     {
         CellOutlineController outline;
         [SerializeField] GameEvent selectedCellChangedEvent;
-        [SerializeField] StorageReference storageReference;
 
         public CellBase CellBase { get; set; }
 
