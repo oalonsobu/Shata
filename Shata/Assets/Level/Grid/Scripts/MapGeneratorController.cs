@@ -22,7 +22,7 @@ namespace Level.Grid
     {
         //TODO: I think that maybe we can store a custom object, maybe something less consuming
         CellBase[] grid;
-        LinkedList<int> pendingToVisit = new LinkedList<int>();
+        CustomCellLinkedList<int> pendingToVisit = new CustomCellLinkedList<int>();
         int[] timesVisited;
 
         [SerializeField] [Range(0,100)]  private float jitter;
@@ -46,7 +46,9 @@ namespace Level.Grid
             timesVisited = new int[height * width];
             
             for (int z = 0, i = 0; z < height; z++) {
-                for (int x = 0; x < width; x++) {
+                for (int x = 0; x < width; x++)
+                {
+                    timesVisited[i] = 0;
                     createWaterCell(x, z, i);
                     setNeigbours(width, x, z, i);
                     i++;
@@ -110,14 +112,7 @@ namespace Level.Grid
                         grid[i].CellType = new Grass();
                         break;
                     default:
-                        if (timesVisited[grid[i].Id] > 5)
-                        {
-                            grid[i].CellType = new Farm();
-                        }
-                        else
-                        {
-                            grid[i].CellType = new Grass();
-                        }
+                        grid[i].CellType = new Farm();
                         break;
                 }
                 Debug.Log(timesVisited[grid[i].Id]);
@@ -150,12 +145,12 @@ namespace Level.Grid
                 index = getRandomCell();
             } while (timesVisited[index] != 0);
             
-            pendingToVisit.AddLast(index);
+            pendingToVisit.queue(index, 1);
             
             index = 0;
-            while (pendingToVisit.Count > 0) {
-                int current = pendingToVisit.First.Value;
-                pendingToVisit.RemoveFirst();
+            while (pendingToVisit.Count > 0)
+            {
+                int current = pendingToVisit.dequeue();
                 timesVisited[current]++;
                 if (timesVisited[current] == 1)
                 {
@@ -169,19 +164,12 @@ namespace Level.Grid
 
                 for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++) {
                     CellBase neighbor = grid[current].getNeigbour(d);
-                    if (neighbor != null && !pendingToVisit.Contains(neighbor.Id)) {
-                        if (Random.Range(0, 100) < jitter)
-                        {
-                            pendingToVisit.AddFirst(neighbor.Id);
-                        }
-                        else
-                        {
-                            pendingToVisit.AddLast(neighbor.Id);
-                        }
+                    if (neighbor != null && !pendingToVisit.contains(neighbor.Id)) {
+                        pendingToVisit.queue(neighbor.Id, Random.Range(0, 100) < jitter ? 1 : 0);
                     }
                 }
             }
-            pendingToVisit.Clear();
+            pendingToVisit.clear();
         }
     }
 }
