@@ -36,12 +36,6 @@ namespace Level.Grid
                     cellReference.value = hit.transform.GetComponent<CellController>();
                     cellReference.value.addOutline();
                     selectedCellChangedEvent.Raise();
-                    
-                    //TODO: borrar
-                    foreach (CellBase neighbour in cellReference.value.CellBase.Neighbour)
-                    {
-                        Debug.Log(neighbour.CellType.Title);
-                    }
                 }
             }
         }

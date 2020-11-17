@@ -114,6 +114,12 @@ namespace Level.Grid
                     case 2:
                         grid[i].CellType = new Stone();
                         break;
+                    case 3:
+                        grid[i].CellType = new Mountain();
+                        break;
+                    case 4:
+                        grid[i].CellType = new HighMountain();
+                        break;
                     default:
                         grid[i].CellType = new Fertile();
                         break;

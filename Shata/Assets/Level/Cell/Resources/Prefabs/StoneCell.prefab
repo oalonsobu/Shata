@@ -262,7 +262,7 @@ GameObject:
   - component: {fileID: 8482426638470317603}
   m_Layer: 0
   m_Name: StoneCell
-  m_TagString: Untagged
+  m_TagString: Cell
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -363,7 +363,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedCellChangedEvent: {fileID: 11400000, guid: cd0c5d576c6fb4b3394eb9aa8d60f41a, type: 2}
-  storageReference: {fileID: 11400000, guid: 301e3c91b623d4aa1956e4637ebf9d73, type: 2}
 --- !u!114 &8482426638470317603
 MonoBehaviour:
   m_ObjectHideFlags: 0
