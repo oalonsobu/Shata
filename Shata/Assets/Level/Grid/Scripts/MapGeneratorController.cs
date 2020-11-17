@@ -23,7 +23,7 @@ namespace Level.Grid
         //TODO: I think that maybe we can store a custom object, maybe something less consuming
         CellBase[] grid;
         LinkedList<int> pendingToVisit = new LinkedList<int>();
-        List<int> alreadyVisited = new List<int>();
+        int[] timesVisited;
 
         [SerializeField] [Range(0,100)]  private float jitter;
         [SerializeField] [Range(20,60)]  private int minLandSize;
@@ -41,7 +41,9 @@ namespace Level.Grid
 
         void createEmptyMap(int width, int height)
         {
+            //Todo: transform to unique array with both values
             grid = new CellBase[height * width];
+            timesVisited = new int[height * width];
             
             for (int z = 0, i = 0; z < height; z++) {
                 for (int x = 0; x < width; x++) {
@@ -90,7 +92,8 @@ namespace Level.Grid
             p.y = 0f;
             p.z = z * hexRadius;
 
-            grid[id] = new CellBase(id, p, new Water());
+            grid[id] = new CellBase(id, p);
+            timesVisited[id] = 0;
         }
 
         void instantiateCells()
@@ -98,6 +101,26 @@ namespace Level.Grid
             GameObject aux;
             for (int i = 0; i < grid.Length; i++)
             {
+                switch (timesVisited[grid[i].Id])
+                {
+                    case 0:
+                        grid[i].CellType = new Water();
+                        break;
+                    case 1:
+                        grid[i].CellType = new Grass();
+                        break;
+                    default:
+                        if (timesVisited[grid[i].Id] > 5)
+                        {
+                            grid[i].CellType = new Farm();
+                        }
+                        else
+                        {
+                            grid[i].CellType = new Grass();
+                        }
+                        break;
+                }
+                Debug.Log(timesVisited[grid[i].Id]);
                 aux = Instantiate<GameObject>(grid[i].CellType.getBasePrefab(), transform, false);
                 aux.GetComponent<CellController>().CellBase = grid[i];
                 aux.transform.localPosition = grid[i].Position;
@@ -125,24 +148,28 @@ namespace Level.Grid
             do
             {
                 index = getRandomCell();
-            } while (alreadyVisited.Contains(index));
+            } while (timesVisited[index] != 0);
             
-            
-            grid[index].CellType = new Grass();
             pendingToVisit.AddLast(index);
             
             index = 0;
-            while (index < size && pendingToVisit.Count > 0) {
+            while (pendingToVisit.Count > 0) {
                 int current = pendingToVisit.First.Value;
                 pendingToVisit.RemoveFirst();
-                alreadyVisited.Add(current);
-                grid[current].CellType = new Grass();
-                landBudget--;
-                index += 1;
+                timesVisited[current]++;
+                if (timesVisited[current] == 1)
+                {
+                    landBudget--;
+                    index += 1;
+                    if (landBudget == 0 || index >= size)
+                    {
+                        break;
+                    }
+                }
 
                 for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++) {
                     CellBase neighbor = grid[current].getNeigbour(d);
-                    if (neighbor != null && !alreadyVisited.Contains(neighbor.Id) && !pendingToVisit.Contains(neighbor.Id)) {
+                    if (neighbor != null && !pendingToVisit.Contains(neighbor.Id)) {
                         if (Random.Range(0, 100) < jitter)
                         {
                             pendingToVisit.AddFirst(neighbor.Id);
@@ -151,7 +178,6 @@ namespace Level.Grid
                         {
                             pendingToVisit.AddLast(neighbor.Id);
                         }
-                        
                     }
                 }
             }

@@ -22,6 +22,12 @@ namespace Level.Cell
             Position = position;
             CellType = cellType;
         }
+        
+        public CellBase(int id, Vector3 position)
+        {
+            Id = id;
+            Position = position;
+        }
 
         public void addNeigbour(CellBase cellBase, HexDirection dir)
         {
