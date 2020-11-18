@@ -29,15 +29,28 @@ namespace Level.Grid
         [SerializeField] [Range(20,60)]  private int minLandSize;
         [SerializeField] [Range(60,100)] private int maxLandSize;
         [SerializeField] [Range(5,95)]   private int landPercentage;
-        [SerializeField] [Range(10,50)]   private int mountainReduction;
+        [SerializeField] [Range(10,50)]  private int mountainReduction;
+        [SerializeField]                 private int seed;
 
         const float hexRadius = 0.866025404f;
         
         void Awake()
         {
+            initSeed();
             createEmptyMap(50, 50);
             createWorld();
             instantiateCells();
+        }
+
+        void initSeed()
+        {
+            if (seed == 0)
+            {
+                //it's a little strange to set the random seed with a random :P
+                seed = Random.Range(0, int.MaxValue);
+            }
+            
+            Random.InitState(seed);
         }
 
         void createEmptyMap(int width, int height)
