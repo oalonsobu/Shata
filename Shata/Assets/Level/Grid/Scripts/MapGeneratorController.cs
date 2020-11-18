@@ -25,10 +25,11 @@ namespace Level.Grid
         CustomCellLinkedList<int> pendingToVisit = new CustomCellLinkedList<int>();
         int[] timesVisited;
 
-        [SerializeField] [Range(0,100)]  private float jitter;
+        [SerializeField] [Range(10,40)]  private float jitter;
         [SerializeField] [Range(20,60)]  private int minLandSize;
         [SerializeField] [Range(60,100)] private int maxLandSize;
         [SerializeField] [Range(5,95)]   private int landPercentage;
+        [SerializeField] [Range(10,50)]   private int mountainReduction;
 
         const float hexRadius = 0.866025404f;
         
@@ -149,9 +150,17 @@ namespace Level.Grid
         void createWorld()
         {
             int landBudget = Mathf.RoundToInt(grid.Length * landPercentage * 0.01f);
-            while (landBudget >= 0)
+            while (landBudget > 0)
             {
-                createTerrain(Random.Range(minLandSize, maxLandSize),ref landBudget);
+                if (Random.Range(0,100) < 100 - mountainReduction)
+                {
+                    createTerrain(Random.Range(minLandSize, maxLandSize),ref landBudget);
+                }
+                else
+                {
+                    flattenTerrain(Random.Range(minLandSize, maxLandSize));
+                }
+               
             }
         }
 
@@ -161,20 +170,46 @@ namespace Level.Grid
             int cell = getNotVisitedRandomCell();
             pendingToVisit.queue(cell, 1);
             
-            while (pendingToVisit.Count > 0)
+            while (pendingToVisit.Count > 0 && landBudget != 0 && currentSize < size)
             {
                 int current = pendingToVisit.dequeue();
                 timesVisited[current]++;
-                if (timesVisited[current] == 1)
-                {
-                    landBudget--;
-                    currentSize += 1;
-                    if (landBudget == 0 || currentSize >= size) break;
-                }
 
                 for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++) {
                     CellBase neighbor = grid[current].getNeigbour(d);
                     if (neighbor != null && !pendingToVisit.contains(neighbor.Id)) {
+                        pendingToVisit.queue(neighbor.Id, Random.Range(0, 100) < jitter ? 1 : 0);
+                    }
+                }
+                
+                if (timesVisited[current] == 1)
+                {
+                    landBudget--;
+                    currentSize += 1;
+                }
+            }
+            pendingToVisit.clear();
+        }
+        
+        void flattenTerrain(int size)
+        {
+            int currentSize = 0;
+            int cell = getRandomCell();
+            pendingToVisit.queue(cell, 1);
+            
+            while (currentSize < size && pendingToVisit.Count > 0)
+            {
+                int current = pendingToVisit.dequeue();
+                currentSize += 1;
+                
+                if (timesVisited[current] > 1)
+                {
+                    timesVisited[current]--;
+                }
+
+                for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++) {
+                    CellBase neighbor = grid[current].getNeigbour(d);
+                    if (neighbor != null && !pendingToVisit.contains(neighbor.Id) && timesVisited[current] > 1) {
                         pendingToVisit.queue(neighbor.Id, Random.Range(0, 100) < jitter ? 1 : 0);
                     }
                 }
