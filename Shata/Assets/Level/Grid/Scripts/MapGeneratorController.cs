@@ -213,7 +213,7 @@ namespace Level.Grid
                 }
                 else
                 {
-                    flattenTerrain(Random.Range(minLandSize, maxLandSize));
+                    flattenTerrain(Random.Range(minLandSize, maxLandSize),ref landBudget);
                 }
                
             }
@@ -222,12 +222,15 @@ namespace Level.Grid
         void createTerrain(int size, ref int landBudget)
         {
             int currentSize = 0;
-            int cell = getNotVisitedRandomCell();
+            List<int> alreadyVisited = new List<int>();
+            int cell = getRandomCell();
             pendingToVisit.queue(cell, 1);
             
             while (pendingToVisit.Count > 0 && landBudget != 0 && currentSize < size)
             {
                 int current = pendingToVisit.dequeue();
+                alreadyVisited.Add(current);
+                currentSize += 1;
                 if (timesVisited[current] < maxElevation)
                 {
                     timesVisited[current]++;
@@ -235,7 +238,7 @@ namespace Level.Grid
 
                 for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++) {
                     CellBase neighbor = grid[current].getNeigbour(d);
-                    if (neighbor != null && !pendingToVisit.contains(neighbor.Id)) {
+                    if (neighbor != null && !pendingToVisit.contains(neighbor.Id) && !alreadyVisited.Contains(neighbor.Id)) {
                         pendingToVisit.queue(neighbor.Id, Random.Range(0, 100) < jitter ? 1 : 0);
                     }
                 }
@@ -243,36 +246,40 @@ namespace Level.Grid
                 if (timesVisited[current] == 1)
                 {
                     landBudget--;
-                    currentSize += 1;
                 }
             }
             pendingToVisit.clear();
+            alreadyVisited.Clear();
         }
         
-        void flattenTerrain(int size)
+        void flattenTerrain(int size, ref int landBudget)
         {
             int currentSize = 0;
-            int cell = getMostVisitedCell();
+            List<int> alreadyVisited = new List<int>();
+            int cell = getRandomCell();
             pendingToVisit.queue(cell, 1);
             
             while (currentSize < size && pendingToVisit.Count > 0)
             {
                 int current = pendingToVisit.dequeue();
+                alreadyVisited.Add(current);
                 currentSize += 1;
                 
-                if (timesVisited[current] > 1)
+                timesVisited[current]--;
+                if (timesVisited[current] == 0)
                 {
-                    timesVisited[current] = 1;
+                    landBudget++;
                 }
 
                 for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++) {
                     CellBase neighbor = grid[current].getNeigbour(d);
-                    if (neighbor != null && !pendingToVisit.contains(neighbor.Id)) {
+                    if (neighbor != null && !pendingToVisit.contains(neighbor.Id) && !alreadyVisited.Contains(neighbor.Id)) {
                         pendingToVisit.queue(neighbor.Id, Random.Range(0, 100) < jitter ? 1 : 0);
                     }
                 }
             }
             pendingToVisit.clear();
+            alreadyVisited.Clear();
         }
     }
 }
