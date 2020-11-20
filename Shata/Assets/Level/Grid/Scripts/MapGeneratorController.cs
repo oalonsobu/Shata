@@ -17,14 +17,26 @@ namespace Level.Grid
         }
     }
     
+    public enum MapSize {
+        Small, Medium, Large
+    }
+    
     //TODO: I think I need to separate the initialization and the "update" (the init method will grown)
     public class MapGeneratorController : MonoBehaviour
     {
+        Dictionary<MapSize, Vector2> MapSizeConvert = new Dictionary<MapSize, Vector2>()
+        {
+            {MapSize.Small, new Vector2(30,30)},
+            {MapSize.Medium, new Vector2(50,50)},
+            {MapSize.Large, new Vector2(70,70)}
+        };
+        
         //TODO: I think that maybe we can store a custom object, maybe something less consuming
         CellBase[] grid;
         CustomCellLinkedList<int> pendingToVisit = new CustomCellLinkedList<int>();
         int[] timesVisited;
 
+        [SerializeField]                 private MapSize mapSize = MapSize.Small;
         [SerializeField] [Range(10,40)]  private float jitter;
         [SerializeField] [Range(20,60)]  private int minLandSize;
         [SerializeField] [Range(60,100)] private int maxLandSize;
@@ -37,7 +49,7 @@ namespace Level.Grid
         void Awake()
         {
             initSeed();
-            createEmptyMap(50, 50);
+            createEmptyMap((int) MapSizeConvert[mapSize].x, (int) MapSizeConvert[mapSize].y);
             createWorld();
             instantiateCells();
         }
