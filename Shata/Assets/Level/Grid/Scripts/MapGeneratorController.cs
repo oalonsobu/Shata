@@ -47,6 +47,7 @@ namespace Level.Grid
         [SerializeField] [Range(5,10)]    private int mapBorderY;
 
         const float hexRadius = 0.866025404f;
+        private const float maxElevation = 4;
         
         void Awake()
         {
@@ -170,6 +171,26 @@ namespace Level.Grid
             return grid[(int) MapSizeConvert[mapSize].x * x + y].Id;
         }
         
+        int getMostVisitedCell()
+        {
+            int max = 0;
+            List<int> aux = new List<int>();
+            for (int i = 0; i < timesVisited.Length; i++)
+            {
+                if (timesVisited[i] > max)
+                {
+                    aux.Clear();
+                    max = timesVisited[i];
+                } 
+                if (timesVisited[i] == max)
+                {
+                    aux.Add(i);
+                }
+            }
+
+            return grid[aux[Random.Range(0, aux.Count)]].Id;
+        }
+        
         int getNotVisitedRandomCell()
         {
             int cell = 0;
@@ -207,7 +228,10 @@ namespace Level.Grid
             while (pendingToVisit.Count > 0 && landBudget != 0 && currentSize < size)
             {
                 int current = pendingToVisit.dequeue();
-                timesVisited[current]++;
+                if (timesVisited[current] < maxElevation)
+                {
+                    timesVisited[current]++;
+                }
 
                 for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++) {
                     CellBase neighbor = grid[current].getNeigbour(d);
@@ -228,7 +252,7 @@ namespace Level.Grid
         void flattenTerrain(int size)
         {
             int currentSize = 0;
-            int cell = getRandomCell();
+            int cell = getMostVisitedCell();
             pendingToVisit.queue(cell, 1);
             
             while (currentSize < size && pendingToVisit.Count > 0)
@@ -238,12 +262,12 @@ namespace Level.Grid
                 
                 if (timesVisited[current] > 1)
                 {
-                    timesVisited[current]--;
+                    timesVisited[current] = 1;
                 }
 
                 for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++) {
                     CellBase neighbor = grid[current].getNeigbour(d);
-                    if (neighbor != null && !pendingToVisit.contains(neighbor.Id) && timesVisited[current] > 1) {
+                    if (neighbor != null && !pendingToVisit.contains(neighbor.Id)) {
                         pendingToVisit.queue(neighbor.Id, Random.Range(0, 100) < jitter ? 1 : 0);
                     }
                 }
