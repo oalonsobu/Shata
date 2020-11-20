@@ -36,13 +36,15 @@ namespace Level.Grid
         CustomCellLinkedList<int> pendingToVisit = new CustomCellLinkedList<int>();
         int[] timesVisited;
 
-        [SerializeField]                 private MapSize mapSize = MapSize.Small;
-        [SerializeField] [Range(10,40)]  private float jitter;
-        [SerializeField] [Range(20,60)]  private int minLandSize;
-        [SerializeField] [Range(60,100)] private int maxLandSize;
-        [SerializeField] [Range(5,95)]   private int landPercentage;
-        [SerializeField] [Range(10,50)]  private int mountainReduction;
-        [SerializeField]                 private int seed;
+        [SerializeField]                  private int seed;
+        [SerializeField]                  private MapSize mapSize = MapSize.Small;
+        [SerializeField] [Range(10,40)]   private float jitter;
+        [SerializeField] [Range(100,150)] private int minLandSize;
+        [SerializeField] [Range(150,200)] private int maxLandSize;
+        [SerializeField] [Range(5,95)]    private int landPercentage;
+        [SerializeField] [Range(10,50)]   private int mountainReduction;
+        [SerializeField] [Range(5,10)]    private int mapBorderX;
+        [SerializeField] [Range(5,10)]    private int mapBorderY;
 
         const float hexRadius = 0.866025404f;
         
@@ -158,7 +160,14 @@ namespace Level.Grid
 
         int getRandomCell()
         {
-            return Random.Range(0, grid.Length);
+            int x, maxX, minX, y, maxY, minY;
+            minX = mapBorderX;
+            minY = mapBorderY;
+            maxX = (int) MapSizeConvert[mapSize].x - mapBorderX;
+            maxY = (int) MapSizeConvert[mapSize].y - mapBorderY;
+            x = Random.Range(minX, maxX);
+            y = Random.Range(minY, maxY);
+            return grid[(int) MapSizeConvert[mapSize].x * x + y].Id;
         }
         
         int getNotVisitedRandomCell()
