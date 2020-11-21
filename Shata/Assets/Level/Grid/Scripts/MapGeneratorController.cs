@@ -42,12 +42,12 @@ namespace Level.Grid
         [SerializeField] [Range(100,150)] private int minLandSize;
         [SerializeField] [Range(150,200)] private int maxLandSize;
         [SerializeField] [Range(5,95)]    private int landPercentage;
-        [SerializeField] [Range(10,50)]   private int mountainReduction;
         [SerializeField] [Range(5,10)]    private int mapBorderX;
         [SerializeField] [Range(5,10)]    private int mapBorderY;
+        [SerializeField] [Range(0,2)]     private int mountainReduction;
 
         const float hexRadius = 0.866025404f;
-        private const float maxElevation = 4;
+        private const float maxElevation = 6;
         
         void Awake()
         {
@@ -134,22 +134,22 @@ namespace Level.Grid
             {
                 switch (timesVisited[grid[i].Id])
                 {
-                    case -1:
+                    case int n when n == -1:
                         grid[i].CellType = new DeepWater();
                         break;
-                    case 0:
+                    case int n when n == 0:
                         grid[i].CellType = new Water();
                         break;
-                    case 1:
+                    case int n when n >= 1 && n <= 1 + mountainReduction:
                         grid[i].CellType = new Grass();
                         break;
-                    case 2:
+                    case int n when n == 2 + mountainReduction:
                         grid[i].CellType = new Stone();
                         break;
-                    case 3:
+                    case int n when n == 3 + mountainReduction:
                         grid[i].CellType = new Mountain();
                         break;
-                    case 4:
+                    case int n when n == 4 + mountainReduction:
                         grid[i].CellType = new HighMountain();
                         break;
                     default:
@@ -174,26 +174,6 @@ namespace Level.Grid
             return grid[(int) MapSizeConvert[mapSize].x * x + y].Id;
         }
         
-        int getMostVisitedCell()
-        {
-            int max = 0;
-            List<int> aux = new List<int>();
-            for (int i = 0; i < timesVisited.Length; i++)
-            {
-                if (timesVisited[i] > max)
-                {
-                    aux.Clear();
-                    max = timesVisited[i];
-                } 
-                if (timesVisited[i] == max)
-                {
-                    aux.Add(i);
-                }
-            }
-
-            return grid[aux[Random.Range(0, aux.Count)]].Id;
-        }
-        
         int getNotVisitedRandomCell()
         {
             int cell = 0;
@@ -210,15 +190,7 @@ namespace Level.Grid
             int landBudget = Mathf.RoundToInt(grid.Length * landPercentage * 0.01f);
             while (landBudget > 0)
             {
-                if (Random.Range(0,100) < 100 - mountainReduction)
-                {
-                    createTerrain(Random.Range(minLandSize, maxLandSize),ref landBudget);
-                }
-                else
-                {
-                    flattenTerrain(Random.Range(minLandSize, maxLandSize),ref landBudget);
-                }
-               
+                createTerrain(Random.Range(minLandSize, maxLandSize),ref landBudget);
             }
         }
 
@@ -226,7 +198,7 @@ namespace Level.Grid
         {
             int currentSize = 0;
             List<int> alreadyVisited = new List<int>();
-            int cell = getNotVisitedRandomCell();
+            int cell = getRandomCell();
             pendingToVisit.queue(cell, 1);
             
             while (pendingToVisit.Count > 0 && landBudget != 0 && currentSize < size)
@@ -249,39 +221,6 @@ namespace Level.Grid
                 if (timesVisited[current] == 1)
                 {
                     landBudget--;
-                }
-            }
-            pendingToVisit.clear();
-            alreadyVisited.Clear();
-        }
-        
-        void flattenTerrain(int size, ref int landBudget)
-        {
-            int currentSize = 0;
-            List<int> alreadyVisited = new List<int>();
-            int cell = getRandomCell();
-            pendingToVisit.queue(cell, 1);
-            
-            while (currentSize < size && pendingToVisit.Count > 0)
-            {
-                int current = pendingToVisit.dequeue();
-                alreadyVisited.Add(current);
-                currentSize += 1;
-
-                if (timesVisited[current] > 0 )
-                {
-                    timesVisited[current]--;
-                    if (timesVisited[current] == 0)
-                    {
-                        landBudget++;
-                    }
-                }
-
-                for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++) {
-                    CellBase neighbor = grid[current].getNeigbour(d);
-                    if (neighbor != null && !pendingToVisit.contains(neighbor.Id) && !alreadyVisited.Contains(neighbor.Id)) {
-                        pendingToVisit.queue(neighbor.Id, Random.Range(0, 100) < jitter ? 1 : 0);
-                    }
                 }
             }
             pendingToVisit.clear();
