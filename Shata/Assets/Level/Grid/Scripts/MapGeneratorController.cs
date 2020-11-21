@@ -134,6 +134,9 @@ namespace Level.Grid
             {
                 switch (timesVisited[grid[i].Id])
                 {
+                    case -1:
+                        grid[i].CellType = new DeepWater();
+                        break;
                     case 0:
                         grid[i].CellType = new Water();
                         break;
@@ -223,7 +226,7 @@ namespace Level.Grid
         {
             int currentSize = 0;
             List<int> alreadyVisited = new List<int>();
-            int cell = getRandomCell();
+            int cell = getNotVisitedRandomCell();
             pendingToVisit.queue(cell, 1);
             
             while (pendingToVisit.Count > 0 && landBudget != 0 && currentSize < size)
@@ -264,11 +267,14 @@ namespace Level.Grid
                 int current = pendingToVisit.dequeue();
                 alreadyVisited.Add(current);
                 currentSize += 1;
-                
-                timesVisited[current]--;
-                if (timesVisited[current] == 0)
+
+                if (timesVisited[current] > 0 )
                 {
-                    landBudget++;
+                    timesVisited[current]--;
+                    if (timesVisited[current] == 0)
+                    {
+                        landBudget++;
+                    }
                 }
 
                 for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++) {

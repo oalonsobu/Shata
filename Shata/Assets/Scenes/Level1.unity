@@ -458,15 +458,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad50aa6ebd0e4ef19029c71bbf75c45e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  seed: 1805286158
   mapSize: 1
   jitter: 15
   minLandSize: 150
   maxLandSize: 200
-  landPercentage: 50
+  landPercentage: 45
   mountainReduction: 50
-  seed: 1805286158
-  mapBorderX: 0
-  mapBorderY: 0
+  mapBorderX: 10
+  mapBorderY: 10
 --- !u!1 &1361742413 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4514273530064040104, guid: 49eaa89d5b2034a46987f6216b427cb1, type: 3}
