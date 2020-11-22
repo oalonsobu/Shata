@@ -231,18 +231,21 @@ namespace Level.Grid
         
         void createDeepWater()
         {
+            List<int> pending = new List<int>();
             for (int i = 0; i < grid.Length; i++)
             {
                 int randomDistance = Random.Range(3, 6);
-                if (isDeepWater(randomDistance, i))
+                if (isDeepWater(randomDistance, i, ref pending))
                 {
                     timesVisited[grid[i].Id] = -1;
                 }
+                pending.Clear();
             }
         }
 
-        bool isDeepWater(int loop, int id)
+        bool isDeepWater(int loop, int id, ref List<int> pending)
         {
+            pending.Add(id);
             if (timesVisited[id] > 0)
             {
                 return false;
@@ -255,8 +258,8 @@ namespace Level.Grid
             
             foreach (CellBase neighbour in grid[id].Neighbour)
             {
-                if (neighbour == null) continue;
-                if (!isDeepWater(loop - 1, neighbour.Id))
+                if (neighbour == null || pending.Contains(neighbour.Id)) continue;
+                if (!isDeepWater(loop - 1, neighbour.Id, ref pending))
                 {
                     return false;
                 }
