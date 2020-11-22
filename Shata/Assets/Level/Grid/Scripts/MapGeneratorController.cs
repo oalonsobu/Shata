@@ -190,11 +190,13 @@ namespace Level.Grid
             int landBudget = Mathf.RoundToInt(grid.Length * landPercentage * 0.01f);
             while (landBudget > 0)
             {
-                createTerrain(Random.Range(minLandSize, maxLandSize),ref landBudget);
+                upriseTerrain(Random.Range(minLandSize, maxLandSize),ref landBudget);
             }
+
+            createDeepWater();
         }
 
-        void createTerrain(int size, ref int landBudget)
+        void upriseTerrain(int size, ref int landBudget)
         {
             int currentSize = 0;
             List<int> alreadyVisited = new List<int>();
@@ -225,6 +227,42 @@ namespace Level.Grid
             }
             pendingToVisit.clear();
             alreadyVisited.Clear();
+        }
+        
+        void createDeepWater()
+        {
+            for (int i = 0; i < grid.Length; i++)
+            {
+                int randomDistance = Random.Range(3, 6);
+                if (isDeepWater(randomDistance, i))
+                {
+                    timesVisited[grid[i].Id] = -1;
+                }
+            }
+        }
+
+        bool isDeepWater(int loop, int id)
+        {
+            if (timesVisited[id] > 0)
+            {
+                return false;
+            }
+
+            if (loop <= 0)
+            {
+                return true;
+            }
+            
+            foreach (CellBase neighbour in grid[id].Neighbour)
+            {
+                if (neighbour == null) continue;
+                if (!isDeepWater(loop - 1, neighbour.Id))
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }
