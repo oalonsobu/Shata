@@ -410,6 +410,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1028465359}
   - component: {fileID: 1028465358}
+  - component: {fileID: 1028465360}
   m_Layer: 0
   m_Name: MapContainer
   m_TagString: Untagged
@@ -445,6 +446,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1028465360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1028465357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad50aa6ebd0e4ef19029c71bbf75c45e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  seed: 1805286158
+  mapSize: 1
+  jitter: 15
+  minLandSize: 150
+  maxLandSize: 200
+  landPercentage: 45
+  mountainReduction: 50
+  mapBorderX: 10
+  mapBorderY: 10
 --- !u!1 &1361742413 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4514273530064040104, guid: 49eaa89d5b2034a46987f6216b427cb1, type: 3}

@@ -12,15 +12,9 @@ namespace Level.Cell
     public class CellController : MonoBehaviour
     {
         CellOutlineController outline;
-        private CellInterface cell;
         [SerializeField] GameEvent selectedCellChangedEvent;
-        [SerializeField] StorageReference storageReference;
 
-        public CellInterface Cell
-        {
-            get => cell;
-            set => cell = value;
-        }
+        public CellBase CellBase { get; set; }
 
         void Start() {
             outline = gameObject.AddComponent<CellOutlineController>();
@@ -43,7 +37,7 @@ namespace Level.Cell
 
         private void instantiateBuilding()
         {
-            GameObject building = Instantiate<GameObject>(cell.CurrentBuilding.getBasePrefab(), transform, false);
+            GameObject building = Instantiate<GameObject>(CellBase.CellType.CurrentBuilding.getBasePrefab(), transform, false);
             building.transform.Rotate(new Vector3(0,1,0), 90);
         }
     }

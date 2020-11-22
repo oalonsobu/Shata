@@ -110,8 +110,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56ec7f9350a5f45eeb657e271ce176a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cellReference: {fileID: 11400000, guid: 0be4e581b33844a4aa4ed5f04105bc81, type: 2}
   selectedCellChangedEvent: {fileID: 11400000, guid: cd0c5d576c6fb4b3394eb9aa8d60f41a, type: 2}
+  storageReference: {fileID: 11400000, guid: 301e3c91b623d4aa1956e4637ebf9d73, type: 2}
 --- !u!114 &8361493379136714368
 MonoBehaviour:
   m_ObjectHideFlags: 0
