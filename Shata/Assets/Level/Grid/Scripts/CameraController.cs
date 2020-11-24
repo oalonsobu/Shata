@@ -6,12 +6,14 @@ namespace Level.Grid
     public class CameraController : MonoBehaviour
     {
         [SerializeField] [Range(15f,30f)] private float zoomSpeed = 15f;
-        [SerializeField] [Range(10,40)]   private float moveSpeed;
+        
+        [SerializeField] [Range(5,15)]   private float moveSpeed;
+        [SerializeField] [Range(2,4)]    private float moveSpeedIncrement;
         
         //Ideally, readonly
         [SerializeField]                  private float yMax = 13f;
         [SerializeField]                  private float yMin = 1f;
-        [SerializeField]                  private float currentZoomRatio = 0f;
+        [SerializeField]                  private float currentZoomRatio = 1f;
         
         private void Update()
         {
@@ -35,9 +37,9 @@ namespace Level.Grid
             Vector3 position = transform.localPosition;
             position += direction * speed;
             currentZoom = position.y;
+            currentZoomRatio = (currentZoom - yMin) / (yMax - yMin); //needed later again
             if (currentZoom < yMax && currentZoom > yMin)
             {
-                currentZoomRatio = (currentZoom - yMin) / (yMax - yMin); //needed later again
                 transform.localPosition = position;
                 float angle = Mathf.Lerp(30, 75, currentZoomRatio);
                 transform.localRotation = Quaternion.Euler(angle, 0f, 0f);
@@ -48,7 +50,9 @@ namespace Level.Grid
             Vector3 direction = new Vector3(xDelta, 0f, zDelta).normalized;
             //Smooth the movement
             float damping = Mathf.Max(Mathf.Abs(xDelta), Mathf.Abs(zDelta));
-            float speed = moveSpeed * Time.deltaTime * damping;
+            float speed = Mathf.Lerp(moveSpeed, moveSpeed * moveSpeedIncrement, currentZoomRatio);
+            
+            speed *= Time.deltaTime * damping;
             
             Vector3 position = transform.localPosition;
             position += direction * speed;
