@@ -15,6 +15,7 @@ namespace Level.Resource
         Gold,
         Wood,
         Meat,
+        Stone,
         Population
     }
 }

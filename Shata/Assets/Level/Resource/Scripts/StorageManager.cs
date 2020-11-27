@@ -8,6 +8,7 @@ namespace Level.Resource
         public readonly Resource Gold;
         public readonly Resource Wood;
         public readonly Resource Meat;
+        public readonly Resource Stone;
         public readonly Resource Population;
 
         public StorageManager()
@@ -15,6 +16,7 @@ namespace Level.Resource
             Gold = new Resource(ResourceType.Gold);
             Wood = new Resource(ResourceType.Wood);
             Meat = new Resource(ResourceType.Meat);
+            Stone = new Resource(ResourceType.Stone);
             Population = new Resource(ResourceType.Population);
         }
         
@@ -23,6 +25,7 @@ namespace Level.Resource
             Gold.Update(time);
             Wood.Update(time);
             Meat.Update(time);
+            Stone.Update(time);
             Population.Update(time);
         }
         
@@ -39,6 +42,7 @@ namespace Level.Resource
             var totalGold = 0.0f;
             var totalMeat = 0.0f;
             var totalWood = 0.0f;
+            var totalStone = 0.0f;
             var totalPopulation = 0.0f;
             foreach (ResourceModifier price in prices)
             {
@@ -55,6 +59,9 @@ namespace Level.Resource
                         case ResourceType.Meat:
                             totalMeat += price.Amount;
                             break;
+                        case ResourceType.Stone:
+                            totalStone += price.Amount;
+                            break;
                         case ResourceType.Population:
                             totalPopulation += price.Amount;
                             break;
@@ -67,6 +74,7 @@ namespace Level.Resource
             return    totalGold <= Gold.Amount
                    && totalMeat <= Meat.Amount
                    && totalWood <= Wood.Amount
+                   && totalStone <= Stone.Amount
                    && totalPopulation <= Population.Amount;
         }
 
@@ -88,6 +96,8 @@ namespace Level.Resource
                     return Wood;
                 case ResourceType.Meat:
                     return Meat;
+                case ResourceType.Stone:
+                    return Stone;
                 case ResourceType.Population:
                     return Population;
                 default:

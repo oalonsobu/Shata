@@ -19,25 +19,25 @@ namespace Level.Building
             => new List<ResourceModifier>
             {
                 //Initial resources, production and storage
-                new FlatPerkModifier(4f, ResourceType.Population, ResourceModifierType.Amount),
+                new FlatPerkModifier(2f, ResourceType.Population, ResourceModifierType.Amount),
                 new FlatPerkModifier(200f, ResourceType.Wood, ResourceModifierType.Amount),
                 new FlatPerkModifier(50f, ResourceType.Meat, ResourceModifierType.Amount),
                 new FlatPerkModifier(50f, ResourceType.Gold, ResourceModifierType.Amount),
+                new FlatPerkModifier(0f, ResourceType.Stone, ResourceModifierType.Amount),
                 
                 
-                new FlatPerkModifier(0.2f, ResourceType.Population, ResourceModifierType.Production),
+                new FlatPerkModifier(0.05f, ResourceType.Population, ResourceModifierType.Production),
                 new FlatPerkModifier(0f, ResourceType.Wood, ResourceModifierType.Production),
                 new FlatPerkModifier(0f, ResourceType.Meat, ResourceModifierType.Production),                
-                new FlatPerkModifier(1, ResourceType.Gold, ResourceModifierType.Production),
+                new FlatPerkModifier(0.05f, ResourceType.Gold, ResourceModifierType.Production),
+                new FlatPerkModifier(0f, ResourceType.Stone, ResourceModifierType.Production),
                 
                 
                 new FlatPerkModifier(6f, ResourceType.Population, ResourceModifierType.Storage),
                 new FlatPerkModifier(500f, ResourceType.Wood, ResourceModifierType.Storage),
                 new FlatPerkModifier(500f, ResourceType.Gold, ResourceModifierType.Storage),
                 new FlatPerkModifier(500f, ResourceType.Meat, ResourceModifierType.Storage),
-                
-                //Town hall modifiers     
-                new FlatHandicapModifier(0.3f, ResourceType.Gold, ResourceModifierType.Production),
+                new FlatPerkModifier(500f, ResourceType.Stone, ResourceModifierType.Storage),
             };
     }
 }

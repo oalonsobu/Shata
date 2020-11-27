@@ -13,6 +13,7 @@ namespace UI
     {
         [SerializeField] StorageReference storageReference;
         [SerializeField] ResourceType resourceType; 
+        [SerializeField] Sprite resourceImage;
         [SerializeField] Text text;
         [SerializeField] Image popOverImage;
         [SerializeField] Text popOverText;
@@ -21,6 +22,7 @@ namespace UI
         private void Start()
         {
             popOverImage.gameObject.SetActive(false);
+            transform.Find("Icon").GetComponent<Image>().sprite = resourceImage;
         }
 
         private void Update()
@@ -36,6 +38,9 @@ namespace UI
                     break;
                 case ResourceType.Meat:
                     resource = storageReference.value.Meat;
+                    break;
+                case ResourceType.Stone:
+                    resource = storageReference.value.Stone;
                     break;
                 case ResourceType.Population:
                     resource = storageReference.value.Population;

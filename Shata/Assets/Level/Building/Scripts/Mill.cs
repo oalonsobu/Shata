@@ -8,7 +8,8 @@ namespace Level.Building
         public override List<ResourceModifier> Price 
             => new List<ResourceModifier>
             {
-                new FlatHandicapModifier(60, ResourceType.Wood, ResourceModifierType.Amount)
+                new FlatHandicapModifier(110, ResourceType.Wood, ResourceModifierType.Amount),
+                new FlatHandicapModifier(10, ResourceType.Stone, ResourceModifierType.Amount)
             };
         
         public override string Description => "Increases your meat production and storage.";
@@ -20,10 +21,10 @@ namespace Level.Building
             => new List<ResourceModifier>
             {
                 new FlatPerkModifier(1, ResourceType.Meat, ResourceModifierType.Production),
-                new FlatPerkModifier(100, ResourceType.Meat, ResourceModifierType.Storage),
+                new FlatPerkModifier(150, ResourceType.Meat, ResourceModifierType.Storage),
                 
                 //Upkeep
-                new FlatHandicapModifier(0.3f, ResourceType.Gold, ResourceModifierType.Production),
+                new FlatHandicapModifier(0.05f, ResourceType.Gold, ResourceModifierType.Production),
             };
     }
 }
