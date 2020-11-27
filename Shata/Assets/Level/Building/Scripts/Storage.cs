@@ -8,7 +8,8 @@ namespace Level.Building
         public override List<ResourceModifier> Price 
             => new List<ResourceModifier>
             {
-                new FlatHandicapModifier(10, ResourceType.Wood, ResourceModifierType.Amount)
+                new FlatHandicapModifier(60, ResourceType.Wood, ResourceModifierType.Amount),
+                new FlatHandicapModifier(30, ResourceType.Gold, ResourceModifierType.Amount)
             };
         
         public override string Description => "Storage all kind of resources here.";
@@ -19,9 +20,12 @@ namespace Level.Building
         public override List<ResourceModifier> Modifiers
             => new List<ResourceModifier>
             {
-                new FlatPerkModifier(100, ResourceType.Wood, ResourceModifierType.Storage),
-                new FlatPerkModifier(100, ResourceType.Meat, ResourceModifierType.Storage),
-                new FlatPerkModifier(100, ResourceType.Gold, ResourceModifierType.Storage)
+                new FlatPerkModifier(200, ResourceType.Wood, ResourceModifierType.Storage),
+                new FlatPerkModifier(200, ResourceType.Meat, ResourceModifierType.Storage),
+                new FlatPerkModifier(200, ResourceType.Gold, ResourceModifierType.Storage),
+                
+                //Upkeep
+                new FlatHandicapModifier(0.1f, ResourceType.Gold, ResourceModifierType.Production),
             };
     }
 }
