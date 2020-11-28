@@ -19,8 +19,10 @@ namespace Level.Building
         public override List<ResourceModifier> Modifiers
             => new List<ResourceModifier>
             {
+                new FlatPerkModifier(3, ResourceType.Population, ResourceModifierType.Storage),
+                
+                //Upkeep
                 new FlatHandicapModifier(0.02f, ResourceType.Gold, ResourceModifierType.Production),
-                new FlatPerkModifier(3, ResourceType.Population, ResourceModifierType.Storage)
             };
     }
 }

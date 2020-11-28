@@ -21,8 +21,7 @@ namespace Level.Cell
             allowedBuildings = new List<BuildingInterface>();
             allowedBuildings.AddRange(new List<BuildingInterface>
             {
-                new House(),
-                new Farm(),
+                new Mine()
             });
         }
     }
