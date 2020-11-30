@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Level.Cell;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using Variables;
 
 namespace Level.Grid
@@ -38,6 +40,9 @@ namespace Level.Grid
         [SerializeField] [Range(5,10)]    private int mapBorderX;
         [SerializeField] [Range(5,10)]    private int mapBorderY;
         [SerializeField] [Range(0,2)]     private int mountainReduction;
+        [SerializeField] [Range(5,10)]    private int fertileLandPopulation;
+        [SerializeField] [Range(5,10)]    private int quarryPopulation;
+        [SerializeField] [Range(5,10)]    private int forestLevelPopulation;
 
         const float hexRadius = 0.866025404f;
         private const float maxElevation = 6;
@@ -203,7 +208,9 @@ namespace Level.Grid
             }
 
             createDeepWater();
-            createResources();
+            createFertileLand();
+            createQuarry();
+            createForest();
         }
 
         void upriseTerrain(int size, ref int landBudget)
@@ -278,11 +285,74 @@ namespace Level.Grid
             return true;
         }
 
-        void createResources()
+        void createFertileLand()
         {
-            int cell = getGrassRandomCell();
+            foreach (var id in getGrassCellByPercentage(fertileLandPopulation))
+            {
+                cellTypes[id] = CellType.Fertile;
+            }
+        }
+        
+        void createQuarry()
+        {
+            foreach (var id in getGrassCellByPercentage(quarryPopulation))
+            {
+                cellTypes[id] = CellType.Stone;
+            }
+        }
+        
+        void createForest()
+        {
+            foreach (var id in getGrassCellByPercentage(forestLevelPopulation))
+            {
+                List<int> pending = new List<int>();
+                pending.Add(id);
 
-            cellTypes[cell] = CellType.Fertile;
+                int current = 0;
+                int total = Random.Range(3, 8);
+                while (current < total && pending.Count > 0)
+                {
+                    int randomIndex = Random.Range(0, pending.Count);
+                    int currentCell = pending[randomIndex];
+                    pending.RemoveAt(randomIndex);
+
+                    cellTypes[currentCell] = CellType.Forest;
+                    
+                    for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++) {
+                        CellBase neighbor = grid[currentCell].getNeigbour(d);
+                        if (neighbor != null && !pending.Contains(neighbor.Id) && cellTypes[neighbor.Id] == CellType.Grass) {
+                            pending.Add(neighbor.Id);
+                        }
+                    }
+                    current++;
+                }
+                pendingToVisit.clear();
+            }
+        }
+        
+        //TODO: create fishing area like fertile or quarry
+        
+        List<int> getGrassCellByPercentage(int percentage)
+        {
+            List<int> nonVisitedCellIndexes = new List<int>();
+            for (int id = 0; id < cellTypes.Length; id++)
+            {
+                if (cellTypes[id] == CellType.Grass)
+                {
+                    nonVisitedCellIndexes.Add(id);
+                }                
+            }
+
+            int numberOfCells = nonVisitedCellIndexes.Count * percentage / 100;
+
+            List<int> grassCellIndexes = new List<int>();
+            for (int i = 0; i < numberOfCells; i++)
+            {
+                //I know a cell can be added twice, but I think is good enough 
+                grassCellIndexes.Add(nonVisitedCellIndexes[Random.Range(0, nonVisitedCellIndexes.Count)]);
+            }
+            
+            return grassCellIndexes;
         }
     }
 }

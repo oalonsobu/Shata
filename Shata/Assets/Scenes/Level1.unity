@@ -597,7 +597,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   seed: 1805286158
-  mapSize: 1
+  mapSize: 50
   jitter: 15
   minLandSize: 150
   maxLandSize: 200
@@ -605,6 +605,9 @@ MonoBehaviour:
   mapBorderX: 10
   mapBorderY: 10
   mountainReduction: 2
+  fertileLandPopulation: 7
+  quarryPopulation: 7
+  forestLevelPopulation: 7
 --- !u!224 &1043581053 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4179854323723972441, guid: bbba89946b12a42ffb060cda6a1cff6e, type: 3}
