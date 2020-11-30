@@ -11,23 +11,23 @@ namespace Level.Grid
     }
 
     public enum MapSize {
-        Small, Medium, Large
+        Small = 30, Medium = 50, Large = 70
+    }
+    
+    public enum CellType {
+        //Identifiers by elevation
+        DeepWater = -1, Water = 0, Grass = 1, LowMountain = 2, Mountain = 3, HighMountain = 4, 
+        //Special identifiers
+        Fertile = 10, Forest = 11, Stone = 12, FishArea = 13
     }
     
     //TODO: I think I need to separate the initialization and the "update" (the init method will grown)
     public class MapGeneratorController : MonoBehaviour
     {
-        Dictionary<MapSize, Vector2> MapSizeConvert = new Dictionary<MapSize, Vector2>()
-        {
-            {MapSize.Small, new Vector2(30,30)},
-            {MapSize.Medium, new Vector2(50,50)},
-            {MapSize.Large, new Vector2(70,70)}
-        };
-        
         //TODO: I think that maybe we can store a custom object, maybe something less consuming
         CellBase[] grid;
         CustomCellLinkedList<int> pendingToVisit = new CustomCellLinkedList<int>();
-        int[] timesVisited;
+        CellType[] cellTypes;
 
         [SerializeField]                  private int seed;
         [SerializeField]                  private MapSize mapSize = MapSize.Small;
@@ -45,7 +45,7 @@ namespace Level.Grid
         void Awake()
         {
             initSeed();
-            createEmptyMap((int) MapSizeConvert[mapSize].x, (int) MapSizeConvert[mapSize].y);
+            createEmptyMap((int) mapSize, (int) mapSize);
             createWorld();
             instantiateCells();
         }
@@ -65,12 +65,12 @@ namespace Level.Grid
         {
             //Todo: transform to unique array with both values
             grid = new CellBase[height * width];
-            timesVisited = new int[height * width];
+            cellTypes = new CellType[height * width];
             
             for (int z = 0, i = 0; z < height; z++) {
                 for (int x = 0; x < width; x++)
                 {
-                    timesVisited[i] = 0;
+                    cellTypes[i] = 0;
                     createWaterCell(x, z, i);
                     setNeigbours(width, x, z, i);
                     i++;
@@ -117,7 +117,7 @@ namespace Level.Grid
             p.z = z * hexRadius;
 
             grid[id] = new CellBase(id, p);
-            timesVisited[id] = 0;
+            cellTypes[id] = CellType.Water;
         }
 
         void instantiateCells()
@@ -125,25 +125,38 @@ namespace Level.Grid
             GameObject aux;
             for (int i = 0; i < grid.Length; i++)
             {
-                switch (timesVisited[grid[i].Id])
+                switch (cellTypes[grid[i].Id])
                 {
-                    case int n when n == -1:
+                    case CellType n when n == CellType.DeepWater:
                         grid[i].CellType = new DeepWater();
                         break;
-                    case int n when n == 0:
+                    case CellType n when n == CellType.Water:
                         grid[i].CellType = new Water();
                         break;
-                    case int n when n >= 1 && n <= 1 + mountainReduction:
+                    case CellType n when n >= CellType.Grass && n <= CellType.Grass + mountainReduction:
                         grid[i].CellType = new Grass();
                         break;
-                    case int n when n == 2 + mountainReduction:
-                        grid[i].CellType = new Stone();
+                    case CellType n when n == CellType.LowMountain + mountainReduction:
+                        grid[i].CellType = new LowMountain();
                         break;
-                    case int n when n == 3 + mountainReduction:
+                    case CellType n when n == CellType.Mountain + mountainReduction:
                         grid[i].CellType = new Mountain();
                         break;
-                    case int n when n == 4 + mountainReduction:
+                    case CellType n when n == CellType.HighMountain + mountainReduction:
                         grid[i].CellType = new HighMountain();
+                        break;
+                    case CellType n when n == CellType.Fertile:
+                        grid[i].CellType = new Fertile();
+                        break;
+                    case CellType n when n == CellType.Forest:
+                        grid[i].CellType = new Forest();
+                        break;
+                    case CellType n when n == CellType.Stone:
+                        grid[i].CellType = new Stone();
+                        break;
+                    case CellType n when n == CellType.FishArea:
+                        //TODO: create fishArea cell
+                        grid[i].CellType = new Water();
                         break;
                     default:
                         grid[i].CellType = new Fertile();
@@ -160,22 +173,25 @@ namespace Level.Grid
             int x, maxX, minX, y, maxY, minY;
             minX = mapBorderX;
             minY = mapBorderY;
-            maxX = (int) MapSizeConvert[mapSize].x - mapBorderX;
-            maxY = (int) MapSizeConvert[mapSize].y - mapBorderY;
+            maxX = (int) mapSize - mapBorderX;
+            maxY = (int) mapSize - mapBorderY;
             x = Random.Range(minX, maxX);
             y = Random.Range(minY, maxY);
-            return grid[(int) MapSizeConvert[mapSize].x * x + y].Id;
+            return grid[(int) mapSize * x + y].Id;
         }
         
-        int getNotVisitedRandomCell()
+        int getGrassRandomCell()
         {
-            int cell = 0;
-            do
+            List<int> nonVisitedCellIndexes = new List<int>();
+            for (int id = 0; id < cellTypes.Length; id++)
             {
-                cell = getRandomCell();
-            } while (timesVisited[cell] != 0);
-
-            return cell;
+                if (cellTypes[id] == CellType.Grass)
+                {
+                    nonVisitedCellIndexes.Add(id);
+                }                
+            }
+            
+            return nonVisitedCellIndexes[Random.Range(0, nonVisitedCellIndexes.Count)];
         }
 
         void createWorld()
@@ -187,6 +203,7 @@ namespace Level.Grid
             }
 
             createDeepWater();
+            createResources();
         }
 
         void upriseTerrain(int size, ref int landBudget)
@@ -201,9 +218,9 @@ namespace Level.Grid
                 int current = pendingToVisit.dequeue();
                 alreadyVisited.Add(current);
                 currentSize += 1;
-                if (timesVisited[current] < maxElevation)
+                if ((int) cellTypes[current] < maxElevation)
                 {
-                    timesVisited[current]++;
+                    cellTypes[current]++;
                 }
 
                 for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++) {
@@ -213,7 +230,7 @@ namespace Level.Grid
                     }
                 }
                 
-                if (timesVisited[current] == 1)
+                if (cellTypes[current] == CellType.Grass)
                 {
                     landBudget--;
                 }
@@ -230,7 +247,7 @@ namespace Level.Grid
                 int randomDistance = Random.Range(3, 6);
                 if (isDeepWater(randomDistance, i, ref pending))
                 {
-                    timesVisited[grid[i].Id] = -1;
+                    cellTypes[grid[i].Id] = CellType.DeepWater;
                 }
                 pending.Clear();
             }
@@ -239,7 +256,7 @@ namespace Level.Grid
         bool isDeepWater(int loop, int id, ref List<int> pending)
         {
             pending.Add(id);
-            if (timesVisited[id] > 0)
+            if (cellTypes[id] > 0)
             {
                 return false;
             }
@@ -259,6 +276,13 @@ namespace Level.Grid
             }
 
             return true;
+        }
+
+        void createResources()
+        {
+            int cell = getGrassRandomCell();
+
+            cellTypes[cell] = CellType.Fertile;
         }
     }
 }
