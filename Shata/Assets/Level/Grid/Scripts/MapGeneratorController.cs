@@ -23,7 +23,6 @@ namespace Level.Grid
         Fertile = 10, Forest = 11, Stone = 12, FishArea = 13
     }
     
-    //TODO: I think I need to separate the initialization and the "update" (the init method will grown)
     public class MapGeneratorController : MonoBehaviour
     {
         //TODO: I think that maybe we can store a custom object, maybe something less consuming
@@ -68,7 +67,6 @@ namespace Level.Grid
 
         void createEmptyMap(int width, int height)
         {
-            //Todo: transform to unique array with both values
             grid = new CellBase[height * width];
             cellTypes = new CellType[height * width];
             

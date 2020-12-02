@@ -36,7 +36,7 @@ namespace UI
                     Button button = go.GetComponent<Button>();
                     Text textBox = button.GetComponentInChildren<Text>();
                     textBox.text = building.Title;
-                    //TODO: create method to check if this can be build (enough wood) in storageReference
+
                     if (cellReference.value.CellBase.CellType.isEmptyCel() && storageReference.value.hasEnoughResources(building.Price))
                     {
                         button.onClick.AddListener(()  => constructEvent(cellReference, building));
@@ -53,7 +53,6 @@ namespace UI
         public void constructEvent(CellReference cellReference, BuildingInterface building)
         {
             //Check two avoid double clicks
-            //TODO: create method to check if this can be build (enough wood) in storageReference
             if (cellReference.value.CellBase.CellType.isEmptyCel() && storageReference.value.hasEnoughResources(building.Price))
             {
                 cellReference.value.CellBase.CellType.setCurrentBuilding(building);

@@ -8,7 +8,6 @@ using Variables;
 
 namespace UI
 {
-    //TODO: pass somehow the resource to show
     public class UiResourceManagerController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] StorageReference storageReference;

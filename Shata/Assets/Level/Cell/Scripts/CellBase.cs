@@ -9,7 +9,6 @@ namespace Level.Cell
 {
     public class CellBase
     {
-        //TODO: create a list or whatever to about empty
         public CellBase[] Neighbour { get; } = new CellBase[6];
         public CellTypeInterface CellType { get; set; }
 

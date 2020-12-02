@@ -2,7 +2,6 @@
 using Level.Grid;
 
 
-//TODO: convertir esto en una clase sin logica, que solo responda a eventos varios y llame a lo que pertoca. Sera el CellReference
 namespace Level.Cell
 {
     //Cell information related with unity behaviours
