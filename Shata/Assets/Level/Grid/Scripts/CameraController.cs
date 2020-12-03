@@ -1,5 +1,6 @@
 using Unity.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Level.Grid
 {
@@ -19,7 +20,12 @@ namespace Level.Grid
         {
             float yDelta = Input.GetAxis("Mouse ScrollWheel");
             if (yDelta != 0f) {
-                AdjustZoom(yDelta);
+                if (!EventSystem.current.IsPointerOverGameObject())
+                {
+                    //If we are over a UI element, continue
+                    AdjustZoom(yDelta);
+                }
+
             }
             
             float xDelta = Input.GetAxis("Horizontal");

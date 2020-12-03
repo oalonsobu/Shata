@@ -24,8 +24,6 @@ namespace Level.Cell
                 new Storage(),
                 new Townhall(),
             });
-            //todo: move to forest cell
-            allowedBuildings.Add(new Sawmill());
         }
     }
 }

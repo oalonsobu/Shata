@@ -10,7 +10,7 @@ namespace UI
     {
     
         [SerializeField] Text titleText;
-        [SerializeField] GridLayoutGroup backgroundGrid;
+        [SerializeField] GridLayoutGroup buildingLayout;
         [SerializeField] GameObject buttonPrefab;
         [SerializeField] StorageReference storageReference;
         
@@ -29,10 +29,10 @@ namespace UI
             
             container.SetActive(isActive);
             if (isActive) {
-                foreach (Transform child in backgroundGrid.transform) Destroy(child.gameObject);
+                foreach (Transform child in buildingLayout.transform) Destroy(child.gameObject);
                 foreach (var building in cellReference.value.CellBase.CellType.getAllowedBuilds())
                 {
-                    GameObject go = Instantiate(buttonPrefab, backgroundGrid.transform, false);
+                    GameObject go = Instantiate(buttonPrefab, buildingLayout.transform, false);
                     Button button = go.GetComponent<Button>();
                     Text textBox = button.GetComponentInChildren<Text>();
                     textBox.text = building.Title;
