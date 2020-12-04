@@ -16,6 +16,8 @@ namespace Level.Cell
 
         public CellBase CellBase { get; set; }
 
+        private GameObject buildingReference = null;
+
         void Start() {
             outline = gameObject.AddComponent<CellOutlineController>();
         }
@@ -29,16 +31,28 @@ namespace Level.Cell
             outline.disable();
         }
         
-        public void build ()
+        public void build()
         {
             instantiateBuilding();
+            selectedCellChangedEvent.Raise();
+        }
+        
+        public void demolish()
+        {
+            removeBuilding();
             selectedCellChangedEvent.Raise();
         }
 
         private void instantiateBuilding()
         {
-            GameObject building = Instantiate<GameObject>(CellBase.CellType.CurrentBuilding.getBasePrefab(), transform, false);
-            building.transform.Rotate(new Vector3(0,1,0), 90);
+            buildingReference = Instantiate<GameObject>(CellBase.CellType.CurrentBuilding.getBasePrefab(), transform, false);
+            buildingReference.transform.Rotate(new Vector3(0,1,0), 90);
+        }
+        
+        private void removeBuilding()
+        {
+            Destroy(buildingReference);
+            buildingReference = null;
         }
     }
 }

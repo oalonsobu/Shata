@@ -28,18 +28,13 @@ namespace Level.Cell
             CurrentBuilding.CurrentLvl = 1;
         }
         
-        public bool isEmptyCel()
+        public bool isEmptyCell()
         {
             return CurrentBuilding is None;
         }
         
         public List<BuildingInterface> getAllowedBuilds()
         {
-            if (!(CurrentBuilding is None))
-            {
-                return new List<BuildingInterface>();
-            }
-            
             return AllowedBuildings;
         }
     }
