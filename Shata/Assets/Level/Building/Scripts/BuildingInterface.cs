@@ -26,5 +26,21 @@ namespace Level.Building
             }
             return Resources.Load("Prefabs/" + BasePrefab + "lvl" + CurrentLvl) as GameObject;
         }
+
+        public string PriceToString()
+        {
+            string text = "";
+            foreach (var resourceModifier in Price)
+            {
+                text += resourceModifier.ResourceType.ToString() + ": " + resourceModifier.Amount + "  ";
+            }
+
+            if (text == "")
+            {
+                text = "Price: Free";
+            }
+
+            return text;
+        }
     }
 }

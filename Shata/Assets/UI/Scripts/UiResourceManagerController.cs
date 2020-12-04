@@ -14,7 +14,7 @@ namespace UI
         [SerializeField] ResourceType resourceType; 
         [SerializeField] Sprite resourceImage;
         [SerializeField] Text text;
-        [SerializeField] Image popOverImage;
+        [SerializeField] GameObject popOverImage;
         [SerializeField] Text popOverText;
 
 
@@ -55,12 +55,12 @@ namespace UI
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            popOverImage.gameObject.SetActive(true);
+            popOverImage.SetActive(true);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            popOverImage.gameObject.SetActive(false);
+            popOverImage.SetActive(false);
         }
     }
 }

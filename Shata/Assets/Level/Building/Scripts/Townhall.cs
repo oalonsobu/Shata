@@ -10,8 +10,8 @@ namespace Level.Building
             {
             };
         
-        public override string Description => "Main building of your village. Is the first building of your village, and only one can bu built.";
-        public override string Comment => "The town hall have room for a few citizens and resource and when built, you're gifted with some resources. Is the center of your village and where the important decisions are made. A village without a town hall is not a village.";
+        public override string Description => "Main building of your village.";
+        public override string Comment => "Is the first building of your village, and only one can bu built. The town hall have room for a few citizens and resource and when built, you're gifted with some resources.";
         public override string Title => "Townhall";
         public override string BasePrefab => "Townhall";
         

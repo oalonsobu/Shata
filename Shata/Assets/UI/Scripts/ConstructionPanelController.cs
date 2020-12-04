@@ -10,7 +10,7 @@ namespace UI
     {
     
         [SerializeField] Text titleText;
-        [SerializeField] GridLayoutGroup buildingLayout;
+        [SerializeField] HorizontalLayoutGroup buildingLayout;
         [SerializeField] GameObject buttonPrefab;
         [SerializeField] GameObject descriptionPrefab;
         [SerializeField] StorageReference storageReference;
@@ -19,7 +19,6 @@ namespace UI
     
         private void Start() {
             container = transform.GetChild(0).gameObject;
-            container.SetActive(false);
         }
     
         public void selectedCellChangedEvent(CellReference cellReference)
@@ -28,59 +27,83 @@ namespace UI
                             cellReference.value.CellBase.CellType.getAllowedBuilds().Any();
             container.SetActive(isActive);
             
-            if (isActive) {
-                foreach (Transform child in buildingLayout.transform) Destroy(child.gameObject);
+            if (isActive)
+            {
+                clearObjects();
+                titleText.text = "Build";
+                setTextObjectDescriptionEvent("");
 
                 if (cellReference.value.CellBase.CellType.CurrentBuilding is None)
                 {
-                    foreach (var building in cellReference.value.CellBase.CellType.getAllowedBuilds())
-                    {
-                        titleText.text = "Build";
-                        descriptionPrefab.SetActive(false);
-                        
-                        GameObject go = Instantiate(buttonPrefab, buildingLayout.transform, false);
-                        Button button = go.GetComponent<Button>();
-                        Text textBox = button.GetComponentInChildren<Text>();
-                        textBox.text = building.Title;
-
-                        if (cellReference.value.CellBase.CellType.isEmptyCell() && storageReference.value.hasEnoughResources(building.Price))
-                        {
-                            button.onClick.AddListener(()  => constructEvent(cellReference, building));
-                            textBox.color = Color.white;
-                        }
-                        else
-                        {
-                            textBox.color = Color.red;
-                        }
-                    } 
+                     setBuildPanel(cellReference);
                 }
                 else
                 {
-                    titleText.text = cellReference.value.CellBase.CellType.CurrentBuilding.Title;
-                    descriptionPrefab.SetActive(true);
-                    Text text = descriptionPrefab.GetComponent<Text>();
-                    text.text = cellReference.value.CellBase.CellType.CurrentBuilding.Description;
-                    
-                    //Remove button
-                    GameObject go = Instantiate(buttonPrefab, buildingLayout.transform, false);
-                    Button button = go.GetComponent<Button>();
-                    button.onClick.AddListener(()  => removeBuildingEvent(cellReference));
-                    
-                    Text textBox = button.GetComponentInChildren<Text>();
-                    textBox.text = "Remove";
-                    textBox.color = Color.white;
-                    
-                    //Update button
-                    go = Instantiate(buttonPrefab, buildingLayout.transform, false);
-                    button = go.GetComponent<Button>();
-                    button.onClick.AddListener(()  => updateBuildingEvent(cellReference));
-                    
-                    textBox = button.GetComponentInChildren<Text>();
-                    textBox.text = "Update";
-                    textBox.color = Color.white;
+                    setUpgradePanel(cellReference);
                 }
                 
             }
+        }
+
+        private void clearObjects()
+        {
+            foreach (Transform child in buildingLayout.transform)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+        
+        private void setBuildPanel(CellReference cellReference)
+        {
+            foreach (var building in cellReference.value.CellBase.CellType.getAllowedBuilds())
+            {
+                GameObject go = Instantiate(buttonPrefab, buildingLayout.transform, false);
+                Button button = go.GetComponent<Button>();
+                Text textBox = button.GetComponentInChildren<Text>();
+                textBox.text = building.Title;
+
+                if (cellReference.value.CellBase.CellType.isEmptyCell() && storageReference.value.hasEnoughResources(building.Price))
+                {
+                    button.onClick.AddListener(()  => constructEvent(cellReference, building));
+                    textBox.color = Color.white;
+                }
+                else
+                {
+                    textBox.color = Color.red;
+                }
+
+                ConstructionPopOverController cpoc = button.gameObject.GetComponent<ConstructionPopOverController>();
+                string text = "";
+                text += building.Description + '\n' + building.Comment + '\n';
+                text += building.PriceToString();
+                cpoc.setText(text);
+            }
+        }
+        
+        private void setUpgradePanel(CellReference cellReference)
+        {
+            titleText.text = cellReference.value.CellBase.CellType.CurrentBuilding.Title;
+            setTextObjectDescriptionEvent(cellReference.value.CellBase.CellType.CurrentBuilding.Comment);
+                    
+            //Remove button
+            GameObject go = Instantiate(buttonPrefab, buildingLayout.transform, false);
+            Button button = go.GetComponent<Button>();
+            button.onClick.AddListener(()  => removeBuildingEvent(cellReference));
+            button.gameObject.GetComponent<ConstructionPopOverController>().enabled = false;
+
+            Text textBox = button.GetComponentInChildren<Text>();
+            textBox.text = "Remove";
+            textBox.color = Color.white;
+                    
+            //Update button
+            go = Instantiate(buttonPrefab, buildingLayout.transform, false);
+            button = go.GetComponent<Button>();
+            button.onClick.AddListener(()  => updateBuildingEvent(cellReference));
+            button.gameObject.GetComponent<ConstructionPopOverController>().enabled = false;
+                    
+            textBox = button.GetComponentInChildren<Text>();
+            textBox.text = "Update";
+            textBox.color = Color.white;
         }
 
         private void constructEvent(CellReference cellReference, BuildingInterface building)
@@ -109,6 +132,12 @@ namespace UI
         private void updateBuildingEvent(CellReference cellReference)
         {
             Debug.Log("Not implemented yet");
+        }
+
+        public void setTextObjectDescriptionEvent(string text)
+        {
+            Text textBox = descriptionPrefab.GetComponent<Text>();
+            textBox.text = text;
         }
     }
 }

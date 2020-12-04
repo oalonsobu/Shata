@@ -168,7 +168,7 @@ GameObject:
   - component: {fileID: 4179854323723972447}
   - component: {fileID: 5706112967363480558}
   m_Layer: 5
-  m_Name: ResourceGold
+  m_Name: Resource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -250,7 +250,7 @@ MonoBehaviour:
   resourceType: 0
   resourceImage: {fileID: 21300000, guid: 229ec315c767c43db906023c6678d1e3, type: 3}
   text: {fileID: 4179854323919351035}
-  popOverImage: {fileID: 5149191287008888265}
+  popOverImage: {fileID: 1162083133898297139}
   popOverText: {fileID: 7720826218619432347}
 --- !u!1 &4179854323919351029
 GameObject:
