@@ -19,6 +19,7 @@ namespace UI
     
         private void Start() {
             container = transform.GetChild(0).gameObject;
+            container.SetActive(false);
         }
     
         public void selectedCellChangedEvent(CellReference cellReference)
