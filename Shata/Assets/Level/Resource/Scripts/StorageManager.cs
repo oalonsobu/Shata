@@ -28,14 +28,6 @@ namespace Level.Resource
             Stone.Update(time);
             Population.Update(time);
         }
-        
-        public void AddModifier(IEnumerable<ResourceModifier> resourceModifiers)
-        {
-            foreach (ResourceModifier resourceModifier in resourceModifiers)
-            {
-                AddModifier(resourceModifier);
-            }
-        }
 
         public bool hasEnoughResources(IEnumerable<ResourceModifier> prices)
         {
@@ -78,13 +70,36 @@ namespace Level.Resource
                    && totalPopulation <= Population.Amount;
         }
 
+        public void AddModifier(IEnumerable<ResourceModifier> resourceModifiers)
+        {
+            foreach (ResourceModifier resourceModifier in resourceModifiers)
+            {
+                AddModifier(resourceModifier);
+            }
+        }
+        
         private void AddModifier(ResourceModifier resourceModifier)
         {
             Resource resource = getResourceByType(resourceModifier.ResourceType);
             resource.AddModifier(resourceModifier);
             resource.ApplyModifiers();
         }
-
+        
+        public void RemoveModifier(IEnumerable<ResourceModifier> resourceModifiers)
+        {
+            foreach (ResourceModifier resourceModifier in resourceModifiers)
+            {
+                RemoveModifier(resourceModifier);
+            }
+        }
+        
+        public void RemoveModifier(ResourceModifier resourceModifier)
+        {
+            Resource resource = getResourceByType(resourceModifier.ResourceType);
+            resource.RemoveModifier(resourceModifier);
+            resource.ApplyModifiers();
+        }
+        
         private Resource getResourceByType(ResourceType resourceType)
         {
             //TODO: get resource or something like that
@@ -103,16 +118,6 @@ namespace Level.Resource
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-        }
-        
-        public void RemoveModifier(ResourceModifier resourceModifier)
-        {
-            throw new NotImplementedException();
-        }
-        
-        public void RemoveModifier(List<ResourceModifier> resourceModifier)
-        {
-            throw new NotImplementedException();
         }
     }
 }

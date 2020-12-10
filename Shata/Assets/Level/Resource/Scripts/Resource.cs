@@ -72,7 +72,7 @@ namespace Level.Resource
         
         public void RemoveModifier(ResourceModifier resourceModifier)
         {
-            throw new NotImplementedException();
+            Modifiers.Remove(resourceModifier);
         }
     }
 }

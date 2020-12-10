@@ -124,9 +124,9 @@ namespace UI
             //Check two avoid double clicks
             if (!cellReference.value.CellBase.CellType.isEmptyCell())
             {
-                cellReference.value.CellBase.CellType.setCurrentBuilding(new None());
-                //Remove Modifiers
+                storageReference.value.RemoveModifier(cellReference.value.CellBase.CellType.CurrentBuilding.Modifiers);
                 cellReference.value.demolish();
+                cellReference.value.CellBase.CellType.setCurrentBuilding(new None());
             }
         }
         
