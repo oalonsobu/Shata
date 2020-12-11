@@ -70,33 +70,33 @@ namespace Level.Resource
                    && totalPopulation <= Population.Amount;
         }
 
-        public void AddModifier(IEnumerable<ResourceModifier> resourceModifiers)
+        public void AddModifier(int id, IEnumerable<ResourceModifier> resourceModifiers)
         {
             foreach (ResourceModifier resourceModifier in resourceModifiers)
             {
-                AddModifier(resourceModifier);
+                AddModifier(id, resourceModifier);
             }
         }
         
-        private void AddModifier(ResourceModifier resourceModifier)
+        private void AddModifier(int id, ResourceModifier resourceModifier)
         {
             Resource resource = getResourceByType(resourceModifier.ResourceType);
-            resource.AddModifier(resourceModifier);
+            resource.AddModifier(id, resourceModifier);
             resource.ApplyModifiers();
         }
         
-        public void RemoveModifier(IEnumerable<ResourceModifier> resourceModifiers)
+        public void RemoveModifier(int id, IEnumerable<ResourceModifier> resourceModifiers)
         {
             foreach (ResourceModifier resourceModifier in resourceModifiers)
             {
-                RemoveModifier(resourceModifier);
+                RemoveModifier(id, resourceModifier);
             }
         }
         
-        public void RemoveModifier(ResourceModifier resourceModifier)
+        public void RemoveModifier(int id, ResourceModifier resourceModifier)
         {
             Resource resource = getResourceByType(resourceModifier.ResourceType);
-            resource.RemoveModifier(resourceModifier);
+            resource.RemoveModifier(id, resourceModifier);
             resource.ApplyModifiers();
         }
         

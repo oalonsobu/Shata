@@ -11,7 +11,6 @@ namespace Level.Cell
     {
         public CellBase[] Neighbour { get; } = new CellBase[6];
         public CellTypeInterface CellType { get; set; }
-        
         public BuildingInterface CurrentBuilding { get; set; } = new None();
 
         public int Id { get; }

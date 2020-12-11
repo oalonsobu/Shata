@@ -113,8 +113,8 @@ namespace UI
             if (cellReference.value.CellBase.isEmptyCell() && storageReference.value.hasEnoughResources(building.Price))
             {
                 cellReference.value.CellBase.setCurrentBuilding(building);
-                storageReference.value.AddModifier(building.Price);
-                storageReference.value.AddModifier(building.Modifiers);
+                storageReference.value.AddModifier(cellReference.value.CellBase.Id, building.Price);
+                storageReference.value.AddModifier(cellReference.value.CellBase.Id, building.Modifiers);
                 cellReference.value.build();
             } 
         }
@@ -124,7 +124,7 @@ namespace UI
             //Check two avoid double clicks
             if (!cellReference.value.CellBase.isEmptyCell())
             {
-                storageReference.value.RemoveModifier(cellReference.value.CellBase.CurrentBuilding.Modifiers);
+                storageReference.value.RemoveModifier(cellReference.value.CellBase.Id, cellReference.value.CellBase.CurrentBuilding.Modifiers);
                 cellReference.value.demolish();
                 cellReference.value.CellBase.setCurrentBuilding(new None());
             }
