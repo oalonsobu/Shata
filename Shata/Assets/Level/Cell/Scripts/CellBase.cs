@@ -11,6 +11,8 @@ namespace Level.Cell
     {
         public CellBase[] Neighbour { get; } = new CellBase[6];
         public CellTypeInterface CellType { get; set; }
+        
+        public BuildingInterface CurrentBuilding { get; set; } = new None();
 
         public int Id { get; }
         public Vector3 Position { get; }
@@ -36,6 +38,17 @@ namespace Level.Cell
         public CellBase getNeigbour(HexDirection dir)
         {
             return Neighbour[(int)dir];
+        }
+        
+        public void setCurrentBuilding(BuildingInterface building)
+        {
+            CurrentBuilding = building;
+            CurrentBuilding.CurrentLvl = 1;
+        }
+        
+        public bool isEmptyCell()
+        {
+            return CurrentBuilding is None;
         }
     }
 }

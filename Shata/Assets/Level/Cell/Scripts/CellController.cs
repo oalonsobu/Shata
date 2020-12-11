@@ -45,7 +45,7 @@ namespace Level.Cell
 
         private void instantiateBuilding()
         {
-            buildingReference = Instantiate<GameObject>(CellBase.CellType.CurrentBuilding.getBasePrefab(), transform, false);
+            buildingReference = Instantiate<GameObject>(CellBase.CurrentBuilding.getBasePrefab(), transform, false);
             buildingReference.transform.Rotate(new Vector3(0,1,0), 90);
         }
         

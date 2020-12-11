@@ -14,25 +14,12 @@ namespace Level.Cell
         public abstract string Title { get; }
         public abstract string BasePrefab { get; }
         public abstract List<BuildingInterface> AllowedBuildings { get; }
-
-        public BuildingInterface CurrentBuilding { get; set; } = new None();
-
+        
         //TODO: check for errors?
         public GameObject getBasePrefab() {
             return Resources.Load("Prefabs/" + BasePrefab) as GameObject;
         }
 
-        public void setCurrentBuilding(BuildingInterface building)
-        {
-            CurrentBuilding = building;
-            CurrentBuilding.CurrentLvl = 1;
-        }
-        
-        public bool isEmptyCell()
-        {
-            return CurrentBuilding is None;
-        }
-        
         public List<BuildingInterface> getAllowedBuilds()
         {
             return AllowedBuildings;

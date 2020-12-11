@@ -34,7 +34,7 @@ namespace UI
                 titleText.text = "Build";
                 setTextObjectDescriptionEvent("");
 
-                if (cellReference.value.CellBase.CellType.CurrentBuilding is None)
+                if (cellReference.value.CellBase.CurrentBuilding is None)
                 {
                      setBuildPanel(cellReference);
                 }
@@ -63,7 +63,7 @@ namespace UI
                 Text textBox = button.GetComponentInChildren<Text>();
                 textBox.text = building.Title;
 
-                if (cellReference.value.CellBase.CellType.isEmptyCell() && storageReference.value.hasEnoughResources(building.Price))
+                if (cellReference.value.CellBase.isEmptyCell() && storageReference.value.hasEnoughResources(building.Price))
                 {
                     button.onClick.AddListener(()  => constructEvent(cellReference, building));
                     textBox.color = Color.white;
@@ -83,8 +83,8 @@ namespace UI
         
         private void setUpgradePanel(CellReference cellReference)
         {
-            titleText.text = cellReference.value.CellBase.CellType.CurrentBuilding.Title;
-            setTextObjectDescriptionEvent(cellReference.value.CellBase.CellType.CurrentBuilding.Comment);
+            titleText.text = cellReference.value.CellBase.CurrentBuilding.Title;
+            setTextObjectDescriptionEvent(cellReference.value.CellBase.CurrentBuilding.Comment);
                     
             //Remove button
             GameObject go = Instantiate(buttonPrefab, buildingLayout.transform, false);
@@ -110,9 +110,9 @@ namespace UI
         private void constructEvent(CellReference cellReference, BuildingInterface building)
         {
             //Check two avoid double clicks
-            if (cellReference.value.CellBase.CellType.isEmptyCell() && storageReference.value.hasEnoughResources(building.Price))
+            if (cellReference.value.CellBase.isEmptyCell() && storageReference.value.hasEnoughResources(building.Price))
             {
-                cellReference.value.CellBase.CellType.setCurrentBuilding(building);
+                cellReference.value.CellBase.setCurrentBuilding(building);
                 storageReference.value.AddModifier(building.Price);
                 storageReference.value.AddModifier(building.Modifiers);
                 cellReference.value.build();
@@ -122,11 +122,11 @@ namespace UI
         private void removeBuildingEvent(CellReference cellReference)
         {
             //Check two avoid double clicks
-            if (!cellReference.value.CellBase.CellType.isEmptyCell())
+            if (!cellReference.value.CellBase.isEmptyCell())
             {
-                storageReference.value.RemoveModifier(cellReference.value.CellBase.CellType.CurrentBuilding.Modifiers);
+                storageReference.value.RemoveModifier(cellReference.value.CellBase.CurrentBuilding.Modifiers);
                 cellReference.value.demolish();
-                cellReference.value.CellBase.CellType.setCurrentBuilding(new None());
+                cellReference.value.CellBase.setCurrentBuilding(new None());
             }
         }
         
