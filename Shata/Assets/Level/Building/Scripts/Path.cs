@@ -3,7 +3,7 @@ using Level.Resource;
 
 namespace Level.Building
 {
-    public class Path : BuildingInterface
+    public class Path : Building
     {
         public override List<ResourceModifier> Price 
             => new List<ResourceModifier>
@@ -23,5 +23,7 @@ namespace Level.Building
                 //Upkeep
                 new FlatHandicapModifier(0.001f, ResourceType.Gold, ResourceModifierType.Production),
             };
+        
+        public override int CurrentLvl => 1;
     }
 }

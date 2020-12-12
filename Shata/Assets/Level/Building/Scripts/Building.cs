@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Level.Building
 {
 
-    public abstract class BuildingInterface
+    public abstract class Building
     {
         public abstract List<ResourceModifier> Price { get; }
         public abstract string Description { get; }
@@ -17,7 +17,7 @@ namespace Level.Building
         
         public abstract List<ResourceModifier> Modifiers { get; }
         
-        public int CurrentLvl { get; set; }
+        public abstract int CurrentLvl { get; }
         
         public GameObject getBasePrefab() {
             if (BasePrefab == "None")

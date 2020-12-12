@@ -107,7 +107,7 @@ namespace UI
             textBox.color = Color.white;
         }
 
-        private void constructEvent(CellReference cellReference, BuildingInterface building)
+        private void constructEvent(CellReference cellReference, Building building)
         {
             //Check two avoid double clicks
             if (cellReference.value.CellBase.isEmptyCell() && storageReference.value.hasEnoughResources(building.Price))

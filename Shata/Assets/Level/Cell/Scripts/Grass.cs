@@ -5,24 +5,25 @@ namespace Level.Cell
 {
     public class Grass : CellTypeInterface
     {
-        private List<BuildingInterface> allowedBuildings;
+        private List<Building.Building> allowedBuildings;
         
         public override string Description => "Ideal for ranching or random buildings.";
         public override string Comment => "Plenty of flowers, herbs and grass. Pretty but useless if you don't build something here.";
         public override string Title => "Grassland";
         public override string BasePrefab => "GrassCell";
 
-        public override List<BuildingInterface> AllowedBuildings => allowedBuildings;
+        public override List<Building.Building> AllowedBuildings => allowedBuildings;
 
         public Grass()
         {
-            allowedBuildings = new List<BuildingInterface>();
-            allowedBuildings.AddRange(new List<BuildingInterface>
+            allowedBuildings = new List<Building.Building>();
+            allowedBuildings.AddRange(new List<Building.Building>
             {
-                new House(),
-                new Mill(),
-                new Storage(),
-                new Townhall(),
+                new Houselvl1(),
+                new Milllvl1(),
+                new Storagelvl1(),
+                new Townhalllvl1(),
+                new Corrallvl1(),
             });
         }
     }

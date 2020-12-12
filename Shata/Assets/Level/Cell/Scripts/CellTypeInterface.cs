@@ -13,14 +13,14 @@ namespace Level.Cell
         public abstract string Comment { get; }
         public abstract string Title { get; }
         public abstract string BasePrefab { get; }
-        public abstract List<BuildingInterface> AllowedBuildings { get; }
+        public abstract List<Building.Building> AllowedBuildings { get; }
         
         //TODO: check for errors?
         public GameObject getBasePrefab() {
             return Resources.Load("Prefabs/" + BasePrefab) as GameObject;
         }
 
-        public List<BuildingInterface> getAllowedBuilds()
+        public List<Building.Building> getAllowedBuilds()
         {
             return AllowedBuildings;
         }
