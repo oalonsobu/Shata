@@ -1,5 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using Level.Building;
+using Level.Cell;
 using UnityEngine;
 using UnityEngine.UI;
 using Variables;
@@ -16,6 +20,8 @@ namespace UI
         [SerializeField] StorageReference storageReference;
         
         GameObject container;
+        
+        List<Building> buildings = new List<Building>();
     
         private void Start() {
             container = transform.GetChild(0).gameObject;
@@ -24,8 +30,10 @@ namespace UI
     
         public void selectedCellChangedEvent(CellReference cellReference)
         {
-            bool isActive = cellReference.value != null && 
-                            cellReference.value.CellBase.CellType.getAllowedBuilds().Any();
+            if (cellReference.value == null) return;
+            
+            getAllAvailableBuilding(cellReference.value.CellBase);
+            bool isActive = buildings.Any() || !cellReference.value.CellBase.isEmptyCell();
             container.SetActive(isActive);
             
             if (isActive)
@@ -34,7 +42,7 @@ namespace UI
                 titleText.text = "Build";
                 setTextObjectDescriptionEvent("");
 
-                if (cellReference.value.CellBase.CurrentBuilding is None)
+                if (cellReference.value.CellBase.isEmptyCell())
                 {
                      setBuildPanel(cellReference);
                 }
@@ -42,7 +50,6 @@ namespace UI
                 {
                     setUpgradePanel(cellReference);
                 }
-                
             }
         }
 
@@ -56,14 +63,14 @@ namespace UI
         
         private void setBuildPanel(CellReference cellReference)
         {
-            foreach (var building in cellReference.value.CellBase.CellType.getAllowedBuilds())
+            foreach (Building building in buildings)
             {
                 GameObject go = Instantiate(buttonPrefab, buildingLayout.transform, false);
                 Button button = go.GetComponent<Button>();
                 Text textBox = button.GetComponentInChildren<Text>();
                 textBox.text = building.Title;
 
-                if (cellReference.value.CellBase.isEmptyCell() && storageReference.value.hasEnoughResources(building.Price))
+                if (building.isBuildable(cellReference.value.CellBase, storageReference.value))
                 {
                     button.onClick.AddListener(()  => constructEvent(cellReference, building));
                     textBox.color = Color.white;
@@ -110,7 +117,7 @@ namespace UI
         private void constructEvent(CellReference cellReference, Building building)
         {
             //Check two avoid double clicks
-            if (cellReference.value.CellBase.isEmptyCell() && storageReference.value.hasEnoughResources(building.Price))
+            if (building.isBuildable(cellReference.value.CellBase, storageReference.value))
             {
                 cellReference.value.CellBase.setCurrentBuilding(building);
                 storageReference.value.AddModifier(cellReference.value.CellBase.Id, building.Price);
@@ -139,6 +146,26 @@ namespace UI
         {
             Text textBox = descriptionPrefab.GetComponent<Text>();
             textBox.text = text;
+        }
+
+        public void getAllAvailableBuilding(CellBase cell)
+        {
+            buildings.Clear();
+            foreach (Type type in Assembly.GetAssembly(typeof(Building)).GetTypes().Where
+            (
+                myType =>
+                    myType.IsClass &&
+                    !myType.IsAbstract &&
+                    myType.IsSubclassOf(typeof(Building)) &&
+                    myType != typeof(None)
+            ))
+            {
+                Building b = (Building) Activator.CreateInstance(type);
+                if (b.isBuildable(cell))
+                {
+                    buildings.Add(b);
+                }
+            }
         }
     }
 }

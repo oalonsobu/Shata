@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Level.Cell;
 using Level.Resource;
 
 namespace Level.Building
@@ -14,6 +15,11 @@ namespace Level.Building
         public override string Comment => "Do you want to build something here?.";
         public override string Title => "Empty";
         public override string BasePrefab => "None";
+        
+        public override List<CellTypeInterface> BuildableIn
+            => new List<CellTypeInterface>
+            {
+            };
                 
         public override List<ResourceModifier> Modifiers
             => new List<ResourceModifier>

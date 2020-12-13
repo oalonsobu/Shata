@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Level.Resource;
+using Level.Cell;
 
 namespace Level.Building
 {
@@ -9,5 +9,12 @@ namespace Level.Building
         public override string Comment => "In the mill you can store here you food";
         public override string Title => "Mill";
         public override string BasePrefab => "Mill";
+        
+        public override List<CellTypeInterface> BuildableIn
+            => new List<CellTypeInterface>
+            {
+                new Grass(),
+                new Fertile(),
+            };
     }
 }

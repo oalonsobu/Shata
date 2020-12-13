@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Level.Cell;
 using Level.Resource;
 
 namespace Level.Building
@@ -16,6 +17,12 @@ namespace Level.Building
         public override string Comment => "Nobody likes to walk over the mud. Your citizens are no an exception. This \"building\" allow your buildings to be reachable.";
         public override string Title => "Path";
         public override string BasePrefab => "Path";
+        
+        //TODO
+        public override List<CellTypeInterface> BuildableIn
+            => new List<CellTypeInterface>
+            {
+            };
         
         public override List<ResourceModifier> Modifiers
             => new List<ResourceModifier>

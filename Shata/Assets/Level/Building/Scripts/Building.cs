@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Level.Cell;
 using Level.Resource;
 using UnityEngine;
 
@@ -9,12 +11,13 @@ namespace Level.Building
 
     public abstract class Building
     {
-        public abstract List<ResourceModifier> Price { get; }
         public abstract string Description { get; }
         public abstract string Comment { get; }
         public abstract string Title { get; }
         public abstract string BasePrefab { get; }
+        public abstract List<CellTypeInterface> BuildableIn { get; }
         
+        public abstract List<ResourceModifier> Price { get; }
         public abstract List<ResourceModifier> Modifiers { get; }
         
         public abstract int CurrentLvl { get; }
@@ -41,6 +44,16 @@ namespace Level.Building
             }
 
             return text;
+        }
+        
+        public bool isBuildable(CellBase cell)
+        {
+            return cell.isEmptyCell() && BuildableIn.Any(a=> a.GetType() == cell.CellType.GetType());
+        }
+        
+        public bool isBuildable(CellBase cell, StorageManager storage)
+        {
+            return isBuildable(cell) && storage.hasEnoughResources(Price);
         }
     }
 }

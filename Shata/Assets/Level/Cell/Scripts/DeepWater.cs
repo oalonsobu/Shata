@@ -9,7 +9,5 @@ namespace Level.Cell
         public override string Comment => "Do not drink.";
         public override string Title => "Deep Water";
         public override string BasePrefab => "DeepWaterCell";
-
-        public override List<Building.Building> AllowedBuildings => new List<Building.Building>();
     }
 }
