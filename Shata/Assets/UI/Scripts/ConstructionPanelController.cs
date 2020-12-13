@@ -39,8 +39,6 @@ namespace UI
             if (isActive)
             {
                 clearObjects();
-                titleText.text = "Build";
-                setTextObjectDescriptionEvent("");
 
                 if (cellReference.value.CellBase.isEmptyCell())
                 {
@@ -63,6 +61,10 @@ namespace UI
         
         private void setBuildPanel(CellReference cellReference)
         {
+            
+            titleText.text = "Build";
+            setTextObjectDescriptionEvent(cellReference.value.CellBase.CurrentBuilding.Comment);
+            
             foreach (Building building in buildings)
             {
                 GameObject go = Instantiate(buttonPrefab, buildingLayout.transform, false);
@@ -79,12 +81,13 @@ namespace UI
                 {
                     textBox.color = Color.red;
                 }
-
+                
                 ConstructionPopOverController cpoc = button.gameObject.GetComponent<ConstructionPopOverController>();
                 string text = "";
                 text += building.Description + '\n' + building.Comment + '\n';
                 text += building.PriceToString();
-                cpoc.setText(text);
+                cpoc.setPopOverText(text);
+                cpoc.setPopOutText(cellReference.value.CellBase.CurrentBuilding.Comment);
             }
         }
         
@@ -104,14 +107,31 @@ namespace UI
             textBox.color = Color.white;
                     
             //Update button
-            go = Instantiate(buttonPrefab, buildingLayout.transform, false);
-            button = go.GetComponent<Button>();
-            button.onClick.AddListener(()  => updateBuildingEvent(cellReference));
-            button.gameObject.GetComponent<ConstructionPopOverController>().enabled = false;
-                    
-            textBox = button.GetComponentInChildren<Text>();
-            textBox.text = "Update";
-            textBox.color = Color.white;
+            foreach (Building building in cellReference.value.CellBase.CurrentBuilding.UpgradableTo)
+            {
+                go = Instantiate(buttonPrefab, buildingLayout.transform, false);
+                button = go.GetComponent<Button>();
+                        
+                textBox = button.GetComponentInChildren<Text>();
+                textBox.text = "Update";
+                
+                if (building.isBuildable(cellReference.value.CellBase, storageReference.value))
+                {
+                    button.onClick.AddListener(()  => updateBuildingEvent(cellReference, building));
+                    textBox.color = Color.white;
+                }
+                else
+                {
+                    textBox.color = Color.red;
+                }
+                
+                ConstructionPopOverController cpoc = button.gameObject.GetComponent<ConstructionPopOverController>();
+                string text = "";
+                text += building.Description + '\n' + building.Comment + '\n';
+                text += building.PriceToString();
+                cpoc.setPopOverText(text);
+                cpoc.setPopOutText(cellReference.value.CellBase.CurrentBuilding.Comment);
+            }
         }
 
         private void constructEvent(CellReference cellReference, Building building)
@@ -137,9 +157,14 @@ namespace UI
             }
         }
         
-        private void updateBuildingEvent(CellReference cellReference)
+        private void updateBuildingEvent(CellReference cellReference, Building building)
         {
-            Debug.Log("Not implemented yet");
+            //Check two avoid double clicks
+            if (!cellReference.value.CellBase.isEmptyCell())
+            {
+                removeBuildingEvent(cellReference);
+                constructEvent(cellReference, building);
+            }
         }
 
         public void setTextObjectDescriptionEvent(string text)

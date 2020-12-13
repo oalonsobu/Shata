@@ -18,6 +18,11 @@ namespace Level.Building
         public override string Title => "Path";
         public override string BasePrefab => "Path";
         
+        public override List<Building> UpgradableTo
+            => new List<Building>
+            {
+            }; 
+        
         //TODO
         public override List<CellTypeInterface> BuildableIn
             => new List<CellTypeInterface>

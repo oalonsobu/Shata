@@ -16,6 +16,11 @@ namespace Level.Building
         public override string Title => "Empty";
         public override string BasePrefab => "None";
         
+        public override List<Building> UpgradableTo
+            => new List<Building>
+            {
+            }; 
+        
         public override List<CellTypeInterface> BuildableIn
             => new List<CellTypeInterface>
             {

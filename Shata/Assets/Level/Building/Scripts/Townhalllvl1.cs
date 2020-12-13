@@ -5,6 +5,12 @@ namespace Level.Building
 {
     public class Townhalllvl1 : Townhall
     {
+        public override List<Building> UpgradableTo
+            => new List<Building>
+            {
+                new Townhalllvl2()
+            }; 
+        
         public override List<ResourceModifier> Price 
             => new List<ResourceModifier>
             {

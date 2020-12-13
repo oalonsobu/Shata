@@ -5,11 +5,15 @@ namespace Level.Building
 {
     public class Storagelvl1 : Storage
     {
+        public override List<Building> UpgradableTo
+            => new List<Building>
+            {
+            }; 
+        
         public override List<ResourceModifier> Price 
             => new List<ResourceModifier>
             {
                 new FlatHandicapModifier(60, ResourceType.Wood, ResourceModifierType.Amount),
-                new FlatHandicapModifier(30, ResourceType.Wood, ResourceModifierType.Amount),
                 new FlatHandicapModifier(30, ResourceType.Gold, ResourceModifierType.Amount),
             };
         

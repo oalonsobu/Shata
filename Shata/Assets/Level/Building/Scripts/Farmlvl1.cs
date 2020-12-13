@@ -5,6 +5,11 @@ namespace Level.Building
 {
     public class Farmlvl1 : Farm
     {
+        public override List<Building> UpgradableTo
+            => new List<Building>
+            {
+            }; 
+        
         public override List<ResourceModifier> Price 
             => new List<ResourceModifier>
             {

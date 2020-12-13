@@ -17,6 +17,9 @@ namespace Level.Building
         public abstract string BasePrefab { get; }
         public abstract List<CellTypeInterface> BuildableIn { get; }
         
+        //Is a list cause maybe we want a building to be upgrade to more than one building
+        public abstract List<Building> UpgradableTo { get; }
+        
         public abstract List<ResourceModifier> Price { get; }
         public abstract List<ResourceModifier> Modifiers { get; }
         
