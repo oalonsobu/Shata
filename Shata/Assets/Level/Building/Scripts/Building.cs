@@ -51,7 +51,8 @@ namespace Level.Building
         
         public bool isBuildable(CellBase cell)
         {
-            return cell.isEmptyCell() && BuildableIn.Any(a=> a.GetType() == cell.CellType.GetType());
+            return (cell.isEmptyCell() && BuildableIn.Any(a=> a.GetType() == cell.CellType.GetType())) ||
+                   (!cell.isEmptyCell() && cell.CurrentBuilding.UpgradableTo.Any(a=> a.GetType() == GetType()));
         }
         
         public bool isBuildable(CellBase cell, StorageManager storage)

@@ -8,6 +8,7 @@ namespace Level.Building
         public override List<Building> UpgradableTo
             => new List<Building>
             {
+                new Corrallvl2()
             }; 
 
         public override List<ResourceModifier> Price 

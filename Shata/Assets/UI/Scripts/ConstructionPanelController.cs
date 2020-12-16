@@ -148,18 +148,18 @@ namespace UI
         
         private void removeBuildingEvent(CellReference cellReference)
         {
-            //Check two avoid double clicks
+            //Check to avoid double clicks
             if (!cellReference.value.CellBase.isEmptyCell())
             {
                 storageReference.value.RemoveModifier(cellReference.value.CellBase.Id, cellReference.value.CellBase.CurrentBuilding.Modifiers);
-                cellReference.value.demolish();
                 cellReference.value.CellBase.setCurrentBuilding(new None());
+                cellReference.value.demolish();
             }
         }
         
         private void updateBuildingEvent(CellReference cellReference, Building building)
         {
-            //Check two avoid double clicks
+            //Check to avoid double clicks
             if (!cellReference.value.CellBase.isEmptyCell())
             {
                 removeBuildingEvent(cellReference);
@@ -188,7 +188,10 @@ namespace UI
                 Building b = (Building) Activator.CreateInstance(type);
                 if (b.isBuildable(cell))
                 {
-                    buildings.Add(b);
+                    if (b.CurrentLvl == 1)
+                    {
+                        buildings.Add(b);
+                    }
                 }
             }
         }
