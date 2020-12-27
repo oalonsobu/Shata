@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 using Common;
 
 namespace UI
@@ -8,21 +7,25 @@ namespace UI
 
         [SerializeField] GameObject creditsMenu;
         [SerializeField] GameObject mainMenu;
+        [SerializeField] GameObject loadSceneMenu;
         [SerializeField] AudioClip clickAudio;
 
         AudioHelper audioHelper;
+        private AsyncOperation loadSceneOperation;
         
         void Start() 
         {
             audioHelper = GetComponent<AudioHelper>();
             mainMenu.SetActive(true);
             creditsMenu.SetActive(false);
+            loadSceneMenu.SetActive(false);
         }
 
         public void NewGame() 
         {
             audioHelper.PlaySound(clickAudio);
-            SceneManager.LoadScene("Level1");
+            loadSceneMenu.SetActive(true);
+            mainMenu.SetActive(false);
         }
 
         public void ShowCredits() 
@@ -43,8 +46,8 @@ namespace UI
             audioHelper.PlaySound(clickAudio);
             mainMenu.SetActive(true);
             creditsMenu.SetActive(false);
+            loadSceneMenu.SetActive(false);
         }
-
     }
 
 }

@@ -1,10 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Level.Cell;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 using Variables;
+using Random = UnityEngine.Random;
 
 namespace Level.Grid
 {
@@ -25,37 +29,89 @@ namespace Level.Grid
     
     public class MapGeneratorController : MonoBehaviour
     {
-        //TODO: I think that maybe we can store a custom object, maybe something less consuming
-        CellBase[] grid;
+        [SerializeField] private MapReference mapReference; 
+        
+        private Grid grid;
         CustomCellLinkedList<int> pendingToVisit = new CustomCellLinkedList<int>();
         CellType[] cellTypes;
-
-        [SerializeField]                  private int seed;
-        [SerializeField]                  private MapSize mapSize = MapSize.Small;
-        [SerializeField] [Range(10,40)]   private float jitter;
+        
+        [SerializeField]                  private GameObject panel;
+        [SerializeField]                  private GameObject loadginText;
+        
+        [SerializeField]                  private InputField seedInput;
+        [SerializeField]                  private Dropdown mapSizeInput;
+        [SerializeField]                  private Slider jitterInput;
+        [SerializeField]                  private Slider landPercentageInput;
+        [SerializeField]                  private Slider stonePercentageInput;
+        [SerializeField]                  private Slider fertilePercentageInput;
+        [SerializeField]                  private Slider forestPercentageInput;
+        
         [SerializeField] [Range(100,150)] private int minLandSize;
         [SerializeField] [Range(150,200)] private int maxLandSize;
-        [SerializeField] [Range(5,95)]    private int landPercentage;
         [SerializeField] [Range(5,10)]    private int mapBorderX;
         [SerializeField] [Range(5,10)]    private int mapBorderY;
         [SerializeField] [Range(0,2)]     private int mountainReduction;
-        [SerializeField] [Range(5,10)]    private int fertileLandPopulation;
-        [SerializeField] [Range(5,10)]    private int quarryPopulation;
-        [SerializeField] [Range(5,10)]    private int forestLevelPopulation;
 
         const float hexRadius = 0.866025404f;
         private const float maxElevation = 6;
-        
-        void Awake()
+
+        private void Start()
         {
+            initInputs();
+        }
+
+        public void GenerateMapEvent()
+        {
+            loadginText.SetActive(true);
+            panel.SetActive(false);
+            MapSize mapSize = (MapSize) Enum.Parse(typeof(MapSize), mapSizeInput.options[mapSizeInput.value].text);
             initSeed();
             createEmptyMap((int) mapSize, (int) mapSize);
             createWorld();
             instantiateCells();
+            mapReference.value = grid;
+            SceneManager.LoadScene("Level1");
+        }
+
+        void initInputs()
+        {
+            loadginText.SetActive(false);
+            string[] enumNames = Enum.GetNames(typeof(MapSize));
+            mapSizeInput.AddOptions(new List<string>(enumNames));
+            
+            jitterInput.maxValue = 40;
+            jitterInput.minValue = 10;
+            jitterInput.wholeNumbers = true;
+            
+            landPercentageInput.maxValue = 90;
+            landPercentageInput.minValue = 5;
+            landPercentageInput.wholeNumbers = true;
+            
+            stonePercentageInput.maxValue = 10;
+            stonePercentageInput.minValue = 5;
+            stonePercentageInput.wholeNumbers = true;
+            
+            forestPercentageInput.maxValue = 10;
+            forestPercentageInput.minValue = 5;
+            forestPercentageInput.wholeNumbers = true;
+            
+            fertilePercentageInput.maxValue = 10;
+            fertilePercentageInput.minValue = 5;
+            fertilePercentageInput.wholeNumbers = true;
+            
+            seedInput.text = "1805286158"; //TODO: test purposes
+            mapSizeInput.value = 1;
+            mapSizeInput.RefreshShownValue();
+            jitterInput.value = 15; //TODO: test purposes
+            landPercentageInput.value = 45;//TODO: test purposes
+            stonePercentageInput.value = 7;//TODO: test purposes
+            forestPercentageInput.value = 7;//TODO: test purposes
+            fertilePercentageInput.value = 7;//TODO: test purposes
         }
 
         void initSeed()
         {
+            int seed = Int32.Parse(seedInput.text);
             if (seed == 0)
             {
                 //it's a little strange to set the random seed with a random :P
@@ -67,50 +123,20 @@ namespace Level.Grid
 
         void createEmptyMap(int width, int height)
         {
-            grid = new CellBase[height * width];
-            cellTypes = new CellType[height * width];
+            grid = new Grid(width, height);
+            cellTypes = new CellType[grid.Size];
             
-            for (int z = 0, i = 0; z < height; z++) {
-                for (int x = 0; x < width; x++)
+            for (int z = 0, i = 0; z < grid.Height; z++) {
+                for (int x = 0; x < grid.Width; x++)
                 {
                     cellTypes[i] = 0;
                     createWaterCell(x, z, i);
-                    setNeigbours(width, x, z, i);
+                    grid.SetNeigbours(grid.Width, x, z, i);
                     i++;
                 }
             }
         }
 
-        void setNeigbours(int width, int currentWidth, int currentHeight, int i)
-        {
-            if (currentWidth > 0)
-            {
-                grid[i].addNeigbour(grid[i - 1], HexDirection.W);
-                grid[i - 1].addNeigbour(grid[i], HexDirection.E);
-            }
-                    
-            if (currentHeight > 0) {
-                if ((currentHeight & 1) == 0) {
-                    grid[i].addNeigbour(grid[i - width], HexDirection.SE);
-                    grid[i - width].addNeigbour(grid[i], HexDirection.NW);
-                    if (currentWidth > 0) {
-                        grid[i].addNeigbour(grid[i - width - 1], HexDirection.SW);
-                        grid[i - width - 1].addNeigbour(grid[i], HexDirection.NE);
-                    }
-                }
-                else {
-                    grid[i].addNeigbour(grid[i - width], HexDirection.SW);
-                    grid[i - width].addNeigbour(grid[i], HexDirection.NE);
-                    if (currentWidth < width - 1) {
-                        grid[i].addNeigbour(grid[i - width + 1], HexDirection.SE);
-                        grid[i - width + 1].addNeigbour(grid[i], HexDirection.NW);
-                    }
-                }
-            }
-        }
-
-       
-        
         void createWaterCell (int x, int z, int id) 
         {
             Vector3 p;
@@ -119,55 +145,52 @@ namespace Level.Grid
             p.y = 0f;
             p.z = z * hexRadius;
 
-            grid[id] = new CellBase(id, p);
+            grid.SetCellBase(id, new CellBase(id, p));
             cellTypes[id] = CellType.Water;
         }
 
         void instantiateCells()
         {
-            GameObject aux;
-            for (int i = 0; i < grid.Length; i++)
+            CellBase cell;
+            for (int i = 0; i < grid.Size; i++)
             {
-                switch (cellTypes[grid[i].Id])
+                cell = grid.GetCellBase(i);
+                switch (cellTypes[cell.Id])
                 {
                     case CellType n when n == CellType.DeepWater:
-                        grid[i].CellType = new DeepWater();
+                        cell.CellType = new DeepWater();
                         break;
                     case CellType n when n == CellType.Water:
-                        grid[i].CellType = new Water();
+                        cell.CellType = new Water();
                         break;
                     case CellType n when n >= CellType.Grass && n <= CellType.Grass + mountainReduction:
-                        grid[i].CellType = new Grass();
+                        cell.CellType = new Grass();
                         break;
                     case CellType n when n == CellType.LowMountain + mountainReduction:
-                        grid[i].CellType = new LowMountain();
+                        cell.CellType = new LowMountain();
                         break;
                     case CellType n when n == CellType.Mountain + mountainReduction:
-                        grid[i].CellType = new Mountain();
+                        cell.CellType = new Mountain();
                         break;
                     case CellType n when n == CellType.HighMountain + mountainReduction:
-                        grid[i].CellType = new HighMountain();
+                        cell.CellType = new HighMountain();
                         break;
                     case CellType n when n == CellType.Fertile:
-                        grid[i].CellType = new Fertile();
+                        cell.CellType = new Fertile();
                         break;
                     case CellType n when n == CellType.Forest:
-                        grid[i].CellType = new Forest();
+                        cell.CellType = new Forest();
                         break;
                     case CellType n when n == CellType.Stone:
-                        grid[i].CellType = new Stone();
+                        cell.CellType = new Stone();
                         break;
                     case CellType n when n == CellType.FishArea:
-                        //TODO: create fishArea cell
-                        grid[i].CellType = new Water();
+                        cell.CellType = new Water();
                         break;
                     default:
-                        grid[i].CellType = new Fertile();
+                        cell.CellType = new Fertile();
                         break;
                 }
-                aux = Instantiate<GameObject>(grid[i].CellType.getBasePrefab(), transform, false);
-                aux.GetComponent<CellController>().CellBase = grid[i];
-                aux.transform.localPosition = grid[i].Position;
             }
         }
 
@@ -176,11 +199,11 @@ namespace Level.Grid
             int x, maxX, minX, y, maxY, minY;
             minX = mapBorderX;
             minY = mapBorderY;
-            maxX = (int) mapSize - mapBorderX;
-            maxY = (int) mapSize - mapBorderY;
+            maxX = grid.Width - mapBorderX;
+            maxY = grid.Height - mapBorderY;
             x = Random.Range(minX, maxX);
             y = Random.Range(minY, maxY);
-            return grid[(int) mapSize * x + y].Id;
+            return grid.GetCellBase(grid.Width * x + y).Id;
         }
         
         int getGrassRandomCell()
@@ -199,7 +222,7 @@ namespace Level.Grid
 
         void createWorld()
         {
-            int landBudget = Mathf.RoundToInt(grid.Length * landPercentage * 0.01f);
+            int landBudget = Mathf.RoundToInt(grid.Size * landPercentageInput.value * 0.01f);
             while (landBudget > 0)
             {
                 upriseTerrain(Random.Range(minLandSize, maxLandSize),ref landBudget);
@@ -229,9 +252,9 @@ namespace Level.Grid
                 }
 
                 for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++) {
-                    CellBase neighbor = grid[current].getNeigbour(d);
+                    CellBase neighbor = grid.GetCellBase(current).getNeigbour(d);
                     if (neighbor != null && !pendingToVisit.contains(neighbor.Id) && !alreadyVisited.Contains(neighbor.Id)) {
-                        pendingToVisit.queue(neighbor.Id, Random.Range(0, 100) < jitter ? 1 : 0);
+                        pendingToVisit.queue(neighbor.Id, Random.Range(0, 100) < jitterInput.value ? 1 : 0);
                     }
                 }
                 
@@ -247,12 +270,12 @@ namespace Level.Grid
         void createDeepWater()
         {
             List<int> pending = new List<int>();
-            for (int i = 0; i < grid.Length; i++)
+            for (int i = 0; i < grid.Size; i++)
             {
                 int randomDistance = Random.Range(3, 6);
                 if (isDeepWater(randomDistance, i, ref pending))
                 {
-                    cellTypes[grid[i].Id] = CellType.DeepWater;
+                    cellTypes[grid.GetCellBase(i).Id] = CellType.DeepWater;
                 }
                 pending.Clear();
             }
@@ -271,7 +294,7 @@ namespace Level.Grid
                 return true;
             }
             
-            foreach (CellBase neighbour in grid[id].Neighbour)
+            foreach (CellBase neighbour in grid.GetCellBase(id).Neighbour)
             {
                 if (neighbour == null || pending.Contains(neighbour.Id)) continue;
                 if (!isDeepWater(loop - 1, neighbour.Id, ref pending))
@@ -285,7 +308,7 @@ namespace Level.Grid
 
         void createFertileLand()
         {
-            foreach (var id in getGrassCellByPercentage(fertileLandPopulation))
+            foreach (var id in getGrassCellByPercentage((int) fertilePercentageInput.value))
             {
                 cellTypes[id] = CellType.Fertile;
             }
@@ -293,7 +316,7 @@ namespace Level.Grid
         
         void createQuarry()
         {
-            foreach (var id in getGrassCellByPercentage(quarryPopulation))
+            foreach (var id in getGrassCellByPercentage((int) stonePercentageInput.value))
             {
                 cellTypes[id] = CellType.Stone;
             }
@@ -301,7 +324,7 @@ namespace Level.Grid
         
         void createForest()
         {
-            foreach (var id in getGrassCellByPercentage(forestLevelPopulation))
+            foreach (var id in getGrassCellByPercentage((int) forestPercentageInput.value))
             {
                 List<int> pending = new List<int>();
                 pending.Add(id);
@@ -317,7 +340,7 @@ namespace Level.Grid
                     cellTypes[currentCell] = CellType.Forest;
                     
                     for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++) {
-                        CellBase neighbor = grid[currentCell].getNeigbour(d);
+                        CellBase neighbor = grid.GetCellBase(currentCell).getNeigbour(d);
                         if (neighbor != null && !pending.Contains(neighbor.Id) && cellTypes[neighbor.Id] == CellType.Grass) {
                             pending.Add(neighbor.Id);
                         }
@@ -327,8 +350,6 @@ namespace Level.Grid
                 pendingToVisit.clear();
             }
         }
-        
-        //TODO: create fishing area like fertile or quarry
         
         List<int> getGrassCellByPercentage(int percentage)
         {

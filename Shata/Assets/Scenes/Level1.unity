@@ -697,7 +697,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1028465359}
   - component: {fileID: 1028465358}
-  - component: {fileID: 1028465360}
   m_Layer: 0
   m_Name: MapContainer
   m_TagString: Untagged
@@ -719,6 +718,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cellReference: {fileID: 11400000, guid: 0be4e581b33844a4aa4ed5f04105bc81, type: 2}
   selectedCellChangedEvent: {fileID: 11400000, guid: cd0c5d576c6fb4b3394eb9aa8d60f41a, type: 2}
+  mapReference: {fileID: 11400000, guid: 6db736c81135c6ad4be6984fb573fff2, type: 2}
 --- !u!4 &1028465359
 Transform:
   m_ObjectHideFlags: 0
@@ -733,30 +733,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1028465360
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1028465357}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad50aa6ebd0e4ef19029c71bbf75c45e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  seed: 1805286158
-  mapSize: 50
-  jitter: 15
-  minLandSize: 150
-  maxLandSize: 200
-  landPercentage: 45
-  mapBorderX: 10
-  mapBorderY: 10
-  mountainReduction: 2
-  fertileLandPopulation: 7
-  quarryPopulation: 7
-  forestLevelPopulation: 7
 --- !u!224 &1043581053 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4179854323723972441, guid: bbba89946b12a42ffb060cda6a1cff6e, type: 3}
