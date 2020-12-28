@@ -16,5 +16,10 @@ namespace Level.Building
                 new Grass(),
                 new Fertile(),
             };
+
+        protected override bool assertConditions(CellBase cell)
+        {
+            return true;
+        }
     }
 }

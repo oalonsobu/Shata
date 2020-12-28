@@ -15,5 +15,10 @@ namespace Level.Building
             {
                 new Fertile(),
             };
+        
+        protected override bool assertConditions(CellBase cell)
+        {
+            return true;
+        }
     }
 }

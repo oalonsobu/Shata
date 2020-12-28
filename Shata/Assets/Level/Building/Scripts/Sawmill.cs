@@ -13,8 +13,12 @@ namespace Level.Building
         public override List<CellTypeInterface> BuildableIn
             => new List<CellTypeInterface>
             {
-                new Grass(),
-                new Fertile(),
+                new Forest(),
             };
+        
+        protected override bool assertConditions(CellBase cell)
+        {
+            return true;
+        }
     }
 }

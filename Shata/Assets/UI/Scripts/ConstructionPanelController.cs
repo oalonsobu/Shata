@@ -186,7 +186,7 @@ namespace UI
             ))
             {
                 Building b = (Building) Activator.CreateInstance(type);
-                if (b.isBuildable(cell))
+                if (b.isCompatibleWithCell(cell))
                 {
                     if (b.CurrentLvl == 1)
                     {

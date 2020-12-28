@@ -15,5 +15,10 @@ namespace Level.Building
             {
                 new Water()
             };
+        
+        protected override bool assertConditions(CellBase cell)
+        {
+            return !closeToOtherBuilding<FisherHouse>(cell) && closeToOtherCell<Grass>(cell);
+        }
     }
 }

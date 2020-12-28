@@ -15,5 +15,10 @@ namespace Level.Building
             {
                 new Stone()
             };
+        
+        protected override bool assertConditions(CellBase cell)
+        {
+            return true;
+        }
     }
 }
