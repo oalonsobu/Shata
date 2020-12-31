@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using Level.Resource;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -48,7 +47,7 @@ namespace UI
 
             if (resource != null)
             {
-                text.text = resource.Amount.ToString("0") + "/" + resource.Storage.ToString("0");
+                text.text = Math.Floor(resource.Amount).ToString("0") + "/" + resource.Storage.ToString("0");
                 popOverText.text = "Production: " + resource.Production.ToString("0.00");
             }
         }

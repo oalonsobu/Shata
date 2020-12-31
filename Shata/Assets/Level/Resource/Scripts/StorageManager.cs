@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Level.Resource
 {
@@ -26,7 +27,19 @@ namespace Level.Resource
             Wood.Update(time);
             Meat.Update(time);
             Stone.Update(time);
+            
+            //TODO: do this in a prettier way. It works but...
+            int popPreUpdate = (int) Math.Floor(Population.Amount);
             Population.Update(time);
+            int popPostUpdate = (int) Math.Floor(Population.Amount);
+            if (popPreUpdate != popPostUpdate)
+            {
+                AddModifier(0, new List<ResourceModifier>
+                {
+                    new FlatPerkModifier(0.02f, ResourceType.Gold, ResourceModifierType.Production),
+                    new FlatHandicapModifier(0.01f, ResourceType.Meat, ResourceModifierType.Production)
+                });
+            }
         }
 
         public bool hasEnoughResources(IEnumerable<ResourceModifier> prices)
@@ -102,7 +115,6 @@ namespace Level.Resource
         
         private Resource getResourceByType(ResourceType resourceType)
         {
-            //TODO: get resource or something like that
             switch (resourceType)
             {
                 case ResourceType.Gold:

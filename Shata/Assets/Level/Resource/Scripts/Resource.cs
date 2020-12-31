@@ -37,7 +37,6 @@ namespace Level.Resource
                 Amount = 0;
                 Storage = 0;
             }
-            
         }
         
         public void ApplyModifiers()
