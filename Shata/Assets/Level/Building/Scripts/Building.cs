@@ -62,7 +62,6 @@ namespace Level.Building
         //TODO: maybe we can store the reference in the building itself or something like that. I like this but I prefer the logic to be only in townhall
         public bool isBuildable(CellBase cell, StorageManager storage, bool townhallBuilt)
         {
-            Debug.Log(townhallBuilt && GetType() != typeof(Townhalllvl1));
             return assertConditions(cell) && isCompatibleWithCell(cell) && enoughResources(storage) &&
                    ((townhallBuilt && GetType() != typeof(Townhalllvl1)) || 
                    (!townhallBuilt && GetType() == typeof(Townhalllvl1)));
