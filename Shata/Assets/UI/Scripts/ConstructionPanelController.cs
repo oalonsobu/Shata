@@ -18,6 +18,7 @@ namespace UI
         [SerializeField] GameObject buttonPrefab;
         [SerializeField] GameObject descriptionPrefab;
         [SerializeField] StorageReference storageReference;
+        [SerializeField] BoolReference isTownhallReference;
         
         GameObject container;
         
@@ -26,6 +27,7 @@ namespace UI
         private void Start() {
             container = transform.GetChild(0).gameObject;
             container.SetActive(false);
+            isTownhallReference.value = false;
         }
     
         public void selectedCellChangedEvent(CellReference cellReference)
@@ -72,7 +74,7 @@ namespace UI
                 Text textBox = button.GetComponentInChildren<Text>();
                 textBox.text = building.Title;
 
-                if (building.isBuildable(cellReference.value.CellBase, storageReference.value))
+                if (building.isBuildable(cellReference.value.CellBase, storageReference.value, isTownhallReference.value))
                 {
                     button.onClick.AddListener(()  => constructEvent(cellReference, building));
                     textBox.color = Color.white;
@@ -115,7 +117,7 @@ namespace UI
                 textBox = button.GetComponentInChildren<Text>();
                 textBox.text = "Update";
                 
-                if (building.isBuildable(cellReference.value.CellBase, storageReference.value))
+                if (building.isBuildable(cellReference.value.CellBase, storageReference.value, isTownhallReference.value))
                 {
                     button.onClick.AddListener(()  => updateBuildingEvent(cellReference, building));
                     textBox.color = Color.white;
@@ -137,12 +139,17 @@ namespace UI
         private void constructEvent(CellReference cellReference, Building building)
         {
             //Check two avoid double clicks
-            if (building.isBuildable(cellReference.value.CellBase, storageReference.value))
+            if (building.isBuildable(cellReference.value.CellBase, storageReference.value, isTownhallReference.value))
             {
                 cellReference.value.CellBase.setCurrentBuilding(building);
                 storageReference.value.AddModifier(cellReference.value.CellBase.Id, building.Price);
                 storageReference.value.AddModifier(cellReference.value.CellBase.Id, building.Modifiers);
                 cellReference.value.build();
+
+                if (building.GetType() == typeof(Townhalllvl1))
+                {
+                    isTownhallReference.value = true;
+                }
             } 
         }
         

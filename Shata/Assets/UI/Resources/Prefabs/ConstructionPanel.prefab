@@ -226,6 +226,7 @@ MonoBehaviour:
   buttonPrefab: {fileID: 8553177690209578805, guid: 650b71f44af664f0a8febc2aa68c9c9d, type: 3}
   descriptionPrefab: {fileID: 5979046342307182378}
   storageReference: {fileID: 11400000, guid: 301e3c91b623d4aa1956e4637ebf9d73, type: 2}
+  isTownhallReference: {fileID: 11400000, guid: 540f62dd402cbb2c28ed83308bcfb5df, type: 2}
 --- !u!114 &3752380739995591614
 MonoBehaviour:
   m_ObjectHideFlags: 0

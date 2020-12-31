@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Level.Cell;
@@ -17,7 +16,7 @@ namespace Level.Building
         public abstract string BasePrefab { get; }
         public abstract List<CellTypeInterface> BuildableIn { get; }
         
-        //Is a list cause maybe we want a building to be upgrade to more than one building
+        //Is a list cause maybe we want a building to be upgrade to more than one building (maybe change it to a enum, not the object itself)
         public abstract List<Building> UpgradableTo { get; }
         
         public abstract List<ResourceModifier> Price { get; }
@@ -60,9 +59,13 @@ namespace Level.Building
                    (!cell.isEmptyCell() && cell.CurrentBuilding.UpgradableTo.Any(a=> a.GetType() == GetType()));
         }
         
-        public bool isBuildable(CellBase cell, StorageManager storage)
+        //TODO: maybe we can store the reference in the building itself or something like that. I like this but I prefer the logic to be only in townhall
+        public bool isBuildable(CellBase cell, StorageManager storage, bool townhallBuilt)
         {
-            return assertConditions(cell) && isCompatibleWithCell(cell) && enoughResources(storage);
+            Debug.Log(townhallBuilt && GetType() != typeof(Townhalllvl1));
+            return assertConditions(cell) && isCompatibleWithCell(cell) && enoughResources(storage) &&
+                   ((townhallBuilt && GetType() != typeof(Townhalllvl1)) || 
+                   (!townhallBuilt && GetType() == typeof(Townhalllvl1)));
         }
 
         /*TODO: once the course is finished and if more buildings and conditions have been added,
