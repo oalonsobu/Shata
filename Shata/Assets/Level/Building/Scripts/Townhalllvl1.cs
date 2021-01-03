@@ -39,14 +39,6 @@ namespace Level.Building
                 new FlatPerkModifier(500f, ResourceType.Gold, ResourceModifierType.Storage),
                 new FlatPerkModifier(500f, ResourceType.Meat, ResourceModifierType.Storage),
                 new FlatPerkModifier(500f, ResourceType.Stone, ResourceModifierType.Storage),
-                
-                
-                //Todo: remove, testing
-                new FlatPerkModifier(2f, ResourceType.Population, ResourceModifierType.Amount),
-                new FlatPerkModifier(500f, ResourceType.Wood, ResourceModifierType.Amount),
-                new FlatPerkModifier(500f, ResourceType.Meat, ResourceModifierType.Amount),
-                new FlatPerkModifier(500f, ResourceType.Gold, ResourceModifierType.Amount),
-                new FlatPerkModifier(500f, ResourceType.Stone, ResourceModifierType.Amount),
             };
         
         public override int CurrentLvl => 1;
