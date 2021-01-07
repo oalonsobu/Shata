@@ -23,6 +23,7 @@ namespace UI
         void Start() 
         {
             inGameMenu.SetActive(false);
+            Time.timeScale = 1;
             audioHelper = GetComponent<AudioHelper>();
         }
 
