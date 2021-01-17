@@ -17,8 +17,7 @@ namespace Level.Building
                 new FlatHandicapModifier(30, ResourceType.Stone, ResourceModifierType.Amount),
                 new FlatHandicapModifier(75, ResourceType.Gold, ResourceModifierType.Amount),
             };
-
-        //TODO: add old modifiers
+        
         public override List<ResourceModifier> Modifiers
             => new List<ResourceModifier>
             {

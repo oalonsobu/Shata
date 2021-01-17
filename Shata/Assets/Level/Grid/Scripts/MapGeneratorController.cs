@@ -99,14 +99,14 @@ namespace Level.Grid
             fertilePercentageInput.minValue = 5;
             fertilePercentageInput.wholeNumbers = true;
             
-            seedInput.text = "1805286158"; //TODO: test purposes
+            seedInput.text = "1805286158";
             mapSizeInput.value = 1;
             mapSizeInput.RefreshShownValue();
-            jitterInput.value = 15; //TODO: test purposes
-            landPercentageInput.value = 45;//TODO: test purposes
-            stonePercentageInput.value = 7;//TODO: test purposes
-            forestPercentageInput.value = 7;//TODO: test purposes
-            fertilePercentageInput.value = 7;//TODO: test purposes
+            jitterInput.value = 15;
+            landPercentageInput.value = 45;
+            stonePercentageInput.value = 7;
+            forestPercentageInput.value = 7;
+            fertilePercentageInput.value = 7;
         }
 
         void initSeed()
