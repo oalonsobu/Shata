@@ -109,7 +109,8 @@ namespace UI
             textBox.color = Color.white;
                     
             //Update button
-            foreach (Building building in cellReference.value.CellBase.CurrentBuilding.UpgradableTo)
+            Building building = cellReference.value.CellBase.CurrentBuilding;
+            foreach (Upgrade upgrade in cellReference.value.CellBase.CurrentBuilding.Upgrades)
             {
                 go = Instantiate(buttonPrefab, buildingLayout.transform, false);
                 button = go.GetComponent<Button>();
@@ -117,9 +118,9 @@ namespace UI
                 textBox = button.GetComponentInChildren<Text>();
                 textBox.text = "Update";
                 
-                if (building.isBuildable(cellReference.value.CellBase, storageReference.value, isTownhallReference.value))
+                if (storageReference.value.hasEnoughResources(upgrade.Price))
                 {
-                    button.onClick.AddListener(()  => updateBuildingEvent(cellReference, building));
+                    button.onClick.AddListener(()  => updateBuildingEvent(cellReference, upgrade));
                     textBox.color = Color.white;
                 }
                 else
@@ -130,7 +131,7 @@ namespace UI
                 ConstructionPopOverController cpoc = button.gameObject.GetComponent<ConstructionPopOverController>();
                 string text = "";
                 text += building.Description + '\n' + building.Comment + '\n';
-                text += building.PriceToString();
+                text += upgrade.PriceToString();
                 cpoc.setPopOverText(text);
                 cpoc.setPopOutText(cellReference.value.CellBase.CurrentBuilding.Comment);
             }
@@ -146,7 +147,7 @@ namespace UI
                 storageReference.value.AddModifier(cellReference.value.CellBase.Id, building.Modifiers);
                 cellReference.value.build();
 
-                if (building.GetType() == typeof(Townhalllvl1))
+                if (building.GetType() == typeof(Townhall))
                 {
                     isTownhallReference.value = true;
                 }
@@ -164,13 +165,15 @@ namespace UI
             }
         }
         
-        private void updateBuildingEvent(CellReference cellReference, Building building)
+        private void updateBuildingEvent(CellReference cellReference, Upgrade upgrade)
         {
             //Check to avoid double clicks
-            if (!cellReference.value.CellBase.isEmptyCell())
+            if (!cellReference.value.CellBase.isEmptyCell() && storageReference.value.hasEnoughResources(upgrade.Price))
             {
-                removeBuildingEvent(cellReference);
-                constructEvent(cellReference, building);
+                //TODO: maybe remove this and just add the new modifiers
+                storageReference.value.RemoveModifier(cellReference.value.CellBase.Id, cellReference.value.CellBase.CurrentBuilding.Modifiers);
+                storageReference.value.AddModifier(cellReference.value.CellBase.Id, upgrade.Price);
+                storageReference.value.AddModifier(cellReference.value.CellBase.Id, upgrade.Modifiers);
             }
         }
 
@@ -195,10 +198,7 @@ namespace UI
                 Building b = (Building) Activator.CreateInstance(type);
                 if (b.isCompatibleWithCell(cell))
                 {
-                    if (b.CurrentLvl == 1)
-                    {
-                        buildings.Add(b);
-                    }
+                    buildings.Add(b);
                 }
             }
         }

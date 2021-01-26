@@ -15,23 +15,21 @@ namespace Level.Building
         public abstract string Title { get; }
         public abstract string BasePrefab { get; }
         public abstract List<CellTypeInterface> BuildableIn { get; }
-        
-        //Is a list cause maybe we want a building to be upgrade to more than one building (maybe change it to a enum, not the object itself)
-        public abstract List<Building> UpgradableTo { get; }
-        
+
         public abstract List<ResourceModifier> Price { get; }
         public abstract List<ResourceModifier> Modifiers { get; }
-        
-        public abstract int CurrentLvl { get; }
+
+        public abstract List<Upgrade> Upgrades { get; }
         
         public GameObject getBasePrefab() {
             if (BasePrefab == "None")
             {
                 throw new Exception();
             }
-            return Resources.Load("Prefabs/" + BasePrefab + "lvl" + CurrentLvl) as GameObject;
+            return Resources.Load("Prefabs/" + BasePrefab + "lvl" + 1) as GameObject;
         }
-
+        
+        //TODO Move to another class
         public string PriceToString()
         {
             string text = "";
@@ -55,16 +53,13 @@ namespace Level.Building
         
         public bool isCompatibleWithCell(CellBase cell)
         {
-            return (cell.isEmptyCell() && BuildableIn.Any(a=> a.GetType() == cell.CellType.GetType())) ||
-                   (!cell.isEmptyCell() && cell.CurrentBuilding.UpgradableTo.Any(a=> a.GetType() == GetType()));
+            return (cell.isEmptyCell() && BuildableIn.Any(a=> a.GetType() == cell.CellType.GetType()));
         }
         
         //TODO: maybe we can store the reference in the building itself or something like that. I like this but I prefer the logic to be only in townhall
         public bool isBuildable(CellBase cell, StorageManager storage, bool townhallBuilt)
         {
-            return assertConditions(cell) && isCompatibleWithCell(cell) && enoughResources(storage) &&
-                   ((townhallBuilt && GetType() != typeof(Townhalllvl1)) || 
-                   (!townhallBuilt && GetType() == typeof(Townhalllvl1)));
+            return assertConditions(cell) && isCompatibleWithCell(cell) && enoughResources(storage);
         }
 
         /*TODO: once the course is finished and if more buildings and conditions have been added,

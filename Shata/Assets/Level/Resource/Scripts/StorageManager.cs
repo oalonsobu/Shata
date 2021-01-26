@@ -4,6 +4,8 @@ using UnityEngine;
 
 namespace Level.Resource
 {
+    
+    //TODO: extract price from modifiers
     public class StorageManager
     {
         public readonly Resource Gold;

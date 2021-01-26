@@ -15,12 +15,7 @@ namespace Level.Building
         public override string Comment => "Do you want to build something here?.";
         public override string Title => "Empty";
         public override string BasePrefab => "None";
-        
-        public override List<Building> UpgradableTo
-            => new List<Building>
-            {
-            }; 
-        
+
         public override List<CellTypeInterface> BuildableIn
             => new List<CellTypeInterface>
             {
@@ -30,7 +25,10 @@ namespace Level.Building
             => new List<ResourceModifier>
             {
             };
-
-        public override int CurrentLvl => 1;
+        
+        public override List<Upgrade> Upgrades 
+            => new List<Upgrade>
+            {
+            };
     }
 }
